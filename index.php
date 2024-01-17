@@ -12,6 +12,8 @@
 <body>
     <div class="container">
         <div class="background"></div>
+        <div class="header">
+            <img class="logo" src="MEDIA/HOME/LOGO.png" alt="logo">
         <div class="lp">
             <img class="lpplaat" src="MEDIA/HOME/LP.png" alt="lp">
         </div> 
