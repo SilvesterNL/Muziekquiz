@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
 
-body, html {
+body,
+html {
     height: 100%;
     margin: 0;
     font-family: 'Roboto', sans-serif;
@@ -31,18 +32,26 @@ body, html {
 .background::before {
     content: '';
     position: absolute;
-    top: 0; 
+    top: 0;
     right: 0;
-    bottom: 0; 
+    bottom: 0;
     left: 0;
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), transparent);
     z-index: -2;
 }
 
 @keyframes gradientAnimation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 .lp {
@@ -71,14 +80,34 @@ body, html {
 }
 
 .header .logo {
-    width: 500px; /* Vaste breedte voor logo */
-    max-width: 100%; /* Zorgt voor responsiviteit */
+    width: 500px;
+
+    max-width: 100%;
+
+}
+
+.logo {
+    transition: .2s scale;
+
+}
+
+.logo:hover {
+    scale: 1.06;
+
 }
 
 @keyframes lpdraai {
-    0% { transform: rotate(0deg); }
-    50% { transform: rotate(180deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(180deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 @media (max-width: 768px) {
@@ -101,6 +130,7 @@ body, html {
     }
 
     .header .logo {
-        width: 80%; /* Aangepaste breedte voor kleinere schermen */
+        width: 80%;
+
     }
 }
