@@ -59,6 +59,7 @@ html {
     transition: .2s scale;
     width: 80%;
     text-align: center;
+    margin-top: 63px;
 }
 
 .lp:hover {
@@ -76,11 +77,11 @@ html {
     color: white;
     text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     text-align: center;
-    margin-top: 2%;
+    margin-top: 1%;
 }
 
 .header .logo {
-    width: 500px;
+    width: 424px;
 
     max-width: 100%;
 

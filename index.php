@@ -22,10 +22,10 @@
         <div class="background"></div>
         <div class="header">
             <img class="logo animate__animated animate__heartBeat" src="MEDIA/HOME/LOGO.png" alt="logo">
+        </div> 
         <div class="lp">
             <img class="lpplaat" src="MEDIA/HOME/LP.png" alt="lp">
-        </div> 
-    </div>
+        </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="JS/script.js"></script>
     
