@@ -1,5 +1,6 @@
 /* Basisstijlen en import */
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
+
 body,
 html {
   height: 100%;
@@ -148,10 +149,12 @@ html {
 }
 
 @keyframes slideInfinite {
+
   0%,
   100% {
     transform: translateX(0%);
   }
+
   50% {
     transform: translateX(-100%);
   }
@@ -182,10 +185,12 @@ html {
 }
 
 @keyframes customHeartBeat {
+
   0%,
   100% {
     transform: scale(1) rotate(-30deg);
   }
+
   14%,
   80% {
     transform: scale(1.3) rotate(-30deg);
@@ -204,6 +209,7 @@ html {
     margin-right: 18vw;
     transition: 0.2s scale;
   }
+
   .header .logo:hover {
     scale: 1.02;
   }
@@ -223,5 +229,42 @@ html {
 
   .arrow {
     display: none;
+  }
+}
+
+
+
+.lobbyselector {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  height: 70%;
+  border-radius: 30px;
+  background-color: rgb(255, 255, 255);
+  transform: translate(-50%, -50%) !important;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  transition: .2s all;
+}
+
+.hide {
+  display: none;
+}
+
+
+
+
+@keyframes zoominup {
+
+  0% {
+    scale: 0;
+  }
+
+  80% {
+    scale: 1.05;
+  }
+
+  100% {
+    scale: 1;
   }
 }

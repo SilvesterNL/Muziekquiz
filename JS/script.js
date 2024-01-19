@@ -51,7 +51,9 @@ document.addEventListener("DOMContentLoaded", function () {
   if (lpImage) {
     lpImage.addEventListener("click", function () {
       let clickSound = new Audio("MEDIA/SOUNDS/onclick.wav");
+      clickSound.volume = 0.5;
       clickSound.play();
+      openlobbyselector();
     });
   }
 });
@@ -75,4 +77,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }, 2950);
 });
+
+function openlobbyselector() {
+  let selector = document.querySelector(".lobbyselector");
+  selector.classList.remove("hide");
+  selector.style.animation = "zoominup 0.5s";
+}
 

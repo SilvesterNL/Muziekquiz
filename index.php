@@ -29,7 +29,9 @@
             <img class="lpplaat" src="MEDIA/HOME/LP.png" alt="lp">
         </div>
         <img class="arrow animate__animated" src="MEDIA/HOME/arrow.png" alt="arrow">
-    </div>
+        <div class="lobbyselector hide">
+            <h1>Kies of maak een lobby</h1>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="JS/script.js"></script>
