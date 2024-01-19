@@ -75,3 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }, 2950);
 });
+
+
+// Python script for yt downloading
+

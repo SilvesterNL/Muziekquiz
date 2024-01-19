@@ -14,6 +14,7 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="msapplication-config" content="MEDIA/FAVICONS/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="https://pyscript.net/releases/2023.11.1/core.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
     <title>Muziekquiz</title>
@@ -35,6 +36,7 @@
 
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module" src="https://pyscript.net/releases/2023.11.1/core.js"></script>
     <script src="JS/script.js"></script>
 
 </body>
