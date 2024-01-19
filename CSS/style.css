@@ -1,137 +1,227 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
-
+/* Basisstijlen en import */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
 body,
 html {
-    height: 100%;
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-    overflow: hidden;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+  overflow: hidden;
 }
 
+/* Hoofdcontainerstijl */
 .container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
+/* Achtergrond animatie */
 .background {
-    animation: gradientAnimation 5s ease infinite;
-    background: linear-gradient(270deg, #ad1fff, #c560ff);
-    background-size: 400% 400%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
+  animation: gradientAnimation 5s ease infinite;
+  background: linear-gradient(270deg, #ad1fff, #c560ff);
+  background-size: 400% 400%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
 }
 
 .background::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), transparent);
-    z-index: -2;
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), transparent);
+  z-index: -2;
 }
 
 @keyframes gradientAnimation {
-    0% {
-        background-position: 0% 50%;
-    }
+  0% {
+    background-position: 0% 50%;
+  }
 
-    50% {
-        background-position: 100% 50%;
-    }
+  50% {
+    background-position: 100% 50%;
+  }
 
-    100% {
-        background-position: 0% 50%;
-    }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
+/* LP plaat animatie en stijl */
 .lp {
-    align-self: center;
-    transition: .2s scale;
-    width: 80%;
-    text-align: center;
-    margin-top: 63px;
+  align-self: center;
+  transition: 0.2s scale;
+  width: 80%;
+  text-align: center;
+  margin-top: 63px;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .lp:hover {
-    scale: 1.02;
+  scale: 1.02;
 }
 
 .lpplaat {
-    width: 500px;
-    animation: lpdraai 3s linear infinite;
-    align-self: center;
+  width: 500px;
+  animation: lpdraai 3s linear infinite;
+  align-self: center;
+  cursor: grab;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
+/* Header en logo stijlen */
 .header {
-    font-size: 3em;
-    color: white;
-    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    margin-top: 1%;
+  font-size: 3em;
+  color: white;
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  margin-top: 1%;
 }
 
 .header .logo {
-    width: 424px;
+  width: 424px;
 
-    max-width: 100%;
-
+  max-width: 100%;
 }
 
 .logo {
-    transition: .2s scale;
-
+  transition: 0.2s scale;
 }
 
 .logo:hover {
-    scale: 1.06;
-
+  scale: 1.06;
 }
 
 @keyframes lpdraai {
-    0% {
-        transform: rotate(0deg);
-    }
+  0% {
+    transform: rotate(0deg);
+  }
 
-    50% {
-        transform: rotate(180deg);
-    }
+  50% {
+    transform: rotate(180deg);
+  }
 
-    100% {
-        transform: rotate(360deg);
-    }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @media (max-width: 768px) {
-    .header {
-        font-size: 2em;
-    }
+  .header {
+    font-size: 2em;
+  }
 
-    .lpplaat {
-        width: 500px;
-    }
+  .lpplaat {
+    width: 500px;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
 }
 
 @media (max-width: 480px) {
-    .header {
-        font-size: 1.5em;
-    }
+  .header {
+    font-size: 1.5em;
+  }
 
-    .lpplaat {
-        width: 500px;
-    }
+  .lpplaat {
+    width: 500px;
+  }
 
-    .header .logo {
-        width: 80%;
+  .header .logo {
+    width: 80%;
+  }
+}
 
-    }
+@keyframes slideInfinite {
+  0%,
+  100% {
+    transform: translateX(0%);
+  }
+  50% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Logo bewegingsanimatie (alleen voor desktop) */
+.header .logo {
+  width: 424px;
+  max-width: 100%;
+  animation: slideInfinite 10s linear infinite;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Pijl animatie en stijlen */
+.arrow {
+  width: 120px;
+  position: absolute;
+  top: 39%;
+  right: 31%;
+  filter: invert(100%);
+  opacity: 75%;
+}
+
+.custom-heartbeat {
+  animation: customHeartBeat 2s ease-in-out;
+}
+
+@keyframes customHeartBeat {
+  0%,
+  100% {
+    transform: scale(1) rotate(-30deg);
+  }
+  14%,
+  80% {
+    transform: scale(1.3) rotate(-30deg);
+  }
+}
+
+/* Responsive voor volledige pagina */
+@media (max-width: 768px) {
+  .header {
+    font-size: 1.5em;
+  }
+
+  .header .logo {
+    width: 80%;
+    animation: none;
+    margin-right: 18vw;
+    transition: 0.2s scale;
+  }
+  .header .logo:hover {
+    scale: 1.02;
+  }
+
+  .lpplaat {
+    width: 95%;
+    max-width: 300px;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .logo {
+    width: 70%;
+    max-width: 200px;
+  }
+
+  .arrow {
+    display: none;
+  }
 }
