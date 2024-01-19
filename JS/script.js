@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
     }
   } else {
+    // Sweet alert voor muziek in lobby
     setTimeout(function () {
       Swal.fire({
         title: "Wil je muziek horen in de lobby?",
@@ -45,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }, 1000);
   }
+  // Onclick geluid voor Plaat
   let lpImage = document.querySelector(".lpplaat");
   if (lpImage) {
     lpImage.addEventListener("click", function () {
