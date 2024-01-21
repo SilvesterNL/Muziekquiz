@@ -232,14 +232,14 @@ html {
   }
 }
 
-
-
+/* Lobby selector CSS */
 .lobbyselector {
   position: absolute;
   top: 50%;
   left: 50%;
   width: 80%;
   height: 70%;
+  transform-origin: center;
   border-radius: 30px;
   background-color: rgb(255, 255, 255);
   transform: translate(-50%, -50%) !important;
@@ -251,20 +251,42 @@ html {
   display: none;
 }
 
-
-
-
 @keyframes zoominup {
-
   0% {
-    scale: 0;
+    transform: scale(0);
+    opacity: 0;
   }
-
-  80% {
-    scale: 1.05;
-  }
-
   100% {
-    scale: 1;
+    transform: scale(1);
+    opacity: 1;
   }
+}
+
+@keyframes zoomoutdown {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease-in;
+  transform: scale(1);
+}
+
+.close-button:hover {
+  transform: scale(1.3);
+  color: red;
+  font-weight: bolder; 
 }

@@ -78,9 +78,29 @@ document.addEventListener("DOMContentLoaded", function () {
   }, 2950);
 });
 
+
+// Lobby Selector
 function openlobbyselector() {
   let selector = document.querySelector(".lobbyselector");
   selector.classList.remove("hide");
-  selector.style.animation = "zoominup 0.5s";
+  selector.style.animation = "zoominup 0.5s forwards";
+
+  document.querySelector('.close-button').addEventListener('click', function() {
+    closeLobbySelector();
+  });
+
+  window.addEventListener('click', function(event) {
+    if (event.target === selector) {
+      closeLobbySelector();
+    }
+  });
 }
 
+function closeLobbySelector() {
+  let selector = document.querySelector(".lobbyselector");
+  selector.style.animation = 'zoomoutdown 0.5s forwards';
+
+  setTimeout(() => {
+    selector.classList.add("hide");
+  }, 500); 
+}

@@ -30,8 +30,9 @@
         </div>
         <img class="arrow animate__animated" src="MEDIA/HOME/arrow.png" alt="arrow">
         <div class="lobbyselector hide">
-            <h1>Kies of maak een lobby</h1>
-        </div>
+    <span class="close-button">&times;</span>
+    <h1>Kies of maak een lobby</h1>
+</div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="JS/script.js"></script>
