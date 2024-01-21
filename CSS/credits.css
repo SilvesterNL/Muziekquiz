@@ -1,0 +1,140 @@
+/* Basisstijlen en import */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
+@import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css');
+
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+  background: linear-gradient(135deg, #ad1fff, #c560ff);
+  overflow: hidden;
+}
+
+/* Styling voor volledige pagina voor credits */
+#backButton {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  font-size: 1em;
+  color: white;
+  background: #603cba;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#backButton:hover {
+  background-color: #5a55a1;
+}
+
+.credits-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+}
+
+.credit-side {
+  flex: 1;
+  padding: 50px;
+  color: white;
+}
+
+.left {
+  background-color: rgba(109, 40, 217, 0.8);
+}
+
+.right {
+  background-color: rgba(173, 31, 255, 0.8);
+}
+
+.credit-image {
+  max-width: 200px;
+  border-radius: 50%;
+  border: 5px solid white;
+  margin-bottom: 20px;
+  animation: animate__fadeInUp 1s;
+}
+
+h2 {
+  font-size: 2em;
+  margin-bottom: 10px;
+  animation: animate__fadeInUp 1s;
+  animation-delay: 0.2s;
+}
+
+p {
+  margin-bottom: 20px;
+  line-height: 1.5;
+  animation: animate__fadeInUp 1s;
+  animation-delay: 0.4s;
+}
+
+.credit-links {
+  list-style: none;
+  padding: 0;
+  animation: animate__fadeInUp 1s;
+  animation-delay: 0.6s;
+}
+
+.credit-links li {
+  margin-bottom: 10px;
+}
+
+.credit-links a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.credit-links a:hover {
+    color: #ffc107;
+  }
+
+  .icon-link {
+    font-size: 24px;
+    transition: transform 0.3s ease;
+  }
+  
+  .icon-link:hover {
+    transform: scale(1.2);
+  }
+  
+  .bottom-links {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: 16px;
+  }
+  
+  .bottom-links a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s;
+  }
+  
+  .bottom-links a:hover {
+    color: #ffc107;
+  }
+  
+  .bottom-links span {
+    color: white;
+    margin: 0 5px;
+  }
+  
+  .link_glr {
+    text-decoration: none;
+    color: rgb(143, 143, 143);
+    opacity: 80%;
+    transition: all 0.3s ease-out;
+  }
+
+  .link_glr:hover {
+    opacity: 100%;
+    
+  }
