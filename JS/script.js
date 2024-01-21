@@ -49,7 +49,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // Onclick geluid voor Plaat
   let lpImage = document.querySelector(".lpplaat");
   if (lpImage) {
-    lpImage.addEventListener("click", function () {
+    lpImage.addEventListener("click", function (event) {
+      event.stopPropagation();
       let clickSound = new Audio("MEDIA/SOUNDS/onclick.wav");
       clickSound.volume = 0.5;
       clickSound.play();
@@ -79,27 +80,30 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-// Lobby Selector
 function openlobbyselector() {
   let selector = document.querySelector(".lobbyselector");
   selector.classList.remove("hide");
   selector.style.animation = "zoominup 0.5s forwards";
+  document.querySelector('.close-button').addEventListener('click', closeLobbySelector);
+  window.addEventListener('click', outsideClickListener);
+}
 
-  document.querySelector('.close-button').addEventListener('click', function() {
+function outsideClickListener(event) {
+  let selector = document.querySelector(".lobbyselector");
+  if (!selector.contains(event.target)) {
     closeLobbySelector();
-  });
-
-  window.addEventListener('click', function(event) {
-    if (event.target === selector) {
-      closeLobbySelector();
-    }
-  });
+    window.removeEventListener('click', outsideClickListener); 
+  }
 }
 
 function closeLobbySelector() {
   let selector = document.querySelector(".lobbyselector");
   selector.style.animation = 'zoomoutdown 0.5s forwards';
 
+  let closeSound = new Audio("MEDIA/SOUNDS/onclose.wav");
+  closeSound.volume = 1;
+  closeSound.play();
+  
   setTimeout(() => {
     selector.classList.add("hide");
   }, 500); 
