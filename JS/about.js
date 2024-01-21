@@ -1,8 +1,21 @@
-document.getElementById('backButton').addEventListener('click', function() {
-    let audio = new Audio('../MEDIA/SOUNDS/onclick.wav');
-    audio.play();
+document.addEventListener('DOMContentLoaded', function() {
+    function playSoundAndNavigate(url) {
+        var sound = new Audio("../MEDIA/SOUNDS/footerButtons.wav");
+        sound.play();
+        setTimeout(function() {
+            window.location.href = url;
+        }, 200); 
+    }
 
-    setTimeout(function() {
-        window.location.href = '../index.php';
-    }, 150);
+    document.getElementById('backButton').addEventListener('click', function(event) {
+        event.preventDefault();
+        playSoundAndNavigate('../index.php');
+    });
+
+    document.querySelectorAll('.bottom-links a').forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            playSoundAndNavigate(this.getAttribute('href'));
+        });
+    });
 });

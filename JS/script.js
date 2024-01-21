@@ -76,10 +76,10 @@ document.addEventListener("DOMContentLoaded", function () {
       void arrow.offsetWidth;
       arrow.classList.add("custom-heartbeat");
     }
-  }, 2950);
+  }, 2350);
 });
 
-
+//  Voor lobby selector
 function openlobbyselector() {
   let selector = document.querySelector(".lobbyselector");
   selector.classList.remove("hide");
@@ -108,3 +108,16 @@ function closeLobbySelector() {
     selector.classList.add("hide");
   }, 500); 
 }
+
+// Voor footer - sounds
+document.querySelectorAll('.bottom-links a').forEach(link => {
+  link.addEventListener('click', function(event) {
+    event.preventDefault();
+    let audio = new Audio("MEDIA/SOUNDS/footerButtons.wav");
+    audio.play();
+
+    setTimeout(() => {
+      window.location.href = this.getAttribute('href');
+    }, 200);
+  });
+})

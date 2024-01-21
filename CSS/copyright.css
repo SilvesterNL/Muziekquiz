@@ -58,6 +58,10 @@ a {
     font-weight: bolder;
 }
 
+.bottom-links a {
+    font-weight: normal;
+}
+
 .bottom-links {
     position: absolute;
     bottom: 20px;
