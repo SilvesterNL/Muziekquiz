@@ -8,12 +8,13 @@ body, html {
   padding: 0;
   font-family: "Roboto", sans-serif;
   background: linear-gradient(135deg, #ad1fff, #c560ff);
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 /* Styling voor volledige pagina voor credits */
 #backButton {
   position: absolute;
+  z-index: 9999;
   top: 20px;
   left: 20px;
   padding: 10px 20px;
@@ -30,26 +31,41 @@ body, html {
   background-color: #5a55a1;
 }
 
+.credits-header {
+  z-index: 1;
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.credits-header h1 {
+  color: white;
+  font-size: 3em;
+  animation: animate__fadeInDown 1s;
+}
+
 .credits-container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  height: 100%;
-  text-align: center;
+  align-items: flex-start;
+  padding: 0 20px;
+  margin-top: 20px;
 }
 
 .credit-side {
   flex: 1;
-  padding: 50px;
+  max-width: 45%;
+  padding: 1em;
   color: white;
+  margin: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
 }
 
-.left {
-  background-color: rgba(109, 40, 217, 0.8);
-}
-
-.right {
-  background-color: rgba(173, 31, 255, 0.8);
+.credit-side h2 {
+  font-size: 2em;
 }
 
 .credit-image {
@@ -57,28 +73,20 @@ body, html {
   border-radius: 50%;
   border: 5px solid white;
   margin-bottom: 20px;
-  animation: animate__fadeInUp 1s;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  transition: transform 0.55s ease-in-out;
 }
 
-h2 {
-  font-size: 2em;
-  margin-bottom: 10px;
-  animation: animate__fadeInUp 1s;
-  animation-delay: 0.2s;
-}
-
-p {
-  margin-bottom: 20px;
-  line-height: 1.5;
-  animation: animate__fadeInUp 1s;
-  animation-delay: 0.4s;
+.credit-image:hover {
+  transform: rotate(360deg);
+  border: 5px solid antiquewhite;
 }
 
 .credit-links {
   list-style: none;
   padding: 0;
-  animation: animate__fadeInUp 1s;
-  animation-delay: 0.6s;
 }
 
 .credit-links li {
@@ -92,49 +100,100 @@ p {
 }
 
 .credit-links a:hover {
-    color: #ffc107;
+  color: #ffc107;
+}
+
+.icon-link {
+  font-size: 24px;
+  transition: transform 0.3s ease;
+}
+
+.icon-link:hover {
+  transform: scale(1.2);
+}
+
+.bottom-links {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-size: 16px;
+}
+
+.bottom-links a {
+  color: white;
+  text-decoration: none;
+  margin: 0 10px;
+  transition: color 0.3s;
+}
+
+.bottom-links a:hover {
+  color: #ffc107;
+}
+
+.bottom-links span {
+  color: white;
+  margin: 0 5px;
+}
+
+.link_glr {
+  text-decoration: none;
+  color: rgb(196, 190, 190);
+  transition: opacity 0.3s ease-out;
+}
+
+.link_glr:hover {
+  opacity: 1;
+}
+
+/* Responsive code */
+@media (max-width: 768px) {
+  .credits-container {
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+  }
+
+  .credit-side {
+    max-width: 90%;
+    margin: 10px 0;
+    text-align: center;
+  }
+
+  .credits-header h1 {
+    font-size: 2em;
+  }
+
+  .bottom-links {
+    position: static;
+    text-align: center;
+    width: 100%;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  #backButton {
+    font-size: 0.8em;
+    padding: 8px 16px;
+  }
+
+  .credits-header h1 {
+    font-size: 1.8em;
+  }
+
+  .credit-image {
+    max-width: 150px;
+  }
+
+  .credit-side h2 {
+    font-size: 1.5em;
   }
 
   .icon-link {
-    font-size: 24px;
-    transition: transform 0.3s ease;
-  }
-  
-  .icon-link:hover {
-    transform: scale(1.2);
-  }
-  
-  .bottom-links {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    font-size: 16px;
-  }
-  
-  .bottom-links a {
-    color: white;
-    text-decoration: none;
-    margin: 0 10px;
-    transition: color 0.3s;
-  }
-  
-  .bottom-links a:hover {
-    color: #ffc107;
-  }
-  
-  .bottom-links span {
-    color: white;
-    margin: 0 5px;
-  }
-  
-  .link_glr {
-    text-decoration: none;
-    color: rgb(143, 143, 143);
-    opacity: 80%;
-    transition: all 0.3s ease-out;
+    font-size: 20px;
   }
 
-  .link_glr:hover {
-    opacity: 100%;
-    
+  .bottom-links a, .bottom-links span {
+    font-size: 14px;
   }
+}

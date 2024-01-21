@@ -31,7 +31,14 @@
         <div class="lobbyselector hide">
     <span class="close-button">&times;</span>
     <h1>Kies of maak een lobby</h1>
-</div>
+    </div>
+    <div class="bottom-links">
+        <a href="./HTML/about.html">Informatie</a>
+        <span>&centerdot;</span>
+        <a href="./HTML/credits.html">Credits</a>
+        <span>&centerdot;</span>
+        <a href="./HTML/copyright.html">&#169; Copyright MuziekQuiz</a>
+    </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="JS/script.js"></script>

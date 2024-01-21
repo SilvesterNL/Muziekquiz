@@ -122,16 +122,27 @@ html {
 }
 
 @media (max-width: 768px) {
-  .header {
-    font-size: 2em;
-  }
+    .header {
+      font-size: 2em;
+    }
 
-  .lpplaat {
-    width: 500px;
-    -ms-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
-  }
+    .lpplaat {
+      width: 500px;
+      -ms-user-select: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .lobbyselector {
+      width: 95%;
+      height: auto;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 20px;
+      padding: 20px;
+      box-sizing: border-box; /* This ensures padding is included in width */
+    }
 }
 
 @media (max-width: 480px) {
@@ -288,4 +299,27 @@ html {
   transform: scale(1.15);
   color: red;
   font-weight: bolder;
+}
+
+.bottom-links {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-size: 16px;
+}
+
+.bottom-links a {
+  color: white;
+  text-decoration: none;
+  margin: 0 10px;
+  transition: color 0.3s;
+}
+
+.bottom-links a:hover {
+  color: #ffc107;
+}
+
+.bottom-links span {
+  color: white;
+  margin: 0 5px;
 }
