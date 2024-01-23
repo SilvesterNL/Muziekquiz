@@ -31,3 +31,10 @@ function openusernamesel() {
         }
     });
 }
+
+setInterval(() => {
+    fetch('../PHP/heartbeatcheck.php')
+        .then(response => response.text())
+        .then(data => console.log(data))
+        .catch(error => console.error('Error:', error));
+}, 10000);
