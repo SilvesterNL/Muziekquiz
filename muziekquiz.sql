@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 23 jan 2024 om 17:28
+-- Gegenereerd op: 23 jan 2024 om 22:58
 -- Serverversie: 10.4.32-MariaDB
 -- PHP-versie: 8.2.12
 
@@ -33,19 +33,9 @@ CREATE TABLE `lobby` (
   `eigenaar` varchar(255) NOT NULL,
   `cat` varchar(255) NOT NULL,
   `first` tinyint(1) NOT NULL DEFAULT 1,
-  `active` tinyint(1) NOT NULL DEFAULT 0
+  `active` tinyint(1) NOT NULL DEFAULT 0,
+  `lastactive` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Gegevens worden geëxporteerd voor tabel `lobby`
---
-
-INSERT INTO `lobby` (`id`, `randomid`, `eigenaar`, `cat`, `first`, `active`) VALUES
-(17, 'Y2umbp', 'S', '', 0, 0),
-(18, 'jqHlGB', 'Silvester', '', 0, 1),
-(19, '73a1Bu', 'Silvester', '', 0, 0),
-(20, 'NGtDCn', 'Silvester', '', 0, 0),
-(21, 't6gMJX', 'Silvester', '', 0, 1);
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -65,7 +55,7 @@ ALTER TABLE `lobby`
 -- AUTO_INCREMENT voor een tabel `lobby`
 --
 ALTER TABLE `lobby`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
