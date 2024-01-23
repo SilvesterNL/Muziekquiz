@@ -30,7 +30,7 @@ if ($result) {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['action']) && $_POST['action'] == 'usernamecreate') {
-        $updateSql = "UPDATE lobby SET first = 0, eigenaar = '{$_POST['username']}' WHERE randomid = '$lobbycode'";
+        $updateSql = "UPDATE lobby SET first = 0, active = 1, eigenaar = '{$_POST['username']}' WHERE randomid = '$lobbycode'";
         mysqli_query($con, $updateSql);
         header("Location: lobby");
     }

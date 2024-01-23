@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="header">
             <video class="logo animate__animated animate__heartBeat" autoplay loop muted>
                 <source class="logo" src="MEDIA/HOME/logo.webm" type="video/webm">
-                <!-- <img class="logo" src="MEDIA/HOME/logo.png" alt="logo"> -->
+                <source class="logo" src="MEDIA/HOME/logo.mov" type="video/mov">
             </video>
         </div>
         <div class="lp">
@@ -62,13 +62,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
         <img class="arrow animate__animated" src="MEDIA/HOME/arrow.png" alt="arrow">
         <div class="lobbyselector hide">
+            <div class="content">
             <span class="close-button">&times;</span>
             <form method="POST">
                 <input type="hidden" name="action" value="create">
                 <button class="button-39" role="button">Maak een Lobby</button>
             </form>
             <h1 class="lobbytitle">Kies of maak een lobby</h1>
+            <?php
+            $sql = "SELECT * FROM lobby WHERE active = 1";
+            $result = mysqli_query($con, $sql);
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    // Voor elke actieve lobby, toon lobby informatie en een join knop
+                    echo '<div class="lobby">';
+                    echo '<h2>Lobby: ' . htmlspecialchars($row['eigenaar']) . '</h2>';
+                    echo '<p>Lobbycode: ' . htmlspecialchars($row['randomid']) . '</p>';
+                    echo '<a href="joinLobby.php?lobbycode=' . urlencode($row['randomid']) . '" class="join-button">Join</a>';
+                    echo '</div>';
+                }
+            } else {
+                echo '<p>Geen actieve lobbies gevonden.</p>';
+            }
+
+            echo '</div>';
+?>
         </div>
+    </div>
         <div class="bottom-links">
             <a href="./HTML/about.html">Informatie</a>
             <span>&centerdot;</span>
