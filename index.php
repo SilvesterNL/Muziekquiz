@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($result) {
             // Lobby Creatie gelukt
             $_SESSION['lobbycode'] = $lobbycode;
-            header("Location: PHP/lobby.php");
+            header("Location: PHP/lobby");
         } else {
             echo "<script>Swal.fire({icon: 'error',title: 'Oops...',text: 'Er is iets misgegaan!'});</script>";
         }
@@ -52,7 +52,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="container">
         <div class="background"></div>
         <div class="header">
-            <img class="logo animate__animated animate__heartBeat" src="MEDIA/HOME/LOGO.png" alt="logo">
+            <video class="logo animate__animated animate__heartBeat" autoplay loop muted>
+                <source class="logo" src="MEDIA/HOME/logo.webm" type="video/webm">
+                <!-- <img class="logo" src="MEDIA/HOME/logo.png" alt="logo"> -->
+            </video>
         </div>
         <div class="lp">
             <img class="lpplaat" src="MEDIA/HOME/LP.png" alt="lp">
@@ -75,6 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="JS/script.js"></script>
 
 </body>

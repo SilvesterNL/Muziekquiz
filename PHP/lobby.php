@@ -8,22 +8,33 @@ require "../REQUIRES/config.php";
 
 $lobbycode = $_SESSION['lobbycode'];
 
+if (!isset($_SESSION['lobbycode'])) {
+    header("Location: ../index?novalidcode");
+}
+
 $sql = "SELECT * FROM lobby WHERE randomid = '$lobbycode'";
 $result = mysqli_query($con, $sql);
 
 if ($result) {
     $row = mysqli_fetch_assoc($result);
-    if ($row['first'] == 1) {
-       
+    if ($row['first'] == 1) { 
+        echo '<script>document.addEventListener("DOMContentLoaded", function () { openusernamesel(); });</script>';
     } else {
         
     }
 } else {
-    header("Location: ../index.php");
+    header("Location: ../index");
 }
 
+// Inistalize game na dat gebruikersnaam is gekozen
 
-
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['action']) && $_POST['action'] == 'usernamecreate') {
+        $updateSql = "UPDATE lobby SET first = 0, eigenaar = '{$_POST['username']}' WHERE randomid = '$lobbycode'";
+        mysqli_query($con, $updateSql);
+        header("Location: lobby");
+    }
+};
 ?>
 
 
@@ -48,7 +59,9 @@ if ($result) {
     <div class="container">
         <div class="background"></div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="../JS/script.js"></script>
+    <script src="../JS/lobby.js"></script>
 </body>
 </html>
