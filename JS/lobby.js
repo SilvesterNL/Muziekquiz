@@ -14,7 +14,6 @@ function openusernamesel() {
             if (inputElement.value === '') {
                 Swal.showValidationMessage(`Naam mag niet leeg zijn`);
             } else {
-                // Submit the form
                 document.getElementById('usernameselect').submit();
                 return inputElement.value;
             }

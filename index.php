@@ -63,32 +63,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <img class="arrow animate__animated" src="MEDIA/HOME/arrow.png" alt="arrow">
         <div class="lobbyselector hide">
             <div class="content">
-            <span class="close-button">&times;</span>
-            <form method="POST">
-                <input type="hidden" name="action" value="create">
-                <button class="button-39" role="button">Maak een Lobby</button>
-            </form>
-            <h1 class="lobbytitle">Kies of maak een lobby</h1>
-            <?php
-            $sql = "SELECT * FROM lobby WHERE active = 1";
-            $result = mysqli_query($con, $sql);
-            if (mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    // Voor elke actieve lobby, toon lobby informatie en een join knop
-                    echo '<div class="lobby">';
-                    echo '<h2>Lobby: ' . htmlspecialchars($row['eigenaar']) . '</h2>';
-                    echo '<p>Lobbycode: ' . htmlspecialchars($row['randomid']) . '</p>';
-                    echo '<a href="joinLobby.php?lobbycode=' . urlencode($row['randomid']) . '" class="join-button">Join</a>';
-                    echo '</div>';
+                <span class="close-button">&times;</span>
+                <form method="POST">
+                    <input type="hidden" name="action" value="create">
+                    <button class="button-39" role="button">Maak een Lobby</button>
+                </form>
+                <h1 class="lobbytitle">Kies of maak een lobby</h1>
+                <?php
+                $sql = "SELECT * FROM lobby WHERE active = 1";
+                $result = mysqli_query($con, $sql);
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        // Voor elke actieve lobby, toon lobby informatie en een join knop
+                        echo '<div class="lobby">';
+                        echo '<h2>Lobby: ' . htmlspecialchars($row['eigenaar']) . '</h2>';
+                        echo '<p>Lobbycode: ' . htmlspecialchars($row['randomid']) . '</p>';
+                        echo '<a href="joinLobby.php?lobbycode=' . urlencode($row['randomid']) . '" class="join-button">Join</a>';
+                        echo '</div>';
+                    }
+                } else {
+                    echo '<p>Geen actieve lobbies gevonden.</p>';
                 }
-            } else {
-                echo '<p>Geen actieve lobbies gevonden.</p>';
-            }
 
-            echo '</div>';
-?>
+                echo '</div>';
+                ?>
+            </div>
         </div>
-    </div>
         <div class="bottom-links">
             <a href="./HTML/about.html">Informatie</a>
             <span>&centerdot;</span>
@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="JS/script.js"></script>
+    <script defer src="JS/script.js"></script>
 
 </body>
 

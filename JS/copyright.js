@@ -3,7 +3,7 @@ function playSoundAndNavigate(url) {
     sound.play();
     setTimeout(function() {
         window.location.href = url;
-    }, 150); 
+    }, 200); 
 }
 
 document.getElementById('backButton').addEventListener('click', function(event) {
