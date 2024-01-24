@@ -141,9 +141,16 @@ html {
       transform: translate(-50%, -50%);
       border-radius: 20px;
       padding: 20px;
-      box-sizing: border-box; /* This ensures padding is included in width */
+      box-sizing: border-box;
     }
 }
+
+@media (max-width: 1505px) {
+  .arrow {
+    display: none;
+  }
+}
+
 
 @media (max-width: 480px) {
   .header {
