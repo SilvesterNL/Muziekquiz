@@ -44,9 +44,14 @@ h2 {
     font-size: 1.3em;
 }
 
+h3 {
+    font-size: 1.4em;
+}
+
 p {
-    font-size: 1.2em;
+    font-size: 1.15em;
     line-height: 1.5;
+    font-weight: normal;
 }
 
 .bottom-links {

@@ -381,3 +381,23 @@ html {
 .button-39:focus-visible {
   box-shadow: none;
 }
+
+/* Aanpassingen voor de lobbyselector voor desktop */
+.lobbyselector .lobbytitle,
+.lobbyselector p {
+  text-align: center;
+}
+
+.lobbyselector .button-39 {
+  position: static;
+  margin-top: 4vh;
+  margin-left: 2.8vw;
+}
+
+/* Aanpassingen voor de lobbyselector voor mobiele apparaten */
+@media (max-width: 768px) {
+  .lobbyselector .button-39 {
+    margin-left: 15vw;
+  }
+
+}

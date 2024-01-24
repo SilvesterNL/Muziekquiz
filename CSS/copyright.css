@@ -43,12 +43,13 @@ h1 {
 }
 
 h2 {
-    font-size: 1.3em;
+    font-size: 1.4em;
 }
 
 p {
-    font-size: 1.2em;
+    font-size: 1em;
     line-height: 1.5;
+    font-weight: normal;
 }
 
 a {
