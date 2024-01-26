@@ -1,11 +1,7 @@
 <?php
-
 //Database initialiseren
-
 require "REQUIRES/config.php";
-
 // Checken welke post er word gedaan
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Controleer of de 'action' variabele bestaat en gelijk is aan 'create'
     if (isset($_POST['action']) && $_POST['action'] == 'create') {
@@ -20,17 +16,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             echo "<script>Swal.fire({icon: 'error',title: 'Oops...',text: 'Er is iets misgegaan!'});</script>";
         }
-
-
     }
 }
-
 ?>
-
-
 <!DOCTYPE html>
 <html lang="nl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
