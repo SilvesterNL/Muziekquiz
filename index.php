@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="hidden" name="action" value="create">
                     <button class="button-39" role="button">Maak een Lobby</button>
                 </form>
-                <h1 class="lobbytitle">Kies of maak een lobby</h1>
+                <h1 class="lobbytitle">Join een lobby</h1>
                 <?php
                 $sql = "SELECT * FROM lobby WHERE active = 1";
                 $result = mysqli_query($con, $sql);

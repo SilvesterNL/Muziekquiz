@@ -46,18 +46,22 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }, 1000);
   }
+  let isSelectorClosed = true;
   // Onclick geluid voor Plaat
   let lpImage = document.querySelector(".lpplaat");
   if (lpImage) {
     lpImage.addEventListener("click", function (event) {
       event.stopPropagation();
-      let clickSound = new Audio("MEDIA/SOUNDS/onclick.wav");
-      clickSound.volume = 0.5;
-      clickSound.play();
-      openlobbyselector();
+      if (isSelectorClosed) {
+        let clickSound = new Audio("MEDIA/SOUNDS/onclick.wav");
+        clickSound.volume = 0.8;
+        clickSound.play();
+        openLobbySelector();
+      }
     });
   }
 });
+
 
 // Muziek afspelen
 function playmusic() {
@@ -80,33 +84,40 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 //  Voor lobby selector
-function openlobbyselector() {
+function openLobbySelector() {
   let selector = document.querySelector(".lobbyselector");
   selector.classList.remove("hide");
   selector.style.animation = "zoominup 0.5s forwards";
-  document.querySelector('.close-button').addEventListener('click', closeLobbySelector);
+  isSelectorClosed = false; // Update de vlag
+  document.querySelector('.close-button').addEventListener('click', function() {
+    closeLobbySelector();
+  });
   window.addEventListener('click', outsideClickListener);
 }
 
+// functie voor sluiten menu door buiten de div te klikken
 function outsideClickListener(event) {
   let selector = document.querySelector(".lobbyselector");
-  if (!selector.contains(event.target)) {
+  if (!selector.contains(event.target) && !isSelectorClosed) {
     closeLobbySelector();
-    window.removeEventListener('click', outsideClickListener); 
   }
 }
 
+// funcite voor sluiten menu
 function closeLobbySelector() {
-  let selector = document.querySelector(".lobbyselector");
-  selector.style.animation = 'zoomoutdown 0.5s forwards';
+  if (!isSelectorClosed) { // Controleer de vlag voordat je sluit
+    let selector = document.querySelector(".lobbyselector");
+    selector.style.animation = 'zoomoutdown 0.5s forwards';
 
-  let closeSound = new Audio("MEDIA/SOUNDS/onclose.wav");
-  closeSound.volume = 1;
-  closeSound.play();
-  
-  setTimeout(() => {
-    selector.classList.add("hide");
-  }, 500); 
+    let closeSound = new Audio("MEDIA/SOUNDS/onclose.wav");
+    closeSound.play();
+
+    setTimeout(() => {
+      selector.classList.add("hide");
+      isSelectorClosed = true; // Update de vlag
+      window.removeEventListener('click', outsideClickListener);
+    }, 150); 
+  }
 }
 
 // Voor footer - sounds
@@ -118,7 +129,7 @@ document.querySelectorAll('.bottom-links a').forEach(link => {
 
     setTimeout(() => {
       window.location.href = this.getAttribute('href');
-    }, 200);
+    }, 150);
   });
 })
 
