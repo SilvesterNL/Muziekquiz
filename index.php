@@ -1,20 +1,22 @@
 <?php
-//Database initialiseren
+// Database initialization
 require "REQUIRES/config.php";
-// Checken welke post er word gedaan
+
+// Check for POST request
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Controleer of de 'action' variabele bestaat en gelijk is aan 'create'
+    // Check if action to create a lobby exists
     if (isset($_POST['action']) && $_POST['action'] == 'create') {
-        // Lobby Creatie
+        // Lobby creation logic
         $lobbycode = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 6);
         $sql = "INSERT INTO lobby (randomid) VALUES ('$lobbycode')";
         $result = mysqli_query($con, $sql);
         if ($result) {
-            // Lobby Creatie gelukt
+            // Lobby creation successful
             $_SESSION['lobbycode'] = $lobbycode;
             header("Location: PHP/lobby");
             $_SESSION['creatinglobby'] = true;
         } else {
+            // Lobby creation failed
             echo "<script>Swal.fire({icon: 'error',title: 'Oops...',text: 'Er is iets misgegaan!'});</script>";
         }
     }
@@ -35,7 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="msapplication-TileColor" content="#603cba">
     <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-
     <title>Home - MuziekQuiz</title>
 </head>
 
@@ -44,8 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="background"></div>
         <div class="header">
             <video class="logo animate__animated animate__heartBeat" autoplay loop muted>
-                <source class="logo" src="MEDIA/HOME/logo.webm" type="video/webm">
-                <source class="logo" src="MEDIA/HOME/logo.mov" type="video/mov">
+                <source src="MEDIA/HOME/logo.webm" type="video/webm">
+                <source src="MEDIA/HOME/logo.mov" type="video/mov">
             </video>
         </div>
         <div class="lp">
@@ -60,24 +61,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <button class="button-39" role="button">Maak een Lobby</button>
                 </form>
                 <h1 class="lobbytitle">Join een lobby</h1>
-                <?php
-                $sql = "SELECT * FROM lobby WHERE active = 1";
-                $result = mysqli_query($con, $sql);
-                if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        // Voor elke actieve lobby, toon lobby informatie en een join knop
-                        echo '<div class="lobby">';
-                        echo '<h2>Lobby: ' . htmlspecialchars($row['eigenaar']) . '</h2>';
-                        echo '<p>Lobbycode: ' . htmlspecialchars($row['randomid']) . '</p>';
-                        echo '<a href="PHP/joinLobby?lobbycode=' . urlencode($row['randomid']) . '" class="join-button">Join</a>';
-                        echo '</div>';
+                <div class="lobbies">
+                    <?php
+                    $sql = "SELECT * FROM lobby WHERE active = 1";
+                    $result = mysqli_query($con, $sql);
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            // Display each active lobby with join button
+                            echo '<div class="lobby">';
+                            echo '<h2>Host: ' . htmlspecialchars($row['eigenaar']) . '</h2>';
+                            echo '<p>Lobbycode: ' . htmlspecialchars($row['randomid']) . '</p>';
+                            echo '<a href="joinLobby.php?lobbycode=' . urlencode($row['randomid']) . '" class="join-button">Join</a>';
+                            echo '</div>';
+                        }
+                    } else {
+                        echo '<p>Geen actieve lobbies gevonden.</p>';
                     }
-                } else {
-                    echo '<p>Geen actieve lobbies gevonden.</p>';
-                }
-
-                echo '</div>';
-                ?>
+                    ?>
+                </div>
             </div>
         </div>
         <div class="bottom-links">
@@ -91,7 +92,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script defer src="JS/script.js"></script>
-
 </body>
 
 </html>

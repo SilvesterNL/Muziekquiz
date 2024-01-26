@@ -1,4 +1,13 @@
 <?php
+// Disable PHP errors
+error_reporting(0);
+ini_set('display_errors', 0);
+// database connectie
+require "../REQUIRES/config.php";
+// ...
+
+
+
 // database connectie
 require "../REQUIRES/config.php";
 // checken of de sessie bestaat en of de lobby net is gemaakt. Zodat gebruiker gebruikers naam moet kiezen voor eigenaarschap
@@ -13,15 +22,6 @@ if ($_SESSION['creatinglobby'] == false || $_SESSION['joinedlobby'] == false) {
     $joinlobbycode = $_GET['lobbycode'];
 }
 
-$sql = "SELECT antusr FROM lobby WHERE randomid = '$joinlobbycode'";
-$result = mysqli_query($con, $sql);
-$row = mysqli_fetch_assoc($result);
-$antusrglobal = $row['antusr'];
-echo $antusrglobal;
-
-if ($antusrglobal > 4) {
-    header("Location: ../index?lobbyfull");
-}
 
 
 if ($_SESSION['creatinglobby'] == true) {

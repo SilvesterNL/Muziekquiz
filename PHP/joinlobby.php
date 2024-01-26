@@ -4,7 +4,14 @@ require "../REQUIRES/config.php";
 
 $lobbycode = $_GET['lobbycode'];
 
-if ($lobbycode == null) {
+$sql = "SELECT antusr FROM lobby WHERE randomid = '$lobbycode'";
+$result = mysqli_query($con, $sql);
+$row = mysqli_fetch_assoc($result);
+$antusrglobal = $row['antusr'];
+
+if ($antusrglobal > 4) {
+    header("Location: ../index?lobbyfull");
+} else if ($lobbycode == null) {
     header("Location: ../index");
 } else {
     echo '<script>document.addEventListener("DOMContentLoaded", function () { openusernamesel(); });</script>';

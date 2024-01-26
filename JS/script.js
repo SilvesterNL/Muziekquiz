@@ -89,7 +89,7 @@ function openLobbySelector() {
   selector.classList.remove("hide");
   selector.style.animation = "zoominup 0.5s forwards";
   isSelectorClosed = false; // Update de vlag
-  document.querySelector('.close-button').addEventListener('click', function() {
+  document.querySelector('.close-button').addEventListener('click', function () {
     closeLobbySelector();
   });
   window.addEventListener('click', outsideClickListener);
@@ -116,13 +116,13 @@ function closeLobbySelector() {
       selector.classList.add("hide");
       isSelectorClosed = true; // Update de vlag
       window.removeEventListener('click', outsideClickListener);
-    }, 150); 
+    }, 150);
   }
 }
 
 // Voor footer - sounds
 document.querySelectorAll('.bottom-links a').forEach(link => {
-  link.addEventListener('click', function(event) {
+  link.addEventListener('click', function (event) {
     event.preventDefault();
     let audio = new Audio("MEDIA/SOUNDS/footerButtons.wav");
     audio.play();
@@ -135,12 +135,31 @@ document.querySelectorAll('.bottom-links a').forEach(link => {
 
 $(document).ready(function () {
   setInterval(function () {
-      $( ".content" ).load(window.location.href + " .content" );
+    $(".content").load(window.location.href + " .content");
   }, 2500);
 });
 
-document.addEventListener('click', function(event) {
-    if (event.target.matches('.close-button')) {
-        closeLobbySelector();
-    }
+document.addEventListener('click', function (event) {
+  if (event.target.matches('.close-button')) {
+    closeLobbySelector();
+  }
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('lobbyfull')) {
+    Swal.fire({
+      position: "top-end",
+      icon: "error",
+      title: "De lobby zit vol",
+      text: "Probeer het later opnieuw of maak zelf een lobby!",
+      showConfirmButton: false,
+      timer: 2000
+    }).then(() => {
+      urlParams.delete('lobbyfull');
+      window.history.replaceState(null, null, "?" + urlParams.toString());
+    });
+  }
+});
+
