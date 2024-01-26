@@ -1,40 +1,78 @@
 <?php
-
 // database connectie
-
 require "../REQUIRES/config.php";
-
 // checken of de sessie bestaat en of de lobby net is gemaakt. Zodat gebruiker gebruikers naam moet kiezen voor eigenaarschap
-
 $lobbycode = $_SESSION['lobbycode'];
+$userid = $_SESSION['userid'];
 
 if (!isset($_SESSION['lobbycode'])) {
-    header("Location: ../index?novalidcode");
+    header("Location: ../index?novalidcode1");
 }
 
-$sql = "SELECT * FROM lobby WHERE randomid = '$lobbycode'";
+if ($_SESSION['creatinglobby'] == false || $_SESSION['joinedlobby'] == false) {
+    $joinlobbycode = $_GET['lobbycode'];
+}
+
+$sql = "SELECT antusr FROM lobby WHERE randomid = '$joinlobbycode'";
 $result = mysqli_query($con, $sql);
+$row = mysqli_fetch_assoc($result);
+$antusrglobal = $row['antusr'];
+echo $antusrglobal;
 
-if ($result) {
-    $row = mysqli_fetch_assoc($result);
-    if ($row['first'] == 1) { 
-        echo '<script>document.addEventListener("DOMContentLoaded", function () { openusernamesel(); });</script>';
-    } else {
-        
-    }
-} else {
-    header("Location: ../index");
+if ($antusrglobal > 4) {
+    header("Location: ../index?lobbyfull");
 }
 
-// Inistalize game na dat gebruikersnaam is gekozen
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['action']) && $_POST['action'] == 'usernamecreate') {
-        $updateSql = "UPDATE lobby SET first = 0, active = 1, eigenaar = '{$_POST['username']}' WHERE randomid = '$lobbycode'";
-        mysqli_query($con, $updateSql);
-        header("Location: lobby");
+if ($_SESSION['creatinglobby'] == true) {
+    $sql = "SELECT * FROM lobby WHERE randomid = '$lobbycode'";
+    $result = mysqli_query($con, $sql);
+    if ($result) {
+        $row = mysqli_fetch_assoc($result);
+        if ($row['first'] == 1) { 
+            echo '<script>document.addEventListener("DOMContentLoaded", function () { openusernamesel(); });</script>';
+        } else {
+            
+        }
+    } else {
+        header("Location: ../index");
     }
-};
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if (isset($_POST['action']) && $_POST['action'] == 'usernamecreate') {
+            $updateSql = "UPDATE lobby SET first = 0, active = 1, eigenaar = '{$_POST['username']}' WHERE randomid = '$lobbycode'";
+            mysqli_query($con, $updateSql);
+            $insertSql = "INSERT INTO users (username, lobbycode) VALUES (?, ?)";
+            $stmt = mysqli_prepare($con, $insertSql);
+            mysqli_stmt_bind_param($stmt, "ss", $_POST['username'], $lobbycode);
+            mysqli_stmt_execute($stmt);
+            $_SESSION["userid"] = mysqli_insert_id($con);
+            $_SESSION['creatinglobby'] = false;
+            $_SESSION['eigenaar'] = true;
+            header("Location: lobby?lobbycode=$lobbycode");
+            $joinlobbycode = $_GET['lobbycode'];
+            
+        }
+    };
+} else if (!isset($joinlobbycode)) {
+    $removeuser = "DELETE FROM users WHERE id = '$userid'";
+    mysqli_query($con, $removeuser);
+    header("Location: ../index?novalidcode2");    
+} else if ($_SESSION['joinedlobby'] == true) {
+    $sql = "SELECT antusr FROM lobby WHERE randomid = '$joinlobbycode'";
+    $result = mysqli_query($con, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $antusr = $row['antusr'];
+    $sql = "UPDATE lobby SET antusr = $antusr + 1 WHERE randomid = '$joinlobbycode'";
+    mysqli_query($con, $sql);
+    $_SESSION['joinedlobby'] = false;
+    $_SESSION['joinedlobbycode'] = $joinlobbycode;
+    header ("Location: lobby?lobbycode=$joinlobbycode");
+
+}
+
+
+
+
 ?>
 
 

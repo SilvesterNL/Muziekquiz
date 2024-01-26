@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Lobby Creatie gelukt
             $_SESSION['lobbycode'] = $lobbycode;
             header("Location: PHP/lobby");
+            $_SESSION['creatinglobby'] = true;
         } else {
             echo "<script>Swal.fire({icon: 'error',title: 'Oops...',text: 'Er is iets misgegaan!'});</script>";
         }
@@ -68,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         echo '<div class="lobby">';
                         echo '<h2>Lobby: ' . htmlspecialchars($row['eigenaar']) . '</h2>';
                         echo '<p>Lobbycode: ' . htmlspecialchars($row['randomid']) . '</p>';
-                        echo '<a href="joinLobby.php?lobbycode=' . urlencode($row['randomid']) . '" class="join-button">Join</a>';
+                        echo '<a href="PHP/joinLobby?lobbycode=' . urlencode($row['randomid']) . '" class="join-button">Join</a>';
                         echo '</div>';
                     }
                 } else {

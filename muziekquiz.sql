@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Gegenereerd op: 26 jan 2024 om 10:36
+-- Gegenereerd op: 26 jan 2024 om 12:25
 -- Serverversie: 10.4.28-MariaDB
 -- PHP-versie: 8.2.4
 
@@ -34,7 +34,21 @@ CREATE TABLE `lobby` (
   `cat` varchar(255) DEFAULT NULL,
   `first` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1 = Lobby net gemaakt. 2 = Naam ingevoerd lobby active',
   `active` tinyint(1) NOT NULL DEFAULT 0,
+  `antusr` int(1) NOT NULL DEFAULT 1,
   `lastactive` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `lobbycode` varchar(255) NOT NULL,
+  `score` int(20) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -48,6 +62,12 @@ ALTER TABLE `lobby`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexen voor tabel `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT voor geëxporteerde tabellen
 --
 
@@ -55,7 +75,13 @@ ALTER TABLE `lobby`
 -- AUTO_INCREMENT voor een tabel `lobby`
 --
 ALTER TABLE `lobby`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+
+--
+-- AUTO_INCREMENT voor een tabel `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
