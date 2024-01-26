@@ -4,12 +4,7 @@ error_reporting(0);
 ini_set('display_errors', 0);
 // database connectie
 require "../REQUIRES/config.php";
-// ...
 
-
-
-// database connectie
-require "../REQUIRES/config.php";
 // checken of de sessie bestaat en of de lobby net is gemaakt. Zodat gebruiker gebruikers naam moet kiezen voor eigenaarschap
 $lobbycode = $_SESSION['lobbycode'];
 $userid = $_SESSION['userid'];

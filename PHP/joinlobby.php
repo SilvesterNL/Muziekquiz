@@ -8,8 +8,9 @@ $sql = "SELECT antusr FROM lobby WHERE randomid = '$lobbycode'";
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_assoc($result);
 $antusrglobal = $row['antusr'];
+echo $antusrglobal;
 
-if ($antusrglobal > 4) {
+if ($antusrglobal > 3) {
     header("Location: ../index?lobbyfull");
 } else if ($lobbycode == null) {
     header("Location: ../index");
