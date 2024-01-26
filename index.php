@@ -1,14 +1,5 @@
 <?php
-<<<<<<< Updated upstream
-//Database initialiseren
 require "REQUIRES/config.php";
-// Checken welke post er word gedaan
-=======
-// Database initialization
-require "REQUIRES/config.php";
-
-// Check for POST request
->>>>>>> Stashed changes
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Check if action to create a lobby exists
     if (isset($_POST['action']) && $_POST['action'] == 'create') {
@@ -28,15 +19,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Test jou muziek kennis met deze leuke MuziekQuiz game!" />
     <link rel="stylesheet" href="CSS/style.css">
     <link rel="shortcut icon" href="MEDIA/FAVICONS/favicon.png" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="180x180" href="MEDIA/FAVICONS/apple-touch-icon.png">
@@ -71,19 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <button class="button-39" role="button">Maak een Lobby</button>
                 </form>
                 <h1 class="lobbytitle">Join een lobby</h1>
-<<<<<<< Updated upstream
-                <?php
-                $sql = "SELECT * FROM lobby WHERE active = 1";
-                $result = mysqli_query($con, $sql);
-                if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        // Voor elke actieve lobby, toon lobby informatie en een join knop
-                        echo '<div class="lobby">';
-                        echo '<h2>Lobby: ' . htmlspecialchars($row['eigenaar']) . '</h2>';
-                        echo '<p>Lobbycode: ' . htmlspecialchars($row['randomid']) . '</p>';
-                        echo '<a href="PHP/joinLobby?lobbycode=' . urlencode($row['randomid']) . '" class="join-button">Join</a>';
-                        echo '</div>';
-=======
                 <div class="lobbies">
                     <?php
                     $sql = "SELECT * FROM lobby WHERE active = 1";
@@ -99,7 +76,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         }
                     } else {
                         echo '<p>Geen actieve lobbies gevonden.</p>';
->>>>>>> Stashed changes
                     }
                     ?>
                 </div>

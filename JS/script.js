@@ -116,11 +116,7 @@ function closeLobbySelector() {
       selector.classList.add("hide");
       isSelectorClosed = true; // Update de vlag
       window.removeEventListener('click', outsideClickListener);
-<<<<<<< Updated upstream
-    }, 150); 
-=======
     }, 200); 
->>>>>>> Stashed changes
   }
 }
 
