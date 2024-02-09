@@ -1,0 +1,29 @@
+.lobby-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.player-slot {
+  width: 150px;
+  height: 150px;
+  background-color: #e0e0e0; /* Lege slot achtergrond */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  transition: background-color 0.3s;
+}
+
+.player-slot span {
+  display: none; /* Verberg spelernaam standaard */
+}
+
+.player-slot.filled {
+  background-color: #76a5af; /* Gevulde slot achtergrond */
+}
+
+.player-slot.filled span {
+  display: block; /* Toon spelernaam wanneer gevuld */
+}

@@ -37,3 +37,39 @@ setInterval(() => {
         .then(data => console.log(data))
         .catch(error => console.error('Error:', error));
 }, 10000);
+
+function updatePlayerSlot(slotId, playerName) {
+  const slot = document.getElementById(slotId);
+  slot.classList.add('filled');
+  slot.querySelector('span').textContent = playerName;
+  slot.querySelector('span').style.display = 'block';
+}
+
+function updateLobby() {
+    $.ajax({
+        url: '../PHP/get_lobby_info.php', // Zorg ervoor dat dit pad correct is
+        type: 'GET',
+        dataType: 'json', // Verwacht een JSON-respons
+        success: function(players) {
+            // Maak de bestaande lobby-inhoud leeg
+            $('.lobby-container').empty();
+
+            // Ga door elke speler en voeg deze toe aan de lobby-container
+            players.forEach(function(player, index) {
+                $('.lobby-container').append(
+                    $('<div>').addClass('player-slot' + (player ? ' filled' : '')).append(
+                        $('<span>').text(player ? player : 'Wachten op speler...')
+                    )
+                );
+            });
+        }
+    });
+}
+
+// Voer updateLobby eenmaal uit bij het laden van de pagina en daarna elke 2.5 seconden
+$(document).ready(function() {
+    updateLobby();
+    setInterval(updateLobby, 2500);
+});
+
+

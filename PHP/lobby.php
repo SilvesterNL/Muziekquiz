@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Disable PHP errors
 error_reporting(0);
 ini_set('display_errors', 0);
@@ -24,10 +25,10 @@ if ($_SESSION['creatinglobby'] == true) {
     $result = mysqli_query($con, $sql);
     if ($result) {
         $row = mysqli_fetch_assoc($result);
-        if ($row['first'] == 1) { 
+        if ($row['first'] == 1) {
             echo '<script>document.addEventListener("DOMContentLoaded", function () { openusernamesel(); });</script>';
         } else {
-            
+
         }
     } else {
         header("Location: ../index");
@@ -45,13 +46,14 @@ if ($_SESSION['creatinglobby'] == true) {
             $_SESSION['eigenaar'] = true;
             header("Location: lobby?lobbycode=$lobbycode");
             $joinlobbycode = $_GET['lobbycode'];
-            
+
         }
-    };
+    }
+    ;
 } else if (!isset($joinlobbycode)) {
     $removeuser = "DELETE FROM users WHERE id = '$userid'";
     mysqli_query($con, $removeuser);
-    header("Location: ../index?novalidcode2");    
+    header("Location: ../index?novalidcode2");
 } else if ($_SESSION['joinedlobby'] == true) {
     $sql = "SELECT antusr FROM lobby WHERE randomid = '$joinlobbycode'";
     $result = mysqli_query($con, $sql);
@@ -61,11 +63,20 @@ if ($_SESSION['creatinglobby'] == true) {
     mysqli_query($con, $sql);
     $_SESSION['joinedlobby'] = false;
     $_SESSION['joinedlobbycode'] = $joinlobbycode;
-    header ("Location: lobby?lobbycode=$joinlobbycode");
+    header("Location: lobby?lobbycode=$joinlobbycode");
 
 }
 
+$sql = "SELECT username FROM users WHERE lobbycode = ?";
+$stmt = mysqli_prepare($con, $sql);
+mysqli_stmt_bind_param($stmt, "s", $lobbycode);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 
+$players = [];
+while ($row = mysqli_fetch_assoc($result)) {
+    $players[] = $row['username'];
+}
 
 
 ?>
@@ -73,8 +84,9 @@ if ($_SESSION['creatinglobby'] == true) {
 
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../CSS/style.css">
     <link rel="shortcut icon" href="../MEDIA/FAVICONS/favicon.png" type="image/x-icon">
@@ -88,13 +100,25 @@ if ($_SESSION['creatinglobby'] == true) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <title>Lobby - MuziekQuiz</title>
 </head>
+
 <body>
     <div class="container">
         <div class="background"></div>
+        <div class="lobby-container">
+            <?php for ($i = 0; $i < 4; $i++): ?>
+                <div class="player-slot <?php echo isset($players[$i]) ? 'filled' : ''; ?>">
+                    <span>
+                        <?php echo isset($players[$i]) ? htmlspecialchars($players[$i]) : 'Wachten op speler...'; ?>
+                    </span>
+                </div>
+            <?php endfor; ?>
+        </div>
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="../JS/script.js"></script>
     <script src="../JS/lobby.js"></script>
 </body>
+
 </html>

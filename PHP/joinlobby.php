@@ -1,5 +1,4 @@
 <?php
-
 require "../REQUIRES/config.php";
 
 $lobbycode = $_GET['lobbycode'];
@@ -16,7 +15,7 @@ if ($antusrglobal > 3) {
 } else {
     echo '<script>document.addEventListener("DOMContentLoaded", function () { openusernamesel(); });</script>';
 }
-    
+
 if (isset($_POST['action']) && $_POST['action'] == 'usernamecreate') {
     $updateSql = "INSERT INTO users (username, lobbycode) VALUES (?, ?)";
     $stmt = mysqli_prepare($con, $updateSql);
@@ -24,6 +23,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'usernamecreate') {
     mysqli_stmt_execute($stmt);
     $_SESSION["userid"] = mysqli_insert_id($con);
     $_SESSION['joinedlobby'] = true;
+    $_SESSION['lobbycode'] = $lobbycode;
     header("Location: lobby?lobbycode=$lobbycode");
 }
 
@@ -33,9 +33,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'usernamecreate') {
 
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../CSS/style.css">
     <link rel="shortcut icon" href="../MEDIA/FAVICONS/favicon.png" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="180x180" href="../MEDIA/FAVICONS/apple-touch-icon.png">
@@ -48,6 +49,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'usernamecreate') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <title>Muziekquiz</title>
 </head>
+
 <body>
     <div class="container">
         <div class="background"></div>
@@ -57,4 +59,5 @@ if (isset($_POST['action']) && $_POST['action'] == 'usernamecreate') {
     <script src="../JS/script.js"></script>
     <script src="../JS/joinlobby.js"></script>
 </body>
+
 </html>
