@@ -133,11 +133,7 @@ document.querySelectorAll('.bottom-links a').forEach(link => {
   });
 })
 
-$(document).ready(function () {
-  setInterval(function () {
-    $(".content").load(window.location.href + " .content");
-  }, 2500);
-});
+
 
 document.addEventListener('click', function (event) {
   if (event.target.matches('.close-button')) {
