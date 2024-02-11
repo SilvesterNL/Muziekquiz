@@ -85,18 +85,7 @@ function updateLobbyUsers(users) {
     });
 }
 
-socket.onmessage = function (event) {
-    const data = JSON.parse(event.data);
-    if (data.action === 'lobbygemaakt') {
-        setupWebSocketHandlers();
-    } else {
-        console.log("Unhandled message action:", data.action);
-    }
-};
-
 
 socket.onerror = function (error) {
     console.error('WebSocket error:', error.message);
 };
-
-
