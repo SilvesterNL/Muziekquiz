@@ -16,6 +16,11 @@ function leaveCurrentLobby(playerId) {
         if (lobbies[lobbyCode].length === 0) {
             delete lobbies[lobbyCode];
             console.log("lobby verwijderd met code: " + lobbyCode);
+            wss.clients.forEach(client => {
+                if (client.readyState === WebSocket.OPEN) {
+                    client.send(JSON.stringify({ action: 'lobbygemaakt' }));
+                }
+            });
         } else {
             updatePlayerCountInLobby(lobbyCode);
         }
@@ -43,7 +48,7 @@ function broadcastLobbyUsers(lobbyCode) {
 function broadcastActiveLobbies() {
     wss.clients.forEach(client => {
         if (client.readyState === WebSocket.OPEN) {
-            client.send(JSON.stringify({ action: 'lobbymaak', lobbies: lobbies }));
+            client.send(JSON.stringify({ action: 'activelobbies', lobbies: lobbies}));
         }
     });
 }
@@ -66,6 +71,11 @@ wss.on('connection', (ws) => {
                 updatePlayerCountInLobby(lobbyCode);
                 broadcastLobbyUsers(lobbyCode);
                 console.log("lobby gemaakt met code: " + lobbyCode);
+                wss.clients.forEach(client => {
+                    if (client.readyState === WebSocket.OPEN) {
+                        client.send(JSON.stringify({ action: 'lobbygemaakt' }));
+                    }
+                });
 
             }
         }

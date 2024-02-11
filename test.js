@@ -62,32 +62,33 @@ function setupWebSocketReconnection() {
 }
 
 // Set up WebSocket event handlers
+
+
 function setupWebSocketHandlers() {
-    socket.onopen = function () {
-        setTimeout(function () {
-            socket.send(JSON.stringify({ action: 'requestActiveLobbies' }));
-            console.log("Verzoek verzonden na timeout.");
-        }, 1000); // Vertraging in milliseconden
-    };
-    // Aanname: setupWebSocketReconnection wordt op een andere manier geïmplementeerd
-    setupWebSocketReconnection();
-}
+    socket.send(JSON.stringify({ action: 'requestActiveLobbies' }));
+};
 
 
-setupWebSocketHandlers();
+setTimeout(() => {
+    setupWebSocketHandlers();
+}, 2500);
+
 
 
 socket.onmessage = function (event) {
-    console.log("WebSocket message received");
     const data = JSON.parse(event.data);
-    if (data.action === 'lobbymaak') {
+    if (data.action === 'activelobbies') {
         const lobbyMessagesDiv = document.getElementById('lobbyMessages');
         lobbyMessagesDiv.innerHTML = '';
-        data.lobbies.forEach(lobby => {
-            lobbyMessagesDiv.innerHTML += `<p>Actieve lobby: ${lobby.lobbyCode} - Spelers: ${lobby.playerCount}</p>`;
-            console.log(lobby);
+        Object.keys(data.lobbies).forEach(key => {
+            const lobby = data.lobbies[key];
+            const playerCount = lobby.length; 
+            lobbyMessagesDiv.innerHTML += `<p>Actieve lobby: ${key} - Spelers: ${playerCount}</p>`;
         });
+    } else if (data.action === 'lobbygemaakt') {
+        setupWebSocketHandlers();
     } else {
         console.log("Unhandled message action:", data.action);
     }
 };
+
