@@ -83,7 +83,7 @@ socket.onmessage = function (event) {
         Object.keys(data.lobbies).forEach(key => {
             const lobby = data.lobbies[key];
             const playerCount = lobby.length; 
-            lobbyMessagesDiv.innerHTML += `<p>Actieve lobby: ${key} - Spelers: ${playerCount}</p>`;
+            lobbyMessagesDiv.innerHTML += `<p>Actieve lobby: ${key} - Spelers: ${playerCount}</p> <button onclick="joinlobby('${key}');">Join lobby</button>`;
         });
     } else if (data.action === 'lobbygemaakt') {
         setupWebSocketHandlers();
@@ -91,4 +91,32 @@ socket.onmessage = function (event) {
         console.log("Unhandled message action:", data.action);
     }
 };
+
+function openUsernameSeljoin(lobbycode) {
+    Swal.fire({
+        title: 'Kies een naam',
+        html: `<input type="text" id="swal-input1" class="swal2-input" placeholder="Jouw naam">`,
+        preConfirm: () => {
+            const inputElement = document.getElementById('swal-input1');
+            if (inputElement.value === '') {
+                Swal.showValidationMessage(`Naam mag niet leeg zijn`);
+            } else {
+                getintolobby(inputElement.value, lobbycode);
+            }
+        }
+    });
+}
+
+
+function joinlobby(lobbycode) {
+    openUsernameSeljoin(lobbycode);
+}
+
+
+function getintolobby(username, lobbycode) {
+    sessionStorage.setItem('username', username);
+    sessionStorage.setItem('lobbyCode', lobbycode);
+    socket.send(JSON.stringify({ action: 'joinLobby', username, lobbyCode: null }));
+    window.location.href = 'PHP/lobby.html';
+}
 

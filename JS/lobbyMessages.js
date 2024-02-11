@@ -7,7 +7,7 @@ function starta() {
     if (socket.readyState === WebSocket.OPEN) {
         const lobbyCode = sessionStorage.getItem('lobbyCode');
         if (!lobbyCode) {
-            window.location.href = 'index.html'; // Terug naar hoofdpagina als er geen lobbyCode is
+            window.location.href = '../index.html'; // Terug naar hoofdpagina als er geen lobbyCode is
         } else {
             displayLobbyInfo(lobbyCode);
             joinLobby(lobbyCode);
@@ -85,7 +85,18 @@ function updateLobbyUsers(users) {
     });
 }
 
+socket.onmessage = function (event) {
+    const data = JSON.parse(event.data);
+    if (data.action === 'lobbygemaakt') {
+        setupWebSocketHandlers();
+    } else {
+        console.log("Unhandled message action:", data.action);
+    }
+};
+
 
 socket.onerror = function (error) {
     console.error('WebSocket error:', error.message);
 };
+
+
