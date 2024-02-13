@@ -12,7 +12,8 @@ function leaveCurrentLobby(playerId) {
     if (players[playerId] && lobbies[players[playerId]]) {
         const lobbyCode = players[playerId];
         lobbies[lobbyCode] = lobbies[lobbyCode].filter(player => player.playerId !== playerId);
-
+        console.log("speler verlaten lobby: " + playerId);
+        broadcastLobbyUsers(lobbyCode);
         if (lobbies[lobbyCode].length === 0) {
             delete lobbies[lobbyCode];
             console.log("lobby verwijderd met code: " + lobbyCode);
@@ -48,7 +49,7 @@ function broadcastLobbyUsers(lobbyCode) {
 function broadcastActiveLobbies() {
     wss.clients.forEach(client => {
         if (client.readyState === WebSocket.OPEN) {
-            client.send(JSON.stringify({ action: 'activelobbies', lobbies: lobbies}));
+            client.send(JSON.stringify({ action: 'activelobbies', lobbies: lobbies }));
         }
     });
 }
