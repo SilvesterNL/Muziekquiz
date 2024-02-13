@@ -47,12 +47,23 @@ function broadcastLobbyUsers(lobbyCode) {
 }
 
 function broadcastActiveLobbies() {
+    const simplifiedLobbies = Object.fromEntries(
+        Object.entries(lobbies).map(([lobbyCode, players]) => [
+            lobbyCode,
+            players.map(player => ({
+                playerId: player.playerId,
+                username: player.username,
+            })),
+        ])
+    );
+
     wss.clients.forEach(client => {
         if (client.readyState === WebSocket.OPEN) {
-            client.send(JSON.stringify({ action: 'activelobbies', lobbies: lobbies }));
+            client.send(JSON.stringify({ action: 'activelobbies', lobbies: simplifiedLobbies }));
         }
     });
 }
+
 
 
 wss.on('connection', (ws) => {
