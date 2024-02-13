@@ -1,4 +1,4 @@
-/* Basisstijlen en import */
+
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
 
 body,
@@ -10,7 +10,7 @@ html {
   overflow: hidden;
 }
 
-/* Hoofdcontainerstijl */
+
 .container {
   display: flex;
   flex-direction: column;
@@ -20,7 +20,7 @@ html {
   position: relative;
 }
 
-/* Achtergrond animatie */
+
 .background {
   animation: gradientAnimation 5s ease infinite;
   background: linear-gradient(270deg, #ad1fff, #c560ff);
@@ -58,7 +58,7 @@ html {
   }
 }
 
-/* LP plaat animatie en stijl */
+
 .lp {
   align-self: center;
   transition: 0.2s scale;
@@ -84,7 +84,7 @@ html {
   user-select: none;
 }
 
-/* Header en logo stijlen */
+
 .header {
   font-size: 3em;
   color: white;
@@ -178,7 +178,7 @@ html {
   }
 }
 
-/* Logo bewegingsanimatie (alleen voor desktop) */
+
 .header .logo {
   width: 424px;
   max-width: 100%;
@@ -188,7 +188,7 @@ html {
   transform: translateX(-50%);
 }
 
-/* Pijl animatie en stijlen */
+
 .arrow {
   width: 120px;
   position: absolute;
@@ -215,7 +215,7 @@ html {
   }
 }
 
-/* Responsive voor volledige pagina */
+
 @media (max-width: 768px) {
   .header {
     font-size: 1.5em;
@@ -250,7 +250,7 @@ html {
   }
 }
 
-/* Lobby selector CSS */
+
 .lobbyselector {
   position: absolute;
   top: 50%;
@@ -386,7 +386,7 @@ html {
   box-shadow: none;
 }
 
-/* Aanpassingen voor de lobbyselector voor desktop */
+
 .lobbyselector .lobbytitle,
 .lobbyselector p {
   text-align: center;
@@ -398,7 +398,7 @@ html {
   margin-left: 2.8vw;
 }
 
-/* Lobby Card Styling */
+
 .lobbies {
   display: flex;
   flex-wrap: wrap;
@@ -471,5 +471,130 @@ html {
     width: 80%;
     flex-direction: column; 
   }
+}
+
+#players {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
+}
+
+.player {
+    text-align: center;
+    margin: 0 30px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+}
+
+
+#player1 { background: #00FF3F; }
+#player2 { background: #35B5FF; }
+#player3 { background: #FF479C; }
+#player4 { background: #FFFB38; }
+
+
+
+.player img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid #000;
+    margin-bottom: 30px;
+}
+
+.player-name {
+    margin-bottom: 10px;
+}
+
+.player-img {
+  margin-bottom: 1vh;
+}
+
+.player-button {
+  margin-top: 10px;
+   width: 130px;
+ height: 40px;
+ font-size: 1.1em;
+ cursor: pointer;
+ background-color: #171717;
+ color: #fff;
+ border: none;
+ border-radius: 5px;
+ transition: all .4s;
+}
+
+.player-button:hover {
+   border-radius: 5px;
+ transform: translateY(-10px);
+ box-shadow: 0 7px 0 -2px #f85959,
+  0 15px 0 -4px #39a2db,
+  0 16px 10px -3px #39a2db;
+}
+
+
+.player-button:active{
+   transition: all 0.2s;
+ transform: translateY(-5px);
+ box-shadow: 0 2px 0 -2px #f85959,
+  0 8px 0 -4px #39a2db,
+  0 12px 10px -3px #39a2db;
+}
+
+.leave-button-container {
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+}
+
+
+.button-39 {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.player-name {
+    margin-top: 10px;
+    animation: colorShift 5s infinite alternate;
+}
+
+.lobby-info-container {
+    position: absolute;
+    top: 60px;
+    width: 197px;
+    left: 50%;
+    height: 56px;
+    line-height: 1.5;
+    text-align: center;
+    transform: translateX(-50%);
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 30px;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+}
+
+.lobby-info-container::before {
+  content: 'Lobby Code';
+  font-size: 15px;
+  line-height: 2;
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
+  background-color: white;
+  position: absolute;
+  top: -25px;
+  left: 25%;
+
+}
+
+@keyframes colorShift {
+    0% { border-color: #00ff3f; }
+    50% { border-color: #35b5ff; }
+    100% { border-color: #fffb38; }
+}
+
+#lobbyInfo {
+  color: black;
+  font-size: 40px;
 }
 

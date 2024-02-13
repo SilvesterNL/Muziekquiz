@@ -19,16 +19,46 @@
 
 <body onload="starta()">
     <div class="container">
+        <div class="leave-button-container">
+    <button onclick="window.location.href='../index.html'" class="button-39">Leave</button>
+    </div>
+<div class="lobby-info-container">
+    <div id="lobbyInfo">ABC123</div>
+</div>
+
         <div class="background"></div>
-        <div id="lobbyInfo" id="userList" class="lobby-info">
-            <!-- Lobby informatie en gebruikerslijst worden hier ingevuld door lobbyPage.js -->
+        <div id="players">
+    <div class="player" id="player1">
+        <p class="player-name">?</p>
+        <img class="player-img" src="../MEDIA/AVATARS/default.png" alt="Avatar 1">
+        <button class="player-button">Ready</button>
+    </div>
+    <div class="player" id="player2">
+        <p class="player-name">?</p>
+        <img class="player-img" src="./MEDIA/AVATARS/default.png" alt="Avatar 2">
+        <button class="player-button">Ready</button>
+    </div> 
+    <div class="player" id="player3">
+        <p class="player-name">?</p>
+        <img class="player-img" src="./MEDIA/AVATARS/default.png" alt="Avatar 3">
+        <button class="player-button">Ready</button>
+
+    </div>
+    <div class="player" id="player4">
+        <p class="player-name">?</p>
+        <img class="player-img" src="./MEDIA/AVATARS/default.png" alt="Avatar 4">
+        <button class="player-button">Ready</button>
         </div>
+    </div>
+</div>
 
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="../JS/script.js"></script>
     <script defer src="../JS/lobbyMessages.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 </body>
 
 </html>

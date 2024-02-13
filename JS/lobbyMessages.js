@@ -43,7 +43,7 @@ function joinLobby(lobbyCode) {
 }
 
 function displayLobbyInfo(lobbyCode) {
-    document.getElementById('lobbyInfo').innerHTML = `Lobby Code: ${lobbyCode}<br>Gebruikers in de lobby: <ul id="userList"></ul>`;
+    document.getElementById('lobbyInfo').innerHTML = `${lobbyCode}`;
 }
 
 socket.onmessage = function (event) {
@@ -76,14 +76,24 @@ socket.onmessage = function (event) {
 };
 
 function updateLobbyUsers(users) {
-    const userList = document.getElementById('userList');
-    userList.innerHTML = ''; // Wis de huidige lijst
-    users.forEach(username => {
-        const userItem = document.createElement('li');
-        userItem.textContent = username;
-        userList.appendChild(userItem);
-    });
+    // Update elke speler div met de gebruikersgegevens of met standaardwaarden
+    for (let i = 1; i <= 4; i++) {
+        const playerDiv = document.getElementById(`player${i}`);
+        const img = playerDiv.querySelector('img');
+        const p = playerDiv.querySelector('.player-name');
+
+        if (users[i - 1]) {
+            // Gebruik `i` om de avatar dynamisch te kiezen op basis van de spelerindex
+            img.src = `../MEDIA/AVATARS/avatar${i}.png`; // Dit kiest avatar1.png voor de eerste speler, avatar2.png voor de tweede, etc.
+            p.textContent = users[i - 1]; // Dit stelt de speler naam in
+        } else {
+            img.src = '../MEDIA/AVATARS/default.png'; // Terug naar de standaard avatar als er geen gebruiker is
+            p.textContent = '?';
+        }
+    }
 }
+
+
 
 
 socket.onerror = function (error) {

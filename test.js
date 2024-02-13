@@ -9,7 +9,7 @@ function checkWebSocketConnection() {
         socket.close();
         // Reinitialize the WebSocket connection
         socket = new WebSocket('ws://localhost:8080');
-        checkWebSocketConnection();
+        setTimeout(checkWebSocketConnection, 1000);
     }
 }
 
@@ -60,8 +60,6 @@ function setupWebSocketReconnection() {
         setupWebSocketHandlers();
     };
 }
-
-// Set up WebSocket event handlers
 
 
 function setupWebSocketHandlers() {

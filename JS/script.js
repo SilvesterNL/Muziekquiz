@@ -159,3 +159,19 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+function updateLobbyUsers(users) {
+    // Update elke speler div met de gebruikersgegevens of met standaardwaarden
+    for (let i = 1; i <= 4; i++) {
+        const playerDiv = document.getElementById(`player${i}`);
+        const img = playerDiv.querySelector('img');
+        const p = playerDiv.querySelector('.player-name');
+
+        if (users[i - 1]) {
+            img.src = './MEDIA/AVATARS/avatar1.png'; // Zet dit naar de daadwerkelijke avatar van de gebruiker
+            p.textContent = users[i - 1];
+        } else {
+            img.src = './MEDIA/AVATARS/default.png'; // Terug naar de standaard avatar als er geen gebruiker is
+            p.textContent = '?';
+        }
+    }
+}
