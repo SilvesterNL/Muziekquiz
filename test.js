@@ -4,12 +4,13 @@ function checkWebSocketConnection() {
     if (socket.readyState === WebSocket.OPEN) {
         console.log("WebSocket is open");
     } else {
+
         console.log("WebSocket is not open, attempting to reconnect...");
         // Close the previous socket connection before creating a new one
         socket.close();
         // Reinitialize the WebSocket connection
         socket = new WebSocket('ws://localhost:8080');
-        checkWebSocketConnection();
+        setTimeout(checkWebSocketConnection, 500);
     }
 }
 
@@ -82,7 +83,7 @@ socket.onmessage = function (event) {
         lobbyMessagesDiv.innerHTML = '';
         Object.keys(data.lobbies).forEach(key => {
             const lobby = data.lobbies[key];
-            const playerCount = lobby.length; 
+            const playerCount = lobby.length;
             lobbyMessagesDiv.innerHTML += `<p>Actieve lobby: ${key} - Spelers: ${playerCount}</p> <button onclick="joinlobby('${key}');">Join lobby</button>`;
         });
     } else if (data.action === 'lobbygemaakt') {
