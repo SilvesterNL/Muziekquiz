@@ -74,21 +74,30 @@ socket.onmessage = function (event) {
         // Voeg aanvullende cases toe voor andere acties, zoals 'userLeft' om een gebruiker te verwijderen uit de lijst
     }
 };
-
 function updateLobbyUsers(users) {
-    // Update elke speler div met de gebruikersgegevens of met standaardwaarden
+    const currentUsername = sessionStorage.getItem('username'); // Haal de huidige gebruikersnaam op
+
     for (let i = 1; i <= 4; i++) {
         const playerDiv = document.getElementById(`player${i}`);
         const img = playerDiv.querySelector('img');
         const p = playerDiv.querySelector('.player-name');
+        const readyButton = playerDiv.querySelector('.player-button'); // Selecteer de "Klaar" knop
 
         if (users[i - 1]) {
-            // Gebruik `i` om de avatar dynamisch te kiezen op basis van de spelerindex
-            img.src = `../MEDIA/AVATARS/avatar${i}.png`; // Dit kiest avatar1.png voor de eerste speler, avatar2.png voor de tweede, etc.
-            p.textContent = users[i - 1]; // Dit stelt de speler naam in
+            img.src = `../MEDIA/AVATARS/avatar${i}.webp`; // Dit kiest dynamisch de avatar
+            p.textContent = users[i - 1];
+
+            // Toon de "Klaar" knop alleen als de huidige gebruiker de speler is
+            if (users[i - 1] === currentUsername) {
+                readyButton.style.display = 'block'; // Of een andere stijl om de knop zichtbaar te maken
+            } else {
+                readyButton.style.display = 'none'; // Verberg de knop voor andere spelers
+            }
+
         } else {
-            img.src = '../MEDIA/AVATARS/default.png'; // Terug naar de standaard avatar als er geen gebruiker is
-            p.textContent = '?';
+            img.src = '../MEDIA/AVATARS/default.webp';
+            p.textContent = '???';
+            readyButton.style.display = 'none'; // Verberg de knop als er geen gebruiker is
         }
     }
 }
