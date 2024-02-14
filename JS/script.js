@@ -98,10 +98,16 @@ function openLobbySelector() {
 // functie voor sluiten menu door buiten de div te klikken
 function outsideClickListener(event) {
   let selector = document.querySelector(".lobbyselector");
-  if (!selector.contains(event.target) && !isSelectorClosed) {
+  let lobbyMessages = document.getElementById("lobbyMessages");
+  let swalPopup = document.querySelector(".swal2-popup");
+
+  // Controleer of de klik buiten de selector, niet binnen de lobbyMessages en niet binnen een SweetAlert popup plaatsvond
+  if (!selector.contains(event.target) && !lobbyMessages.contains(event.target) && !(swalPopup && swalPopup.contains(event.target)) && !isSelectorClosed) {
     closeLobbySelector();
   }
 }
+
+
 
 // funcite voor sluiten menu
 function closeLobbySelector() {

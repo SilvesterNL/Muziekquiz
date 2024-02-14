@@ -33,14 +33,24 @@ document.getElementById('joinLobbyButton').addEventListener('click', () => {
 function openUsernameSel() {
     Swal.fire({
         title: 'Kies een naam',
-        html: `<input type="text" id="swal-input1" class="swal2-input" placeholder="Jouw naam">`,
+        html: '<input type="text" id="swal-input1" class="swal2-input" placeholder="Jouw naam">',
+        showCancelButton: true,
+        confirmButtonText: 'OK',
+        focusConfirm: false,
+        didOpen: () => {
+            document.getElementById('swal-input1').focus(); // Focus op het invoerveld
+        },
         preConfirm: () => {
             const inputElement = document.getElementById('swal-input1');
-            if (inputElement.value === '') {
+            if (!inputElement.value) {
                 Swal.showValidationMessage(`Naam mag niet leeg zijn`);
             } else {
-                startLobby(inputElement.value);
+                return inputElement.value; // Retourneer de waarde voor gebruik in then((result))
             }
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            startLobby(result.value); // Gebruik de ingevoerde waarde na bevestiging
         }
     });
 }
@@ -94,14 +104,24 @@ socket.onmessage = function (event) {
 function openUsernameSeljoin(lobbycode) {
     Swal.fire({
         title: 'Kies een naam',
-        html: `<input type="text" id="swal-input1" class="swal2-input" placeholder="Jouw naam">`,
+        html: '<input type="text" id="swal-input1" class="swal2-input" placeholder="Jouw naam">',
+        showCancelButton: true,
+        confirmButtonText: 'OK',
+        focusConfirm: false,
+        didOpen: () => {
+            document.getElementById('swal-input1').focus(); // Focus op het invoerveld
+        },
         preConfirm: () => {
             const inputElement = document.getElementById('swal-input1');
-            if (inputElement.value === '') {
+            if (!inputElement.value) {
                 Swal.showValidationMessage(`Naam mag niet leeg zijn`);
             } else {
-                getintolobby(inputElement.value, lobbycode);
+                return inputElement.value; // Retourneer de waarde voor gebruik in then((result))
             }
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            getintolobby(result.value, lobbycode); // Gebruik de ingevoerde waarde na bevestiging
         }
     });
 }
