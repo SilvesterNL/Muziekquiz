@@ -4,7 +4,7 @@ function openusernamesel() {
         html: `
             <form id="usernameselect" method="POST">
                 <input type="hidden" name="action" value="usernamecreate">
-                <input name="username" required id="swal-input1" class="swal2-input">
+                <input maxlength="10" name="username" required id="swal-input1" class="swal2-input">
             </form>`,
         focusConfirm: false,
         allowEscapeKey: false,

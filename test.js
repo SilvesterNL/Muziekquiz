@@ -33,7 +33,7 @@ document.getElementById('joinLobbyButton').addEventListener('click', () => {
 function openUsernameSel() {
     Swal.fire({
         title: 'Kies een naam',
-        html: '<input type="text" id="swal-input1" class="swal2-input" placeholder="Jouw naam">',
+        html: '<input maxlength="10" type="text" id="swal-input1" class="swal2-input" placeholder="Jouw naam">',
         showCancelButton: true,
         confirmButtonText: 'OK',
         focusConfirm: false,
@@ -104,7 +104,7 @@ socket.onmessage = function (event) {
 function openUsernameSeljoin(lobbycode) {
     Swal.fire({
         title: 'Kies een naam',
-        html: '<input type="text" id="swal-input1" class="swal2-input" placeholder="Jouw naam">',
+        html: '<input maxlength="10" type="text" id="swal-input1" class="swal2-input" placeholder="Jouw naam">',
         showCancelButton: true,
         confirmButtonText: 'OK',
         focusConfirm: false,
