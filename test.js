@@ -42,10 +42,13 @@ function openUsernameSel() {
         },
         preConfirm: () => {
             const inputElement = document.getElementById('swal-input1');
-            if (!inputElement.value) {
+            const username = inputElement.value.trim(); // Trim to remove any whitespace
+            if (!username) {
                 Swal.showValidationMessage(`Naam mag niet leeg zijn`);
+            } else if (username.length > 10) { // Enforce the character limit
+                Swal.showValidationMessage(`Naam mag niet langer zijn dan 10 karakters`);
             } else {
-                return inputElement.value; // Retourneer de waarde voor gebruik in then((result))
+                return username; // Retourneer de waarde voor gebruik in then((result))
             }
         }
     }).then((result) => {
