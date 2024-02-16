@@ -1,4 +1,4 @@
-const socket = new WebSocket('ws://localhost:8080');
+let socket = new WebSocket('ws://localhost:8080');
 
 let activeLobbies = [];
 
@@ -13,7 +13,7 @@ function starta() {
             joinLobby(lobbyCode);
         }
     } else {
-        const socket = new WebSocket('ws://localhost:8080');
+        socket = new WebSocket('ws://localhost:8080');
 
         function starta() {
             const lobbyCode = sessionStorage.getItem('lobbyCode');
