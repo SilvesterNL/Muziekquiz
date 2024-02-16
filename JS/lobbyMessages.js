@@ -3,38 +3,34 @@ let socket = new WebSocket('ws://localhost:8080');
 let activeLobbies = [];
 
 
+function checkWebSocketConnection() {
+    if (socket.readyState === WebSocket.OPEN) {
+        console.log("WebSocket is open");
+        setTimeout(() => {
+            starta();
+        }, 1500);
+    } else {
+        console.log("WebSocket is not open, attempting to reconnect...");
+        socket = new WebSocket('ws://localhost:8080');
+        setTimeout(checkWebSocketConnection, 500);
+    }
+}
+
+
+
+
 function starta() {
     if (socket.readyState === WebSocket.OPEN) {
         const lobbyCode = sessionStorage.getItem('lobbyCode');
         if (!lobbyCode) {
             window.location.href = '../index.html'; // Terug naar hoofdpagina als er geen lobbyCode is
         } else {
-            displayLobbyInfo(lobbyCode);
             joinLobby(lobbyCode);
+            displayLobbyInfo(lobbyCode);
+
         }
     } else {
-        socket = new WebSocket('ws://localhost:8080');
-
-        function starta() {
-            const lobbyCode = sessionStorage.getItem('lobbyCode');
-            if (!lobbyCode) {
-                window.location.href = 'index.html'; // Terug naar hoofdpagina als er geen lobbyCode is
-            } else {
-                displayLobbyInfo(lobbyCode);
-                joinLobby(lobbyCode);
-            }
-        }
-
-        function connectWithRetry() {
-            if (socket.readyState === WebSocket.OPEN) {
-                starta();
-            } else {
-                setTimeout(connectWithRetry, 1000); // Retry connection after 1 second
-            }
-        }
-
-        connectWithRetry();
-
+        checkWebSocketConnection();
     }
 }
 function joinLobby(lobbyCode) {
@@ -61,7 +57,6 @@ socket.onmessage = function (event) {
             }
             break;
         case 'userJoined':
-            // Voeg nieuwe gebruiker toe aan de lijst
             if (data.lobbyCode === sessionStorage.getItem('lobbyCode')) {
                 const userItem = document.createElement('li');
                 userItem.textContent = data.username;
@@ -70,6 +65,7 @@ socket.onmessage = function (event) {
             break;
         case 'lobbyUsers':
             updateLobbyUsers(data.users);
+            console.log("recieved");
             break;
         // Voeg aanvullende cases toe voor andere acties, zoals 'userLeft' om een gebruiker te verwijderen uit de lijst
     }
@@ -104,7 +100,3 @@ function updateLobbyUsers(users) {
 
 
 
-
-socket.onerror = function (error) {
-    console.error('WebSocket error:', error.message);
-};

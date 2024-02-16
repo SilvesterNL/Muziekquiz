@@ -40,9 +40,11 @@ function updatePlayerCountInLobby(lobbyCode) {
 function broadcastLobbyUsers(lobbyCode) {
     const usersInLobby = lobbies[lobbyCode].map(player => player.username);
     lobbies[lobbyCode].forEach(player => {
-        if (player.ws.readyState === WebSocket.OPEN) {
-            player.ws.send(JSON.stringify({ action: 'lobbyUsers', users: usersInLobby }));
-        }
+        wss.clients.forEach(client => {
+            if (client.readyState === WebSocket.OPEN) {
+                client.send(JSON.stringify({ action: 'lobbyUsers', users: usersInLobby }));
+            }
+        });
     });
 }
 
@@ -57,11 +59,7 @@ function broadcastActiveLobbies() {
         ])
     );
 
-    wss.clients.forEach(client => {
-        if (client.readyState === WebSocket.OPEN) {
-            client.send(JSON.stringify({ action: 'activelobbies', lobbies: simplifiedLobbies }));
-        }
-    });
+
 }
 
 
@@ -75,7 +73,6 @@ wss.on('connection', (ws) => {
 
         if (action === 'joinLobby') {
             leaveCurrentLobby(playerId);
-
             if (lobbyCode) {
                 if (!lobbies[lobbyCode]) lobbies[lobbyCode] = [];
                 lobbies[lobbyCode].push({ ws, playerId, username });
