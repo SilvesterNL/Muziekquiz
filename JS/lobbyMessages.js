@@ -6,9 +6,7 @@ let activeLobbies = [];
 function checkWebSocketConnection() {
     if (socket.readyState === WebSocket.OPEN) {
         console.log("WebSocket is open");
-        setTimeout(() => {
-            starta();
-        }, 1500);
+        starta();
     } else {
         console.log("WebSocket is not open, attempting to reconnect...");
         socket = new WebSocket('ws://localhost:8080');
