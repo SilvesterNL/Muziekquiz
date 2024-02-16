@@ -99,8 +99,6 @@ socket.onmessage = function (event) {
         });
     } else if (data.action === 'lobbygemaakt') {
         setupWebSocketHandlers();
-    } else {
-        console.log("Unhandled message action:", data.action);
     }
 };
 
