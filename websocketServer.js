@@ -39,10 +39,12 @@ function updatePlayerCountInLobby(lobbyCode) {
 
 function broadcastLobbyUsers(lobbyCode) {
     const usersInLobby = lobbies[lobbyCode].map(player => player.username);
+    const playerId = lobbies[lobbyCode].map(player => player.playerId);
+    
     lobbies[lobbyCode].forEach(player => {
         wss.clients.forEach(client => {
             if (client.readyState === WebSocket.OPEN) {
-                client.send(JSON.stringify({ action: 'lobbyUsers', users: usersInLobby }));
+                client.send(JSON.stringify({ action: 'lobbyUsers', users: usersInLobby, playerId}));
             }
         });
     });
