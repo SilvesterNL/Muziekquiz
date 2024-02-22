@@ -649,4 +649,25 @@ html {
         top: 0px;
         right: -65px; 
     }
+
+    .lobby-info-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: auto;
+      margin-bottom: 20v;
+      padding: 25px;
+      font-size: 20px;
+    }
+
+    .lobby-info-container::before {
+      content: 'Lobby Code';
+      position: static;
+      width: 100%;
+      text-align: center;
+    }  
 }
