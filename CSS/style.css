@@ -265,6 +265,13 @@ html {
   transform: translate(-50%, -50%) !important;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   transition: .2s all;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.lobbyselector::-webkit-scrollbar {
+  display: none;
 }
 
 .hide {
@@ -387,15 +394,78 @@ html {
   box-shadow: none;
 }
 
-
 .lobbyselector .lobbytitle,
-.lobbyselector p {
+.lobbyselector h1,
+.lobbyselector p,
+.lobbyselector h3 {
   text-align: center;
+  font-size: 28px;
+  color: #ad1fff;
 }
+
+.lobbyselector h1,
+.lobbyselector h3 {
+  padding-top: 8px;
+}
+
+.cssbuttons-io-button {
+  background: #a370f0;
+  color: white;
+  font-family: inherit;
+  padding: 0.35em;
+  padding-left: 1.2em;
+  font-size: 17px;
+  font-weight: 500;
+  border-radius: 0.9em;
+  border: none;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  box-shadow: inset 0 0 1.6em -0.6em #714da6;
+  overflow: hidden;
+  position: relative;
+  height: 2.8em;
+  padding-right: 3.3em;
+  cursor: pointer;
+}
+
+.cssbuttons-io-button .icon {
+  background: white;
+  margin-left: 1em;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.2em;
+  width: 2.2em;
+  border-radius: 0.7em;
+  box-shadow: 0.1em 0.1em 0.6em 0.2em #7b52b9;
+  right: 0.3em;
+  transition: all 0.3s;
+}
+
+.cssbuttons-io-button:hover .icon {
+  width: calc(100% - 0.6em);
+}
+
+.cssbuttons-io-button .icon svg {
+  width: 1.1em;
+  transition: transform 0.3s;
+  color: #7b52b9;
+}
+
+.cssbuttons-io-button:hover .icon svg {
+  transform: translateX(0.1em);
+}
+
+.cssbuttons-io-button:active .icon {
+  transform: scale(0.95);
+}
+
 
 .lobbyselector .button-39 {
   position: static;
-  margin-top: 4vh;
+  margin-bottom: 2.5vh;
   margin-left: 2.8vw;
 }
 
@@ -404,11 +474,21 @@ html {
   display: flex;
   flex-wrap: wrap;
   justify-content: center; 
-  gap: 20px; 
+  border: 2px solid transparent;
+  backdrop-filter: blur(50px);
+  background-color: rgb(236, 226, 226);
+  gap: 20px;
+  align-items: center; 
+  flex-direction: column;
   max-height: 100%; 
   overflow-y: auto; 
 }
 
+.hr-lobby {
+  width: 70%;
+	background-color: #fff;
+	border-top: 1px dashed #8c8b8b;
+}
 
 .lobby {
   flex: 0 1 calc(33.33% - 20px);
@@ -420,7 +500,7 @@ html {
   padding: 15px; 
   margin: 15x auto; 
   text-align: center; 
-  width: 60%; 
+  width: 100%; 
   max-width: 300px; 
   display: flex;
   flex-direction: column;
@@ -429,6 +509,7 @@ html {
   transition: all 0.3s ease-in;
   transform: scale(0.97);
   opacity: 80%;
+  margin-bottom: 20px;
 }
 
 .lobby:hover {
