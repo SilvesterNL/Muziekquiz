@@ -181,3 +181,23 @@ function updateLobbyUsers(users) {
         }
     }
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Geluid toevoegen aan de 'Nieuwe Lobby' knop
+  const newLobbyButton = document.getElementById('newLobbyButton'); // Veronderstelt dat je knop een id heeft van 'newLobbyButton'
+  if (newLobbyButton) {
+      newLobbyButton.addEventListener('click', function() {
+          const clickSound = new Audio("MEDIA/SOUNDS/onclick.wav");
+          clickSound.play();
+      });
+  }
+
+  // Geluid toevoegen aan de 'Join Lobby' knop
+  const joinLobbyButton = document.getElementById('joinLobbyButton'); // Je hebt al een element met dit ID
+  if (joinLobbyButton) {
+      joinLobbyButton.addEventListener('click', function() {
+          const clickSound = new Audio("MEDIA/SOUNDS/onclick.wav");
+          clickSound.play();
+      });
+  }
+});
