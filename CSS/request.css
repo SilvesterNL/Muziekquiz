@@ -1,4 +1,4 @@
-/* Basisstijlen en import */
+
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
 @import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css');
 
@@ -11,7 +11,7 @@ body, html {
   overflow-x: hidden;
 }
 
-/* Styling voor volledige pagina voor credits */
+
 #backButton {
   position: absolute;
   z-index: 9999;
@@ -31,19 +31,19 @@ body, html {
   background-color: #5a55a1;
 }
 
-.credits-header {
+.request-header {
   z-index: 1;
   text-align: center;
   margin-bottom: 1em;
 }
 
-.credits-header h1 {
+.request-header h1 {
   color: white;
   font-size: 3em;
   animation: animate__fadeInDown 1s;
 }
 
-.credits-container {
+.request-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -146,9 +146,9 @@ body, html {
   opacity: 100%;
 }
 
-/* Responsive code */
+
 @media (max-width: 768px) {
-  .credits-container {
+  .request-container {
     flex-direction: column;
     align-items: center;
     overflow-y: auto;
@@ -160,7 +160,7 @@ body, html {
     text-align: center;
   }
 
-  .credits-header h1 {
+  .request-header h1 {
     font-size: 2em;
   }
 
@@ -171,15 +171,6 @@ body, html {
     margin-top: 2.8vh;
     margin-bottom: 3vh;
   }
-
-  
-    .credits {
-      display: none;
-    }
-
-    .music-requests {
-      display: none;
-    }
 }
 
 @media (max-width: 480px) {
@@ -188,7 +179,7 @@ body, html {
     padding: 8px 16px;
   }
 
-  .credits-header h1 {
+  .request-header h1 {
     font-size: 1.8em;
   }
 
@@ -209,47 +200,129 @@ body, html {
   }
 }
 
-.credits-text {
+.request-text {
   font-size: 1.15em;
 }
 
-.credits {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
+.form-container {
+  width: 100%;
+  max-width: 725px;
+  margin: auto;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-container h1 {
+  margin-bottom: 0px;
   color: white;
-  z-index: 100; 
+  font-size: 4em; 
 }
 
-.credits a {
-  color: #ffc107; 
-  text-decoration: none; 
-  opacity: 80%;
-  transition: all 0.2s ease-in;
-  scale: 1;
+.form-container p {
+  color: rgb(231, 219, 219);
+  font-size: 1.7em; 
+  margin-bottom: 45px;
+  max-width: 80%;
 }
 
-.credits a:hover {
-  text-decoration: underline;
-  opacity: 100%;
+.form-container input[type="text"] {
+  margin-bottom: 15px;
+  padding: 12px; 
+  border-radius: 5px;
+  border: none;
+  font-size: 1.2em; 
+  width: 80%; 
 }
 
-.music-requests {
-  position: absolute;
-  bottom: 35px; 
-  left: 45px;
+.form-container button {
+  padding: 15px 30px; 
+  background: #603cba;
   color: white;
-  z-index: 100;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2em;
+  margin-top: 30px;
 }
 
-.music-requests a {
-  color: #ffc107; 
-  text-decoration: none; 
-  opacity: 80%;
-  transition: all 0.2s ease-in;
-  scale: 1;
+.form-container button:hover {
+  background: #5a55a1;
 }
 
-.music-requests a:hover {
-  opacity: 100%;
+.form-container input[type="text"]::placeholder {
+  text-align: center;
+  font-size: 1em;
+}
+
+
+@media (max-width: 768px) {
+  .form-container {
+    max-width: 90%;
+    padding: 30px;
+  }
+
+  .form-container h1 {
+    font-size: 2.5em;
+  }
+
+  .form-container p {
+    font-size: 1.4em;
+    margin-bottom: 30px;
+  }
+
+  .form-container input[type="text"] {
+    font-size: 1em;
+    padding: 10px;
+    width: 100%;
+  }
+
+  .form-container button {
+    font-size: 1em;
+    padding: 10px 20px;
+  }
+  
+}
+
+
+@media (max-width: 480px) {
+  .form-container h1 {
+    font-size: 2em;
+  }
+
+  .form-container p {
+    font-size: 1.2em;
+  }
+}
+
+.bottom-links {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-size: 16px;
+}
+
+.bottom-links a {
+  color: white;
+  text-decoration: none;
+  margin: 0 10px;
+  transition: color 0.3s;
+}
+
+.bottom-links a:hover {
+  color: #ffc107;
+}
+
+.bottom-links span {
+  color: white;
+  margin: 0 5px;
 }

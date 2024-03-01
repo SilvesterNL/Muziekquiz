@@ -762,6 +762,10 @@ html {
       display: none;
     }
 
+    .music-requests {
+      display: none;
+    }
+
     .lobby-info-container {
       display: flex;
       justify-content: center;
@@ -802,5 +806,25 @@ html {
 
 .credits a:hover {
   text-decoration: underline;
+  opacity: 100%;
+}
+
+.music-requests {
+  position: absolute;
+  bottom: 35px; 
+  left: 45px;
+  color: white;
+  z-index: 100;
+}
+
+.music-requests a {
+  color: #ffc107; 
+  text-decoration: none; 
+  opacity: 80%;
+  transition: all 0.2s ease-in;
+  scale: 1;
+}
+
+.music-requests a:hover {
   opacity: 100%;
 }
