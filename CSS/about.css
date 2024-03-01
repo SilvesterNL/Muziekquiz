@@ -135,3 +135,15 @@ p {
         font-size: 14px;
     }
 }
+
+.request {
+    color: rgb(233, 233, 208);
+    opacity: 85%;
+    text-decoration: none;
+    transition: all 0.2s ease-in;
+}
+
+.request:hover {
+    opacity: 100%;
+    color: beige;
+}

@@ -64,11 +64,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 // Muziek afspelen
+let audio = new Audio("MEDIA/HOME/homescreen.mp3");
+
 function playmusic() {
-  let audio = new Audio("MEDIA/HOME/homescreen.mp3");
   audio.loop = true;
   audio.volume = 0.02;
   audio.play();
+}
+
+function toggleMusic() {
+  if (audio.paused) {
+    audio.play();
+    document.getElementById('musicToggle').textContent = 'Pauzeer Muziek';
+  } else {
+    audio.pause();
+    document.getElementById('musicToggle').textContent = 'Speel Muziek';
+  }
 }
 
 // Animatie voor 'Arrow'
@@ -81,6 +92,14 @@ document.addEventListener("DOMContentLoaded", function () {
       arrow.classList.add("custom-heartbeat");
     }
   }, 2350);
+  document.getElementById('musicToggle').addEventListener('click', toggleMusic);
+  const musicButton = document.getElementById('musicToggle');
+  setInterval(() => {
+    musicButton.classList.add('animate__animated', 'animate__pulse');
+    musicButton.addEventListener('animationend', () => {
+      musicButton.classList.remove('animate__animated', 'animate__pulse');
+    }, { once: true }); 
+  }, 2325);
 });
 
 //  Voor lobby selector
