@@ -5,7 +5,7 @@
     height: 20px;
     border-radius: 50%;
     background-color: red;
-    box-shadow: 0 0 8px rgba(0,0,0,0.5);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
 }
 
 .player-ready .ready-indicator {

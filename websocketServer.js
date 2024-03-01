@@ -33,6 +33,8 @@ function updatePlayerCountInLobby(lobbyCode) {
     lobbies[lobbyCode].forEach(player => {
         if (player.ws.readyState === WebSocket.OPEN) {
             player.ws.send(JSON.stringify({ action: 'updatePlayerCount', playerCount }));
+
+
         }
     });
 }
@@ -40,11 +42,11 @@ function updatePlayerCountInLobby(lobbyCode) {
 function broadcastLobbyUsers(lobbyCode) {
     const usersInLobby = lobbies[lobbyCode].map(player => player.username);
     const playerId = lobbies[lobbyCode].map(player => player.playerId);
-    
+
     lobbies[lobbyCode].forEach(player => {
         wss.clients.forEach(client => {
             if (client.readyState === WebSocket.OPEN) {
-                client.send(JSON.stringify({ action: 'lobbyUsers', users: usersInLobby, playerId}));
+                client.send(JSON.stringify({ action: 'lobbyUsers', users: usersInLobby, playerId }));
             }
         });
     });
@@ -68,6 +70,9 @@ function broadcastActiveLobbies() {
 
 
 }
+
+
+
 
 
 
@@ -98,6 +103,9 @@ wss.on('connection', (ws) => {
         if (action === 'requestActiveLobbies') {
             broadcastActiveLobbies();
         }
+        if (action === 'readyPlayer') {
+            setPlayerReady(playerId, lobbyCode);
+        }
     });
 
     ws.on('close', () => {
@@ -106,3 +114,14 @@ wss.on('connection', (ws) => {
     });
 });
 
+let activeplayers = [];
+
+function setPlayerReady(playerId, lobbyCode) {
+    wss.clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+            activeplayers[lobbyCode] = [];
+            activeplayers[lobbyCode].push(playerId);
+            client.send(JSON.stringify({ action: 'playeractive', playerId: playerId }));
+        }
+    })
+};

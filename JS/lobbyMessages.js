@@ -1,15 +1,13 @@
-let socket = new WebSocket('ws://localhost:8080');
+let socket = new WebSocket('ws://10.10.60.50:8080');
 
 let activeLobbies = [];
 
 
 function checkWebSocketConnection() {
     if (socket.readyState === WebSocket.OPEN) {
-        console.log("WebSocket is open");
         starta();
     } else {
-        console.log("WebSocket is not open, attempting to reconnect...");
-        socket = new WebSocket('ws://localhost:8080');
+        socket = new WebSocket('ws://10.10.60.50:8080');
         setTimeout(checkWebSocketConnection, 500);
     }
 }
@@ -21,7 +19,7 @@ function starta() {
     if (socket.readyState === WebSocket.OPEN) {
         const lobbyCode = sessionStorage.getItem('lobbyCode');
         if (!lobbyCode) {
-            window.location.href = '../index.html'; 
+            window.location.href = '../index.html';
         } else {
             joinLobby(lobbyCode);
             displayLobbyInfo(lobbyCode);
@@ -46,10 +44,15 @@ socket.onmessage = function (event) {
         case 'lobbyUsers':
             updateLobbyUsers(data.users, data.playerId);
             break;
+        case 'playeractive':
+            updatereadyplayers(data.playerId);
+            break;
+        case 'playeractive':
+            console.log("test'");
+            break;
     }
 };
 function updateLobbyUsers(users, playerIds) {
-    console.log(users);
     const currentUsername = sessionStorage.getItem('username');
 
     for (let i = 1; i <= 4; i++) {
@@ -62,7 +65,8 @@ function updateLobbyUsers(users, playerIds) {
             img.src = `../MEDIA/AVATARS/avatar${i}.webp`;
             p.textContent = users[i - 1];
             // Assign corresponding player ID from the array to each player div
-            playerDiv.setAttribute('data-playerid', playerIds[i - 1]);
+            playerDiv.setAttribute('playerid', playerIds[i - 1]);
+            playerDiv.setAttribute('onclick', 'readyplayer("' + playerIds[i - 1] + '")');
 
             if (users[i - 1] === currentUsername) {
                 readyButton.style.display = 'block';
@@ -80,3 +84,14 @@ function updateLobbyUsers(users, playerIds) {
 
 
 
+
+function readyplayer(playerId) {
+    socket.send(JSON.stringify({ action: 'readyPlayer', playerId }));
+}
+
+function updatereadyplayers(playerId) {
+    const playerDiv = document.querySelector(`[playerid="${playerId}"]`);
+    const readyButton = playerDiv.querySelector('.ready-indicator');
+    readyButton.style.background = 'green';
+    console.log("player is ready");
+}
