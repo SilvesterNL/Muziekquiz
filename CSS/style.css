@@ -664,6 +664,14 @@ html {
     z-index: 10;
 }
 
+.version {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: rgb(96, 89, 89);
+    font-size: 0.8em;
+    z-index: 100;
+}
 
 .button-39 {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
@@ -788,6 +796,23 @@ html {
     }  
 }
 
+.short-text {
+    display: none;
+}
+
+
+@media (max-width: 768px) {
+   
+    .full-text {
+        display: none;
+    }
+
+   
+    .short-text {
+        display: inline;
+    }
+}
+
 .credits {
   position: absolute;
   bottom: 10px;
@@ -827,4 +852,37 @@ html {
 
 .music-requests a:hover {
   opacity: 100%;
+}
+
+.version {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: gray;
+    font-size: 0.8em;
+    z-index: 100;
+}
+
+
+@media (max-width: 768px) {
+   
+    .music-requests {
+        display: block;
+        position: absolute;
+        top: 35px;
+        left: 10px;
+        font-size: 0.8em;
+        color: white;
+    }
+
+    .music-requests a {
+        color: rgb(255, 255, 255);
+        text-decoration: none;
+        opacity: 100%;
+        transition: opacity 0.2s ease-in;
+    }
+
+    .music-requests a:hover {
+        opacity: 100%;
+    }
 }

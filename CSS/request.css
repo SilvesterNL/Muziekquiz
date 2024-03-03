@@ -267,7 +267,7 @@ body, html {
 
 @media (max-width: 768px) {
   .form-container {
-    max-width: 90%;
+    max-width: 80%;
     padding: 30px;
   }
 
@@ -292,7 +292,6 @@ body, html {
   }
   
 }
-
 
 @media (max-width: 480px) {
   .form-container h1 {
@@ -325,4 +324,13 @@ body, html {
 .bottom-links span {
   color: white;
   margin: 0 5px;
+}
+
+.submission-message {
+    color: green;
+    text-align: center;
+    font-size: 1.5em;
+    margin-top: 13vh;
+    opacity: 1;
+    transition: opacity 6s ease-in-out;
 }

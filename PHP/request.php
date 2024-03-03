@@ -1,21 +1,21 @@
 <?php
+$formSubmitted = false;
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Connect to the database
     $conn = new mysqli("localhost", "root", "", "muziekquiz");
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
+
     }
 
-    // Prepare the SQL statement to prevent SQL injection
     $stmt = $conn->prepare("INSERT INTO music_requests (youtube_link, artist_name, song_title) VALUES (?, ?, ?)");
     $stmt->bind_param("sss", $_POST['youtube_link'], $_POST['artist_name'], $_POST['song_title']);
 
-    // Execute the statement and close connections
     $stmt->execute();
     $stmt->close();
     $conn->close();
 
-    echo "<script>alert('Aanvraag succesvol ingediend! Als deze word goedgekeurd komt deze direct in de game!');</script>";
+    $formSubmitted = true;
 }
 ?>
 
@@ -36,6 +36,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <button id="backButton"><i class="fas fa-arrow-left"></i> Home</button>
+    <?php if ($formSubmitted): ?>
+        <div id="submissionMessage" class="submission-message">Verzoek gestuurd!</div>
+    <?php endif; ?>
     <div class="form-container animate__animated animate__fadeIn animate__slow">
         <h1>Muziek aanvragen</h1>
         <p>Geef hier <strong>correct</strong> een YouTube (audio) link aan die jij graag in de game zou willen zien!</p>

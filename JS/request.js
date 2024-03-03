@@ -17,3 +17,9 @@ document.querySelectorAll('.bottom-links a').forEach(function(link) {
       playSoundAndNavigate(this.getAttribute('href'));
   });
 });
+
+    if (document.getElementById("submissionMessage")) {
+        setTimeout(function() {
+            document.getElementById("submissionMessage").style.opacity = '0';
+        }, 4500);
+    }

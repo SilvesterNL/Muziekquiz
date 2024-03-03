@@ -61,7 +61,7 @@ function startLobby(username) {
     sessionStorage.setItem('username', username);
     sessionStorage.setItem('lobbyCode', lobbyCode);
     socket.send(JSON.stringify({ action: 'joinLobby', username, lobbyCode: null }));
-    window.location.href = 'PHP/lobby.html';
+    window.location.href = 'lobby.html';
 }
 
 // Reconnect WebSocket if disconnected
@@ -149,6 +149,6 @@ function getintolobby(username, lobbycode) {
     sessionStorage.setItem('username', username);
     sessionStorage.setItem('lobbyCode', lobbycode);
     socket.send(JSON.stringify({ action: 'joinLobby', username, lobbyCode: null }));
-    window.location.href = 'PHP/lobby.html';
+    window.location.href = 'lobby.html';
 }
 
