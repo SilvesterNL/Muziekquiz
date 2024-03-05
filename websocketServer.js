@@ -188,28 +188,20 @@ wss.on('connection', (ws) => {
         if (!global[vragenGehadKey]) global[vragenGehadKey] = 1;
         if (global[vragenGehadKey] <= 8) {
 
-            // Genereer een nieuwe quizvraag
-            let quizQuestion = generateQuizQuestion(music); // Aanname: 'music' is een beschikbare array
+
+            let quizQuestion = generateQuizQuestion(music); 
             console.log(global[songsgotKey]);
             if (!global[songsgotKey].includes(quizQuestion.songPath)) {
                 global[songsgotKey].push(quizQuestion.songPath);
-
-
-
-                // Verstuur de vraag naar alle clients in de lobby
                 wss.clients.forEach(client => {
-                    // Aanname: Je hebt een manier om te controleren of de client tot de juiste lobby behoort
                     if (client.readyState === WebSocket.OPEN) {
                         client.send(JSON.stringify({ action: 'nieuwevraag', quizQuestion, lobbycodevragen }));
                     }
                 });
-
-                // Reset de staat na een bepaalde tijd, zodat een nieuwe vraag gestuurd kan worden
                 setTimeout(() => {
-                    console.log('Reset vraagstatus voor lobby', lobbycodevragen);
                     global[vragenGehadKey]++;
-                    stuurvragen(lobbycodevragen); // Voorbeeld van hoe je de functie opnieuw zou kunnen aanroepen
-                }, 15000); // Pas de tijd aan op basis van je behoefte
+                    stuurvragen(lobbycodevragen); 
+                }, 15000); 
             } else {
                 quizQuestion = generateQuizQuestion(music);
                 stuurvragen(lobbycodevragen);
@@ -217,7 +209,7 @@ wss.on('connection', (ws) => {
         } else {
             wss.clients.forEach(client => {
                 if (client.readyState === WebSocket.OPEN) {
-                    client.send(JSON.stringify({ action: 'gameover' }));
+                    client.send(JSON.stringify({ action: 'gameover', lobbycode: lobbycodevragen, songsgot: global[songsgotKey] }));
                 }
             });
         }

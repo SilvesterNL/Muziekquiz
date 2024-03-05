@@ -113,16 +113,15 @@
 }
 
 .logoResize {
-    width: 50%;
-    max-width: 300px;
+    width: 40%;
+    max-width: 443px;
     display: block;
     margin: 0 auto;
-    transition: all 0.2s ease-in-out;
+    transition: all .5s!important;
 }
 
 .logoResize:hover {
     transform: scale(1.05);
-    opacity: 100%;
 }
 
 @media (max-width: 768px) {

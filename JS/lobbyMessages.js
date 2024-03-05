@@ -85,8 +85,13 @@ socket.onmessage = function (event) {
                 break;
             }
         case 'gameover':
+            if (data.lobbycode === lobbyCode) {
             alert("game over");
+            console.log(data.songsgot);
             break;
+            } else {
+                break;
+            }
         case 'nieuwevraag':
             if (data.lobbycodevragen === lobbyCode) {
                 startquiz(data.quizQuestion);
