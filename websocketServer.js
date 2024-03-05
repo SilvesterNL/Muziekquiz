@@ -55,6 +55,7 @@ function leaveCurrentLobby(playerId) {
 
 
 function updatePlayerCountInLobby(lobbyCode) {
+
     const playerCount = lobbies[lobbyCode].length;
     lobbies[lobbyCode].forEach(player => {
         if (player.ws.readyState === WebSocket.OPEN) {
@@ -68,6 +69,8 @@ function updatePlayerCountInLobby(lobbyCode) {
 function broadcastLobbyUsers(lobbyCode) {
     const usersInLobby = lobbies[lobbyCode].map(player => player.username);
     const playerId = lobbies[lobbyCode].map(player => player.playerId);
+
+
 
     lobbies[lobbyCode].forEach(player => {
         wss.clients.forEach(client => {
@@ -121,6 +124,7 @@ wss.on('connection', (ws) => {
                 wss.clients.forEach(client => {
                     if (client.readyState === WebSocket.OPEN) {
                         client.send(JSON.stringify({ action: 'lobbygemaakt' }));
+                        client.send(JSON.stringify({ action: 'playeridtje', playerId }));
                     }
                 });
 
@@ -136,45 +140,82 @@ wss.on('connection', (ws) => {
             updateplayercount(lobbyCode);
         }
         if (action === 'startGame') {
-            function generateQuizQuestion(musicArray) {
-                const correctAnswer = musicArray[Math.floor(Math.random() * musicArray.length)];
-                let wrongAnswers = musicArray.filter(track => track.id !== correctAnswer.id);
-                wrongAnswers = wrongAnswers.sort(() => 0.5 - Math.random()).slice(0, 3);
-                const options = [correctAnswer, ...wrongAnswers].sort(() => 0.5 - Math.random());
+            stuurvragen(lobbyCode);
+        }
 
-                return {
-                    question: `Welk nummer is dit?`,
-                    songPath: correctAnswer.song_path,
-                    options: options.map(option => `${option.title} - ${option.artist}`),
-                    correctAnswer: `${correctAnswer.title} - ${correctAnswer.artist}`
-                };
+        ws.on('close', () => {
+            leaveCurrentLobby(playerId);
+            delete players[playerId];
+        });
+    });
+
+    let activeplayers = [];
+
+    function setPlayerReady(playerId, lobbyCode) {
+        wss.clients.forEach(client => {
+            if (client.readyState === WebSocket.OPEN) {
+                activeplayers[lobbyCode] = [];
+                activeplayers[lobbyCode].push(playerId);
+                client.send(JSON.stringify({ action: 'playeractive', playerId: playerId }));
             }
+        })
+    };
 
-            // Voorbeeld van hoe je een quizvraag genereert
-            const quizQuestion = generateQuizQuestion(music);
-            console.log(quizQuestion);
-            wss.clients.forEach(client => {
-                if (client.readyState === WebSocket.OPEN) {
-                    client.send(JSON.stringify({ action: 'nieuwevraag', quizQuestion, lobbyCode }));
-                }
-            });
+
+
+    function generateQuizQuestion(musicArray) {
+        const correctAnswer = musicArray[Math.floor(Math.random() * musicArray.length)];
+        let wrongAnswers = musicArray.filter(track => track.id !== correctAnswer.id);
+        wrongAnswers = wrongAnswers.sort(() => 0.5 - Math.random()).slice(0, 3);
+        const options = [correctAnswer, ...wrongAnswers].sort(() => 0.5 - Math.random());
+
+        return {
+            question: `Welk nummer is dit?`,
+            songPath: correctAnswer.song_path,
+            options: options.map(option => `${option.title} - ${option.artist}`),
+            correctAnswer: `${correctAnswer.title} - ${correctAnswer.artist}`
+        };
+    }
+
+
+
+
+
+    function stuurvragen(lobbycodevragen) {
+        let songsgotKey = 'songsgot_' + lobbycodevragen;
+        if (!global[songsgotKey]) global[songsgotKey] = [];
+        let vragenGehadKey = `vragenGehad_${lobbycodevragen}`;
+        if (!global[vragenGehadKey]) global[vragenGehadKey] = 1;
+        if (global[vragenGehadKey] <= 8) {
+
+            // Genereer een nieuwe quizvraag
+            let quizQuestion = generateQuizQuestion(music); // Aanname: 'music' is een beschikbare array
+            console.log(global[songsgotKey]);
+            if (!global[songsgotKey].includes(quizQuestion.songPath)) {
+                global[songsgotKey].push(quizQuestion.songPath);
+
+
+
+                // Verstuur de vraag naar alle clients in de lobby
+                wss.clients.forEach(client => {
+                    // Aanname: Je hebt een manier om te controleren of de client tot de juiste lobby behoort
+                    if (client.readyState === WebSocket.OPEN) {
+                        client.send(JSON.stringify({ action: 'nieuwevraag', quizQuestion, lobbycodevragen }));
+                    }
+                });
+
+                // Reset de staat na een bepaalde tijd, zodat een nieuwe vraag gestuurd kan worden
+                setTimeout(() => {
+                    console.log('Reset vraagstatus voor lobby', lobbycodevragen);
+                    global[vragenGehadKey]++;
+                    stuurvragen(lobbycodevragen); // Voorbeeld van hoe je de functie opnieuw zou kunnen aanroepen
+                }, 15000); // Pas de tijd aan op basis van je behoefte
+            } else {
+                quizQuestion = generateQuizQuestion(music);
+                stuurvragen(lobbycodevragen);
+            }
+        } else {
+            console.log("game over");
         }
-    });
-
-    ws.on('close', () => {
-        leaveCurrentLobby(playerId);
-        delete players[playerId];
-    });
+    }
 });
-
-let activeplayers = [];
-
-function setPlayerReady(playerId, lobbyCode) {
-    wss.clients.forEach(client => {
-        if (client.readyState === WebSocket.OPEN) {
-            activeplayers[lobbyCode] = [];
-            activeplayers[lobbyCode].push(playerId);
-            client.send(JSON.stringify({ action: 'playeractive', playerId: playerId }));
-        }
-    })
-};

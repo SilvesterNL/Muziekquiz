@@ -1,15 +1,17 @@
-let socket = new WebSocket('ws://localhost:8080');
+let socket = new WebSocket('ws://10.10.60.50:8080');
 
 let activeLobbies = [];
 
+let leiderid = 0;
 
+let playerid = 0;
 
 
 function checkWebSocketConnection() {
     if (socket.readyState === WebSocket.OPEN) {
         starta();
     } else {
-        socket = new WebSocket('ws://localhost:8080');
+        socket = new WebSocket('ws://10.10.60.50:8080');
         setTimeout(checkWebSocketConnection, 500);
     }
 }
@@ -58,6 +60,7 @@ function displayLobbyInfo(lobbyCode) {
     document.getElementById('lobbyInfo').innerHTML = `${lobbyCode}`;
 }
 
+
 socket.onmessage = function (event) {
     const data = JSON.parse(event.data);
     switch (data.action) {
@@ -74,12 +77,24 @@ socket.onmessage = function (event) {
         case 'playeractive':
             console.log("test'");
             break;
+        case 'playeridtje':
+            if (playerid === 0) {
+                playerid = data.playerId;
+                break;
+            } else {
+                break;
+            }
         case 'nieuwevraag':
-            if (data.lobbyCode === lobbyCode) {
+            if (data.lobbycodevragen === lobbyCode) {
+                startquiz(data.quizQuestion);
                 console.log(data.quizQuestion);
+                break;
             }
     }
 };
+
+
+
 function updateLobbyUsers(users, playerIds) {
     const currentUsername = localStorage.getItem('username');
 
@@ -93,6 +108,7 @@ function updateLobbyUsers(users, playerIds) {
             img.src = `../MEDIA/AVATARS/avatar${i}.webp`;
             p.textContent = users[i - 1];
             playerDiv.setAttribute('playerid', playerIds[i - 1]);
+            leiderid = playerIds[0];
             playerDiv.setAttribute('onclick', 'readyplayer("' + playerIds[i - 1] + '")');
             if (users[i - 1] === currentUsername) {
                 readyButton.style.display = 'block';
@@ -107,7 +123,6 @@ function updateLobbyUsers(users, playerIds) {
         }
     }
 }
-
 
 
 
@@ -150,7 +165,13 @@ function startGame() {
 
                 document.querySelector('.lobby-container').style.display = 'none';
                 document.querySelector('.game').style.display = 'flex';
-                socket.send(JSON.stringify({ action: 'startGame', lobbyCode }));
+                console.log(playerid);
+                console.log(leiderid);
+                if (playerid === leiderid) {
+                    console.log("leider res gestuurd");
+                    socket.send(JSON.stringify({ action: 'startGame', lobbyCode }));
+                }
+
             }
         });
     } else {
@@ -165,4 +186,30 @@ function startGame() {
     }
 }
 
+let vraagid = 1;
+
+let vragengehad = [];
+
+function startquiz(vraag) {
+    if (vraagid <= 8) {
+        console.log(vraagid);
+        console.log("game booted");
+        document.querySelector('.card-title').textContent = vraag.question;
+        document.getElementById('card-button1').textContent = vraag.options[0];
+        document.getElementById('card-button2').textContent = vraag.options[1];
+        document.getElementById('card-button3').textContent = vraag.options[2];
+        document.getElementById('card-button4').textContent = vraag.options[3];
+        let audio = new Audio("MEDIA/MUSIC/" + vraag.songPath);
+        audio.play();
+        setTimeout(() => {
+            audio.pause();
+            vraagid++;
+        }, 15000);
+    } else {
+        alert("game over");
+    }
+
+
+
+}
 
