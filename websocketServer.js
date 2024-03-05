@@ -215,7 +215,11 @@ wss.on('connection', (ws) => {
                 stuurvragen(lobbycodevragen);
             }
         } else {
-            console.log("game over");
+            wss.clients.forEach(client => {
+                if (client.readyState === WebSocket.OPEN) {
+                    client.send(JSON.stringify({ action: 'gameover' }));
+                }
+            });
         }
     }
 });
