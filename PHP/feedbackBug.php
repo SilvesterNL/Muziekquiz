@@ -1,3 +1,26 @@
+<?php
+$formSubmitted = false;
+$submissionType = '';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $submissionType = $_POST['feedback_type'] === 'Feedback' ? 'Feedback' : 'Bug';
+
+    $conn = new mysqli("localhost", "root", "", "muziekquiz");
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $stmt = $conn->prepare("INSERT INTO feedback_bug (name, email, feedback_type, message) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $_POST['name'], $_POST['email'], $_POST['feedback_type'], $_POST['message']);
+
+    $stmt->execute();
+    $stmt->close();
+    $conn->close();
+
+    $formSubmitted = true;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="nl">
 
@@ -16,7 +39,9 @@
 <body>
     <button id="backButton"><i class="fas fa-arrow-left"></i> Home</button>
     <?php if ($formSubmitted): ?>
-        <div id="submissionMessage" class="submission-message">Feedback verstuurd!</div>
+        <div id="submissionMessage" class="submission-message">
+            <?php echo $submissionType; ?> verstuurd!
+        </div>
     <?php endif; ?>
     <div class="form-container animate__animated animate__fadeIn animate__slow">
         <h1>Feedback & Bugs</h1>
@@ -27,13 +52,13 @@
                 <input type="email" name="email" placeholder="E-mail" required>
             </div>
             <textarea name="message" placeholder="Jouw feedback of bug" required></textarea>
-            <div class="radio-form">
-                <input checked="" value="Feedback" name="feedback_type" type="radio" id="a">
-                <label for="a"><span></span>Feedback</label>
-                <input value="Bug" name="feedback_type" type="radio" id="b">
-                <label for="b"><span></span>Bug</label>
-                <div class="worm">
-                    <div class="worm__segment"></div>
+            <div class="container">
+                <div class="tabs">
+                    <input type="radio" id="radio-1" name="feedback_type" value="Feedback" checked="">
+                    <label class="tab" for="radio-1">Feedback</label>
+                    <input type="radio" id="radio-2" name="feedback_type" value="Bug">
+                    <label class="tab" for="radio-2">Bug</label>
+                    <span class="glider"></span>
                 </div>
             </div>
             <button type="submit">Verzenden</button>

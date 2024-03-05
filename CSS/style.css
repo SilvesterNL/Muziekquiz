@@ -19,6 +19,7 @@ html {
   justify-content: center;
   align-items: center;
   position: relative;
+  z-index: 1;
 }
 
 
@@ -858,17 +859,18 @@ html {
     position: absolute;
     top: 10px;
     left: 10px;
-    color: gray;
+    color: rgb(106, 102, 102);
     font-size: 0.8em;
     z-index: 100;
 }
+
 .feedback-link {
     position: absolute;
     top: 35px;
     left: 10px;
     color: rgb(96, 89, 89);
     font-size: 0.8em;
-    z-index: 100;
+    z-index: 1000;
     text-decoration: none;
 }
 
@@ -876,13 +878,16 @@ html {
     color: #ffc107;
 }
 
+.feedback-link:hover, .feedback-link:active {
+    cursor: pointer;
+}
 
 @media (max-width: 768px) {
    
     .music-requests {
         display: block;
         position: absolute;
-        top: 30px;
+        top: 60px;
         left: 10px;
         font-size: 0.8em;
         color: white;
@@ -901,7 +906,7 @@ html {
 
     .feedback-link {
       position: absolute;
-      top: 52px;
+      top: 35px;
       z-index: 100;
     }
 }

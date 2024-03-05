@@ -371,49 +371,71 @@ body, html {
     transition: opacity 6s ease-in-out;
 }
 
-
-.form-container .row select {
-  width: auto;
-  flex-grow: 1;
-}
-
-.form-container .row button {
-  width: auto;
-  flex-grow: 1;
-}
-
-.radio-form {
+.container {
   display: flex;
-  margin: 20px auto;
+  justify-content: center;
   align-items: center;
+  width: 100%;
+  margin-top: 20px;
 }
 
-.radio-form input[type="radio"] {
-  margin-right: 10px;
+.tabs {
+  display: flex;
+  position: relative;
+  background-color: #fff;
+  box-shadow: 0 0 1px 0 rgba(24, 94, 224, 0.15), 0 6px 12px 0 rgba(24, 94, 224, 0.15);
+  padding: 0.75rem;
+  border-radius: 99px;
+  width: 140px;
 }
 
-.radio-form label {
-  margin-right: 20px;
+.tabs * {
+  z-index: 2;
+}
+
+.container input[type="radio"] {
+  display: none;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  width: 50%;
+  font-size: .8rem;
+  color: black;
+  font-weight: 500;
+  border-radius: 99px;
   cursor: pointer;
+  transition: color 0.15s ease-in;
+}
+
+.container input[type="radio"]:checked + label {
+  color: #185ee0;
+}
+
+.glider {
+  position: absolute;
   display: flex;
-  align-items: center;
+  height: 30px;
+  width: 42.5%;
+  background-color: #e6eef9;
+  z-index: 1;
+  border-radius: 99px;
+  transition: 0.25s ease-out;
 }
 
-.radio-form label span {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
-  border-radius: 50%;
-  background-color: #ccc;
-  transition: background-color 0.3s ease;
+.container input[id="radio-1"]:checked ~ .glider {
+  transform: translateX(0);
 }
 
-.radio-form input[type="radio"]:checked + label span {
-  background-color: #255ff4;
+.container input[id="radio-2"]:checked ~ .glider {
+  transform: translateX(100%);
 }
 
-.worm {
-  display: none; /* Hide worm animation */
+@media (max-width: 700px) {
+  .tabs {
+    transform: scale(0.6);
+  }
 }
-
