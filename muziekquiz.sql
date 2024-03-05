@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Gegenereerd op: 26 jan 2024 om 12:25
--- Serverversie: 10.4.28-MariaDB
--- PHP-versie: 8.2.4
+-- Gegenereerd op: 05 mrt 2024 om 11:08
+-- Serverversie: 10.4.27-MariaDB
+-- PHP-versie: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -41,6 +41,69 @@ CREATE TABLE `lobby` (
 -- --------------------------------------------------------
 
 --
+-- Tabelstructuur voor tabel `music`
+--
+
+CREATE TABLE `music` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `artist` varchar(255) NOT NULL,
+  `song_path` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `music`
+--
+
+INSERT INTO `music` (`id`, `title`, `artist`, `song_path`) VALUES
+(1, 'Bad Medicine', 'Bon Jovi', 'BadMedicine.mp3'),
+(2, 'Blue Monday', 'New Order', 'BlueMonday.mp3'),
+(3, 'Boys Dont Cry', 'The Cure', 'BoysDontCry.mp3'),
+(4, 'Careless Whisper', 'George Michael', 'CarelessWhisper.mp3'),
+(5, 'Everybody Wants To Rule The World', 'Tears For Fears', 'EverybodyWantsToRuleTheWorld.mp3'),
+(6, 'Ghostbusters', 'Ray Parker Jr', 'Ghostbusters.mp3'),
+(7, 'Its My Life', 'Bon Jovi', 'ItsMyLife.mp3'),
+(8, 'Jump', 'Van Halen', 'Jump.mp3'),
+(9, 'Maneater', 'Daryl Hall & John Oates', 'Maneater.mp3'),
+(10, 'Never', 'Heart', 'Never.mp3'),
+(11, 'Sweet Dreams', 'Eurythmics', 'SweetDreams.mp3'),
+(12, 'Take On Me', 'a-ha', 'TakeOnMe.mp3'),
+(13, 'Whats Up', '4 Non Blondes', 'WhatsUp.mp3'),
+(14, 'Creep', 'Radiohead', 'Creep.mp3'),
+(15, 'Gangstas Paradise', 'Coolio', 'GangstasParadise.mp3');
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `music_requests`
+--
+
+CREATE TABLE `music_requests` (
+  `id` int(11) NOT NULL,
+  `youtube_link` varchar(255) NOT NULL,
+  `artist_name` varchar(255) NOT NULL,
+  `song_title` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `music_requests`
+--
+
+INSERT INTO `music_requests` (`id`, `youtube_link`, `artist_name`, `song_title`) VALUES
+(1, 'https://www.youtube.com/watch?v=UuYXsffev7k', 'Ken Carson', 'MDMA'),
+(14, '123123', '123123', '1123123'),
+(15, '123123', '123123', '1123123'),
+(16, 'test.com/test', 'Ken Carson', 'MDMA'),
+(17, 'test.com/test', 'Destroy Lonely', 'If Looks Could Kill'),
+(18, 'test.com/test', 'Destroy Lonely', 'If Looks Could Kill'),
+(19, 'test.com/test', 'Destroy Lonely', 'If Looks Could Kill'),
+(20, 'test.com/test', 'Destroy Lonely', 'If Looks Could Kill'),
+(21, 'laatste.test/mobile', 'submit', 'placeholder'),
+(22, 'laatste.test/mobile', 'submit', 'placeholder');
+
+-- --------------------------------------------------------
+
+--
 -- Tabelstructuur voor tabel `users`
 --
 
@@ -62,6 +125,18 @@ ALTER TABLE `lobby`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexen voor tabel `music`
+--
+ALTER TABLE `music`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexen voor tabel `music_requests`
+--
+ALTER TABLE `music_requests`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexen voor tabel `users`
 --
 ALTER TABLE `users`
@@ -76,6 +151,18 @@ ALTER TABLE `users`
 --
 ALTER TABLE `lobby`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+
+--
+-- AUTO_INCREMENT voor een tabel `music`
+--
+ALTER TABLE `music`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT voor een tabel `music_requests`
+--
+ALTER TABLE `music_requests`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT voor een tabel `users`
