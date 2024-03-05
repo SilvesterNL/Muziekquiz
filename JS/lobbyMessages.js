@@ -1,4 +1,4 @@
-let socket = new WebSocket('ws://localhost:8080');
+let socket = new WebSocket('ws://10.10.60.50:8080');
 
 let activeLobbies = [];
 
@@ -9,7 +9,7 @@ function checkWebSocketConnection() {
     if (socket.readyState === WebSocket.OPEN) {
         starta();
     } else {
-        socket = new WebSocket('ws://localhost:8080');
+        socket = new WebSocket('ws://10.10.60.50:8080');
         setTimeout(checkWebSocketConnection, 500);
     }
 }
@@ -33,16 +33,24 @@ function starta() {
     }
 }
 
-let playercount = 0;
+let playerCount = 0;
 
-function playercountupdate(i) {
-    playercount = i;
+
+playerupdate();
+function playerupdate() {
+    setTimeout(() => {
+        playerCount = document.querySelectorAll('[playerid]').length;
+        playerupdate();
+    }, 500);
 }
 
 
 
+
+
+
 function joinLobby(lobbyCode) {
-    const username = sessionStorage.getItem('username');
+    const username = localStorage.getItem('username');
     socket.send(JSON.stringify({ action: 'joinLobby', lobbyCode, username }));
 }
 
@@ -54,23 +62,24 @@ socket.onmessage = function (event) {
     const data = JSON.parse(event.data);
     switch (data.action) {
         case 'lobbyUsers':
-            updateLobbyUsers(data.users, data.playerId);
-            break;
+            if (data.lobbyCode === lobbyCode) {
+                updateLobbyUsers(data.users, data.playerId);
+                break;
+            } else {
+                break;
+            }
         case 'playeractive':
             updatereadyplayers(data.playerId);
             break;
         case 'playeractive':
             console.log("test'");
             break;
-        case 'updatePlayerCount':
-            playercountupdate(data.playerCount);
-            break;
         case 'nieuwevraag':
             console.log(data.quizQuestion);
     }
 };
 function updateLobbyUsers(users, playerIds) {
-    const currentUsername = sessionStorage.getItem('username');
+    const currentUsername = localStorage.getItem('username');
 
     for (let i = 1; i <= 4; i++) {
         const playerDiv = document.getElementById(`player${i}`);
@@ -81,10 +90,8 @@ function updateLobbyUsers(users, playerIds) {
         if (users[i - 1]) {
             img.src = `../MEDIA/AVATARS/avatar${i}.webp`;
             p.textContent = users[i - 1];
-            // Assign corresponding player ID from the array to each player div
             playerDiv.setAttribute('playerid', playerIds[i - 1]);
             playerDiv.setAttribute('onclick', 'readyplayer("' + playerIds[i - 1] + '")');
-
             if (users[i - 1] === currentUsername) {
                 readyButton.style.display = 'block';
             } else {
@@ -93,7 +100,7 @@ function updateLobbyUsers(users, playerIds) {
         } else {
             img.src = '../MEDIA/AVATARS/default.webp';
             p.textContent = '???';
-            playerDiv.setAttribute('data-playerid', "NULL");
+            playerDiv.removeAttribute('playerid');
             readyButton.style.display = 'none';
         }
     }
@@ -120,7 +127,7 @@ function updatereadyplayers(playerId) {
 
 
 function startGame() {
-    if (playercount === readyplayers) {
+    if (playerCount === readyplayers) {
         const audio = new Audio('MEDIA/SOUNDS/starter.mp3');
         audio.play();
         let timerInterval;
@@ -147,9 +154,11 @@ function startGame() {
             position: "top-end",
             icon: "success",
             title: "Je bent ready!",
-            html: readyplayers + " van de " + playercount + " spelers zijn ready",
+            html: readyplayers + " van de " + playerCount + " spelers zijn ready",
             showConfirmButton: false,
             timer: 2000
         });
     }
 }
+
+

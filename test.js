@@ -1,4 +1,4 @@
-let socket = new WebSocket('ws://localhost:8080');
+let socket = new WebSocket('ws://10.10.60.50:8080');
 
 let activeLobbies = [];
 
@@ -7,7 +7,7 @@ function checkWebSocketConnection() {
     if (socket.readyState === WebSocket.OPEN) {
         return
     } else {
-        socket = new WebSocket('ws://localhost:8080');
+        socket = new WebSocket('ws://10.10.60.50:8080');
         setTimeout(checkWebSocketConnection, 500);
     }
 }
@@ -58,7 +58,7 @@ function openUsernameSel() {
 
 function startLobby(username) {
     const lobbyCode = generateRandomCode();
-    sessionStorage.setItem('username', username);
+    localStorage.setItem('username', username);
     sessionStorage.setItem('lobbyCode', lobbyCode);
     socket.send(JSON.stringify({ action: 'joinLobby', username, lobbyCode: null }));
     window.location.href = 'lobby.html';
@@ -146,7 +146,7 @@ function joinlobby(lobbycode) {
 
 
 function getintolobby(username, lobbycode) {
-    sessionStorage.setItem('username', username);
+    localStorage.setItem('username', username);
     sessionStorage.setItem('lobbyCode', lobbycode);
     socket.send(JSON.stringify({ action: 'joinLobby', username, lobbyCode: null }));
     window.location.href = 'lobby.html';

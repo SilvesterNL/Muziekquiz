@@ -52,11 +52,13 @@ function leaveCurrentLobby(playerId) {
     }
 }
 
+
+
 function updatePlayerCountInLobby(lobbyCode) {
     const playerCount = lobbies[lobbyCode].length;
     lobbies[lobbyCode].forEach(player => {
         if (player.ws.readyState === WebSocket.OPEN) {
-            player.ws.send(JSON.stringify({ action: 'updatePlayerCount', playerCount }));
+            player.ws.send(JSON.stringify({ action: 'updatePlayerCount', playerCount, lobbyCode }));
 
 
         }
@@ -70,7 +72,7 @@ function broadcastLobbyUsers(lobbyCode) {
     lobbies[lobbyCode].forEach(player => {
         wss.clients.forEach(client => {
             if (client.readyState === WebSocket.OPEN) {
-                client.send(JSON.stringify({ action: 'lobbyUsers', users: usersInLobby, playerId }));
+                client.send(JSON.stringify({ action: 'lobbyUsers', users: usersInLobby, playerId, lobbyCode }));
             }
         });
     });
@@ -129,6 +131,9 @@ wss.on('connection', (ws) => {
         }
         if (action === 'readyPlayer') {
             setPlayerReady(playerId, lobbyCode);
+        }
+        if (action === 'updatePlayerCount') {
+            updateplayercount(lobbyCode);
         }
         if (action === 'startGame') {
             function generateQuizQuestion(musicArray) {
