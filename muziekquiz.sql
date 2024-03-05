@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Gegenereerd op: 05 mrt 2024 om 11:08
+-- Gegenereerd op: 05 mrt 2024 om 17:05
 -- Serverversie: 10.4.27-MariaDB
 -- PHP-versie: 8.2.0
 
@@ -20,6 +20,33 @@ SET time_zone = "+00:00";
 --
 -- Database: `muziekquiz`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `feedback_bug`
+--
+
+CREATE TABLE `feedback_bug` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `feedback_type` enum('Feedback','Bug') NOT NULL,
+  `message` text NOT NULL,
+  `submitted_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `feedback_bug`
+--
+
+INSERT INTO `feedback_bug` (`id`, `name`, `email`, `feedback_type`, `message`, `submitted_at`) VALUES
+(1, 'nebi', 'nebi@gmail.com', 'Feedback', 'Ik vind jouw cool.', '2024-03-05 15:39:07'),
+(2, 'Nebi', 'nebi@gmail.com', 'Bug', 'hier bug, solly.', '2024-03-05 15:39:21'),
+(3, 'Test', 'test@gmail.com', 'Feedback', 'testing123', '2024-03-05 16:48:25'),
+(4, 'Test', 'test@gmail.com', 'Feedback', 'testing123', '2024-03-05 16:50:34'),
+(5, 'Silvester', 'Silvester@gmail.com', 'Bug', 'Dit is een bug', '2024-03-05 16:51:04'),
+(6, 'Silvester1', 'Silvester1@gmail.com', 'Feedback', 'Dit is feedback.', '2024-03-05 16:51:22');
 
 -- --------------------------------------------------------
 
@@ -90,16 +117,7 @@ CREATE TABLE `music_requests` (
 --
 
 INSERT INTO `music_requests` (`id`, `youtube_link`, `artist_name`, `song_title`) VALUES
-(1, 'https://www.youtube.com/watch?v=UuYXsffev7k', 'Ken Carson', 'MDMA'),
-(14, '123123', '123123', '1123123'),
-(15, '123123', '123123', '1123123'),
-(16, 'test.com/test', 'Ken Carson', 'MDMA'),
-(17, 'test.com/test', 'Destroy Lonely', 'If Looks Could Kill'),
-(18, 'test.com/test', 'Destroy Lonely', 'If Looks Could Kill'),
-(19, 'test.com/test', 'Destroy Lonely', 'If Looks Could Kill'),
-(20, 'test.com/test', 'Destroy Lonely', 'If Looks Could Kill'),
-(21, 'laatste.test/mobile', 'submit', 'placeholder'),
-(22, 'laatste.test/mobile', 'submit', 'placeholder');
+(1, 'https://www.youtube.com/watch?v=UuYXsffev7k', 'Ken Carson', 'MDMA');
 
 -- --------------------------------------------------------
 
@@ -117,6 +135,12 @@ CREATE TABLE `users` (
 --
 -- Indexen voor geëxporteerde tabellen
 --
+
+--
+-- Indexen voor tabel `feedback_bug`
+--
+ALTER TABLE `feedback_bug`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexen voor tabel `lobby`
@@ -147,6 +171,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT voor een tabel `feedback_bug`
+--
+ALTER TABLE `feedback_bug`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT voor een tabel `lobby`
 --
 ALTER TABLE `lobby`
@@ -162,7 +192,7 @@ ALTER TABLE `music`
 -- AUTO_INCREMENT voor een tabel `music_requests`
 --
 ALTER TABLE `music_requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT voor een tabel `users`
