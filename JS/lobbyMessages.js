@@ -121,7 +121,8 @@ function updatereadyplayers(playerId) {
 
 function startGame() {
     if (playercount === readyplayers) {
-
+        const audio = new Audio('MEDIA/SOUNDS/starter.mp3');
+        audio.play();
         let timerInterval;
         Swal.fire({
             title: "Iedereen was ready!",
@@ -133,6 +134,7 @@ function startGame() {
             willClose: () => {
                 clearInterval(timerInterval);
             }
+
         }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
                 document.querySelector('.game').style.display = 'block';
