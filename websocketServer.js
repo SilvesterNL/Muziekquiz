@@ -155,7 +155,7 @@ wss.on('connection', (ws) => {
             console.log(quizQuestion);
             wss.clients.forEach(client => {
                 if (client.readyState === WebSocket.OPEN) {
-                    client.send(JSON.stringify({ action: 'nieuwevraag', quizQuestion }));
+                    client.send(JSON.stringify({ action: 'nieuwevraag', quizQuestion, lobbyCode }));
                 }
             });
         }

@@ -75,7 +75,9 @@ socket.onmessage = function (event) {
             console.log("test'");
             break;
         case 'nieuwevraag':
-            console.log(data.quizQuestion);
+            if (data.lobbyCode === lobbyCode) {
+                console.log(data.quizQuestion);
+            }
     }
 };
 function updateLobbyUsers(users, playerIds) {
@@ -138,16 +140,17 @@ function startGame() {
             timer: 5000,
             timerProgressBar: true,
             showConfirmButton: false,
+            allowOutsideClick: false,
             willClose: () => {
                 clearInterval(timerInterval);
             }
 
         }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
-                
+
                 document.querySelector('.lobby-container').style.display = 'none';
                 document.querySelector('.game').style.display = 'flex';
-                socket.send(JSON.stringify({ action: 'startGame' }));
+                socket.send(JSON.stringify({ action: 'startGame', lobbyCode }));
             }
         });
     } else {
