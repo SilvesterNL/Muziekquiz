@@ -862,6 +862,19 @@ html {
     font-size: 0.8em;
     z-index: 100;
 }
+.feedback-link {
+    position: absolute;
+    top: 35px;
+    left: 10px;
+    color: rgb(96, 89, 89);
+    font-size: 0.8em;
+    z-index: 100;
+    text-decoration: none;
+}
+
+.feedback-link:hover {
+    color: #ffc107;
+}
 
 
 @media (max-width: 768px) {
@@ -869,7 +882,7 @@ html {
     .music-requests {
         display: block;
         position: absolute;
-        top: 35px;
+        top: 30px;
         left: 10px;
         font-size: 0.8em;
         color: white;
@@ -885,4 +898,11 @@ html {
     .music-requests a:hover {
         opacity: 100%;
     }
+
+    .feedback-link {
+      position: absolute;
+      top: 52px;
+      z-index: 100;
+    }
 }
+

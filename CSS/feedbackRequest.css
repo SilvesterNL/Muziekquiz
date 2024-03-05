@@ -206,7 +206,7 @@ body, html {
 
 .form-container {
   width: 100%;
-  max-width: 725px;
+  max-width: 705px;
   margin: auto;
   padding: 40px;
   background: rgba(255, 255, 255, 0.2);
@@ -244,6 +244,15 @@ body, html {
   width: 80%; 
 }
 
+.form-container input[type="email"] {
+  margin-bottom: 15px;
+  padding: 12px; 
+  border-radius: 5px;
+  border: none;
+  font-size: 1.2em; 
+  width: 80%; 
+}
+
 .form-container button {
   padding: 15px 30px; 
   background: #603cba;
@@ -264,6 +273,21 @@ body, html {
   font-size: 1em;
 }
 
+.form-container input[type="email"]::placeholder {
+  text-align: center;
+  font-size: 1em;
+}
+
+.form-container textarea {
+  width: 365px; 
+  height: 113px;
+  margin-bottom: 1px;
+  padding: 12px;
+  border-radius: 5px;
+  border: none;
+  font-size: 1.2em;
+}
+
 
 @media (max-width: 768px) {
   .form-container {
@@ -281,6 +305,18 @@ body, html {
   }
 
   .form-container input[type="text"] {
+    font-size: 1em;
+    padding: 10px;
+    width: 100%;
+  }
+
+    .form-container input[type="email"] {
+    font-size: 1em;
+    padding: 10px;
+    width: 100%;
+  }
+
+    .form-container textarea {
     font-size: 1em;
     padding: 10px;
     width: 100%;
@@ -334,3 +370,50 @@ body, html {
     opacity: 1;
     transition: opacity 6s ease-in-out;
 }
+
+
+.form-container .row select {
+  width: auto;
+  flex-grow: 1;
+}
+
+.form-container .row button {
+  width: auto;
+  flex-grow: 1;
+}
+
+.radio-form {
+  display: flex;
+  margin: 20px auto;
+  align-items: center;
+}
+
+.radio-form input[type="radio"] {
+  margin-right: 10px;
+}
+
+.radio-form label {
+  margin-right: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.radio-form label span {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background-color: #ccc;
+  transition: background-color 0.3s ease;
+}
+
+.radio-form input[type="radio"]:checked + label span {
+  background-color: #255ff4;
+}
+
+.worm {
+  display: none; /* Hide worm animation */
+}
+

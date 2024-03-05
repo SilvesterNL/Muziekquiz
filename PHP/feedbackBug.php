@@ -1,31 +1,10 @@
-<?php
-$formSubmitted = false;
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $conn = new mysqli("localhost", "root", "", "muziekquiz");
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-
-    }
-
-    $stmt = $conn->prepare("INSERT INTO music_requests (youtube_link, artist_name, song_title) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $_POST['youtube_link'], $_POST['artist_name'], $_POST['song_title']);
-
-    $stmt->execute();
-    $stmt->close();
-    $conn->close();
-
-    $formSubmitted = true;
-}
-?>
-
 <!DOCTYPE html>
 <html lang="nl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aanvraag - MuziekQuiz</title>
+    <title>Feedback & Bugs - MuziekQuiz</title>
     <link rel="stylesheet" href="../CSS/feedbackRequest.css">
     <link rel="shortcut icon" href="../MEDIA/FAVICONS/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -37,15 +16,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <button id="backButton"><i class="fas fa-arrow-left"></i> Home</button>
     <?php if ($formSubmitted): ?>
-        <div id="submissionMessage" class="submission-message">Verzoek gestuurd!</div>
+        <div id="submissionMessage" class="submission-message">Feedback verstuurd!</div>
     <?php endif; ?>
     <div class="form-container animate__animated animate__fadeIn animate__slow">
-        <h1>Muziek aanvragen</h1>
-        <p>Geef hier <strong>correct</strong> een YouTube (audio) link aan die jij graag in de game zou willen zien!</p>
-        <form action="request.php" method="post">
-            <input type="text" name="youtube_link" placeholder="YouTube link" required>
-            <input type="text" name="artist_name" placeholder="Artiestennaam" required>
-            <input type="text" name="song_title" placeholder="Titel van het nummer" required>
+        <h1>Feedback & Bugs</h1>
+        <p>Deel hier jouw feedback of meld een bug die je bent tegengekomen.</p>
+        <form action="feedbackBug.php" method="post" class="feedback-form">
+            <div class="row">
+                <input type="text" name="name" placeholder="Naam" required>
+                <input type="email" name="email" placeholder="E-mail" required>
+            </div>
+            <textarea name="message" placeholder="Jouw feedback of bug" required></textarea>
+            <div class="radio-form">
+                <input checked="" value="Feedback" name="feedback_type" type="radio" id="a">
+                <label for="a"><span></span>Feedback</label>
+                <input value="Bug" name="feedback_type" type="radio" id="b">
+                <label for="b"><span></span>Bug</label>
+                <div class="worm">
+                    <div class="worm__segment"></div>
+                </div>
+            </div>
             <button type="submit">Verzenden</button>
         </form>
     </div>
