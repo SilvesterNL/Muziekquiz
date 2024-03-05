@@ -1,3 +1,4 @@
+
 .ready-indicator {
     position: absolute;
     top: -10px;
@@ -10,4 +11,142 @@
 
 .player-ready .ready-indicator {
     background-color: green;
+}
+
+.small-desc {
+    font-size: 1em;
+    font-weight: 400;
+    line-height: 1.5em;
+    color: #452c2c;
+}
+
+.go-corner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 2em;
+  height: 2em;
+  overflow: hidden;
+  top: 0;
+  right: 0;
+  background: linear-gradient(135deg, #6293c8, #384c6c);
+  border-radius: 0 4px 0 32px;
+}
+
+.go-arrow {
+  margin-top: -4px;
+  margin-right: -4px;
+  color: white;
+  font-family: courier, sans;
+}
+
+.game {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: calc(100% - 40px);
+    max-width: 850px;
+    height: auto;
+    background-color: #f2f8f9;
+    border-radius: 10px;
+    padding: 2em 1.2em;
+    margin: 14px auto;
+    text-decoration: none;
+    z-index: 0;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #c3e6ec, #a7d1d9);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.card-title {
+    text-align: center;
+    color: #262626;
+    font-size: calc(16px + 1vw);
+    line-height: normal;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.button-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    justify-items: center;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+}
+
+.card-button {
+    background-color: #6293c8;
+    border: none;
+    color: white;
+    padding: 15px 10px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: calc(10px + 1vw);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.card-button:hover {
+    background-color: #384c6c;
+}
+
+.resize {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.logoResize {
+    width: 50%;
+    max-width: 300px;
+    display: block;
+    margin: 0 auto;
+    transition: all 0.2s ease-in-out;
+}
+
+.logoResize:hover {
+    transform: scale(1.05);
+    opacity: 100%;
+}
+
+@media (max-width: 768px) {
+    .card {
+        padding: 15px;
+        width: calc(93% - 30px);
+    }
+
+    .card-title {
+        font-size: calc(14px + 2vw);
+    }
+
+    .card-button {
+        font-size: calc(12px + 2vw);
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        width: calc(100% - 40px);
+    }
+
+    .resize .logoResize {
+        width: 60%;
+        max-width: 250px;
+    }
 }
