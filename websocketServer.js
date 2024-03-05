@@ -8,11 +8,35 @@ function createLobbyCode() {
     return Math.random().toString(36).substring(2, 10);
 }
 
+const music = [
+    { id: 1, title: 'Bad Medicine', artist: 'Bon Jovi', song_path: 'BadMedicine.mp3' },
+    { id: 2, title: 'Blue Monday', artist: 'New Order', song_path: 'BlueMonday.mp3' },
+    { id: 3, title: 'Boys Dont Cry', artist: 'The Cure', song_path: 'BoysDontCry.mp3' },
+    { id: 4, title: 'Careless Whisper', artist: 'George Michael', song_path: 'CarelessWhisper.mp3' },
+    { id: 5, title: 'Everybody Wants To Rule The World', artist: 'Tears For Fears', song_path: 'EverybodyWantsToRuleTheWorld.mp3' },
+    { id: 6, title: 'Ghostbusters', artist: 'Ray Parker Jr', song_path: 'Ghostbusters.mp3' },
+    { id: 7, title: 'Its My Life', artist: 'Bon Jovi', song_path: 'ItsMyLife.mp3' },
+    { id: 8, title: 'Jump', artist: 'Van Halen', song_path: 'Jump.mp3' },
+    { id: 9, title: 'Maneater', artist: 'Daryl Hall & John Oates', song_path: 'Maneater.mp3' },
+    { id: 10, title: 'Never', artist: 'Heart', song_path: 'Never.mp3' },
+    { id: 11, title: 'Sweet Dreams', artist: 'Eurythmics', song_path: 'SweetDreams.mp3' },
+    { id: 12, title: 'Take On Me', artist: 'a-ha', song_path: 'TakeOnMe.mp3' },
+    { id: 13, title: 'Whats Up', artist: '4 Non Blondes', song_path: 'WhatsUp.mp3' },
+    { id: 14, title: 'Creep', artist: 'Radiohead', song_path: 'Creep.mp3' },
+    { id: 15, title: 'Gangstas Paradise', artist: 'Coolio', song_path: 'GangstasParadise.mp3' }
+];
+
+
 function leaveCurrentLobby(playerId) {
     if (players[playerId] && lobbies[players[playerId]]) {
         const lobbyCode = players[playerId];
         lobbies[lobbyCode] = lobbies[lobbyCode].filter(player => player.playerId !== playerId);
         console.log("speler verlaten lobby: " + playerId);
+        wss.clients.forEach(client => {
+            if (client.readyState === WebSocket.OPEN) {
+                client.send(JSON.stringify({ action: 'playercountremove', lobbyCode }));
+            }
+        });
         broadcastLobbyUsers(lobbyCode);
         if (lobbies[lobbyCode].length === 0) {
             delete lobbies[lobbyCode];
@@ -105,6 +129,30 @@ wss.on('connection', (ws) => {
         }
         if (action === 'readyPlayer') {
             setPlayerReady(playerId, lobbyCode);
+        }
+        if (action === 'startGame') {
+            function generateQuizQuestion(musicArray) {
+                const correctAnswer = musicArray[Math.floor(Math.random() * musicArray.length)];
+                let wrongAnswers = musicArray.filter(track => track.id !== correctAnswer.id);
+                wrongAnswers = wrongAnswers.sort(() => 0.5 - Math.random()).slice(0, 3);
+                const options = [correctAnswer, ...wrongAnswers].sort(() => 0.5 - Math.random());
+
+                return {
+                    question: `Welk nummer is dit?`,
+                    songPath: correctAnswer.song_path,
+                    options: options.map(option => `${option.title} - ${option.artist}`),
+                    correctAnswer: `${correctAnswer.title} - ${correctAnswer.artist}`
+                };
+            }
+
+            // Voorbeeld van hoe je een quizvraag genereert
+            const quizQuestion = generateQuizQuestion(music);
+            console.log(quizQuestion);
+            wss.clients.forEach(client => {
+                if (client.readyState === WebSocket.OPEN) {
+                    client.send(JSON.stringify({ action: 'nieuwevraag', quizQuestion }));
+                }
+            });
         }
     });
 

@@ -3,6 +3,8 @@ let socket = new WebSocket('ws://localhost:8080');
 let activeLobbies = [];
 
 
+
+
 function checkWebSocketConnection() {
     if (socket.readyState === WebSocket.OPEN) {
         starta();
@@ -12,7 +14,7 @@ function checkWebSocketConnection() {
     }
 }
 
-
+const lobbyCode = sessionStorage.getItem('lobbyCode');
 
 
 function starta() {
@@ -23,12 +25,22 @@ function starta() {
         } else {
             joinLobby(lobbyCode);
             displayLobbyInfo(lobbyCode);
+            document.querySelector('.game').style.display = 'hidden';
 
         }
     } else {
         checkWebSocketConnection();
     }
 }
+
+let playercount = 0;
+
+function playercountupdate(i) {
+    playercount = i;
+}
+
+
+
 function joinLobby(lobbyCode) {
     const username = sessionStorage.getItem('username');
     socket.send(JSON.stringify({ action: 'joinLobby', lobbyCode, username }));
@@ -50,6 +62,11 @@ socket.onmessage = function (event) {
         case 'playeractive':
             console.log("test'");
             break;
+        case 'updatePlayerCount':
+            playercountupdate(data.playerCount);
+            break;
+        case 'nieuwevraag':
+            console.log(data.quizQuestion);
     }
 };
 function updateLobbyUsers(users, playerIds) {
@@ -89,9 +106,48 @@ function readyplayer(playerId) {
     socket.send(JSON.stringify({ action: 'readyPlayer', playerId }));
 }
 
+let readyplayers = 0;
+
 function updatereadyplayers(playerId) {
     const playerDiv = document.querySelector(`[playerid="${playerId}"]`);
     const readyButton = playerDiv.querySelector('.ready-indicator');
     readyButton.style.background = 'green';
     console.log("player is ready");
+    readyplayers++;
+    startGame();
+
+}
+
+
+function startGame() {
+    if (playercount === readyplayers) {
+
+        let timerInterval;
+        Swal.fire({
+            title: "Iedereen was ready!",
+            html: "De game is aan het starten....",
+            icon: 'success',
+            timer: 5000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+            willClose: () => {
+                clearInterval(timerInterval);
+            }
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+                document.querySelector('.game').style.display = 'block';
+                document.querySelector('.lobby-container').style.display = 'none';
+                socket.send(JSON.stringify({ action: 'startGame' }));
+            }
+        });
+    } else {
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Je bent ready!",
+            html: readyplayers + " van de " + playercount + " spelers zijn ready",
+            showConfirmButton: false,
+            timer: 2000
+        });
+    }
 }
