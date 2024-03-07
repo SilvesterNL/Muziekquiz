@@ -96,6 +96,7 @@ socket.onmessage = function (event) {
             if (data.lobbycode === lobbyCode) {
                 document.querySelector('.game').style.display = 'none';
                 document.querySelector('.leaderboard').style.display = 'block';
+                document.querySelector('.ranking-block').style.display = 'block';
 
                 break;
             } else {
