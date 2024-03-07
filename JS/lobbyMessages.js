@@ -198,10 +198,13 @@ let vraagid = 1;
 
 let vragengehad = [];
 
+let antwoord = "";
+
 function startquiz(vraag) {
     if (vraagid <= 8) {
         console.log(vraagid);
         console.log("game booted");
+        antwoord = vraag.correctAnswer;
         document.querySelector('.card-title').textContent = vraag.question;
         document.getElementById('card-button1').textContent = vraag.options[0];
         document.getElementById('card-button2').textContent = vraag.options[1];
@@ -221,3 +224,16 @@ function startquiz(vraag) {
 
 }
 
+
+let punten = {};
+
+function answer(button) {
+    let answer = document.getElementById("card-button" + button).textContent;
+    console.log(button);
+    if (answer === antwoord) {
+        punten[playerid] = (punten[playerid] || 0) + 1;
+        console.log(punten);
+    } else {
+        return
+    }
+}
