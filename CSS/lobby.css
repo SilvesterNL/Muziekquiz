@@ -238,8 +238,45 @@
 }
 
 @media (max-width: 768px) {
-    .ranking-block, .leaderboard {
-        width: 90%;
-        top: 20%;
+    #ranking-block {
+        top: 13%;
+        width: 80%;
+        padding: 10px 20px;
+    }
+
+    .leaderboard {
+        top: 50%;
+        width: 85%;
+        max-width: 90%;
+    }
+
+    #leaderboard table {
+        font-size: 0.8em;
+    }
+
+    #leaderboard th, #leaderboard td {
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    #ranking-block {
+        top: 10%;
+        width: 95%;
+        padding: 8px 16px;
+    }
+
+    .leaderboard {
+        top: 45%;
+        width: 78%;
+        max-width: 95%;
+    }
+
+    #leaderboard table {
+        font-size: 0.7em;
+    }
+
+    #leaderboard th, #leaderboard td {
+        padding: 6px;
     }
 }
