@@ -1,4 +1,4 @@
-let socket = new WebSocket('ws://10.10.60.50:8080');
+let socket = new WebSocket('ws://localhost:8080');
 
 let activeLobbies = [];
 
@@ -11,7 +11,7 @@ function checkWebSocketConnection() {
     if (socket.readyState === WebSocket.OPEN) {
         starta();
     } else {
-        socket = new WebSocket('ws://10.10.60.50:8080');
+        socket = new WebSocket('ws://localhost:8080');
         setTimeout(checkWebSocketConnection, 500);
     }
 }
@@ -96,7 +96,7 @@ socket.onmessage = function (event) {
             if (data.lobbycode === lobbyCode) {
                 document.querySelector('.game').style.display = 'none';
                 document.querySelector('.leaderboard').style.display = 'block';
-                console.log(data.songsgot);
+
                 break;
             } else {
                 break;
