@@ -94,7 +94,8 @@ socket.onmessage = function (event) {
             }
         case 'gameover':
             if (data.lobbycode === lobbyCode) {
-                alert("game over");
+                document.querySelector('.game').style.display = 'none';
+                document.querySelector('.leaderboard').style.display = 'block';
                 console.log(data.songsgot);
                 break;
             } else {
@@ -220,6 +221,10 @@ function startquiz(vraag) {
         document.getElementById('card-button2').textContent = vraag.options[1];
         document.getElementById('card-button3').textContent = vraag.options[2];
         document.getElementById('card-button4').textContent = vraag.options[3];
+        document.getElementById('card-button1').style.background = "#6293c8";
+        document.getElementById('card-button2').style.background = "#6293c8";
+        document.getElementById('card-button3').style.background = "#6293c8";
+        document.getElementById('card-button4').style.background = "#6293c8";
         let audio = new Audio("MEDIA/MUSIC/" + vraag.songPath);
         audio.play();
         timer = 15;
@@ -233,9 +238,9 @@ function startquiz(vraag) {
             audio.pause();
             vraagid++;
         }, 15000);
-    } else {
-        alert("game over");
     }
+
+
 
 
 
@@ -250,7 +255,7 @@ function answer(button) {
         if (vragengehad.includes(vraagid)) {
             return;
         } else {
-
+            document.getElementById("card-button" + button).style.background = "green";
             punten[playerid] = (punten[playerid] || 0) + 1 * timer;
             socket.send(JSON.stringify({ action: 'updatePoints', points: punten[playerid], playerid: playerid, lobbyCode: lobbyCode }));
             console.log(punten);
@@ -258,6 +263,7 @@ function answer(button) {
         }
     } else {
         vragengehad.push(vraagid);
+        document.getElementById("card-button" + button).style.background = "red";
     }
 }
 
