@@ -142,6 +142,10 @@ wss.on('connection', (ws) => {
         if (action === 'startGame') {
             stuurvragen(lobbyCode);
         }
+        if (action === 'updatePoints') {
+            const { points, playerid, lobbyCode } = JSON.parse(message);
+            updatepoints(lobbyCode, points, playerid);
+        }
 
         ws.on('close', () => {
             leaveCurrentLobby(playerId);
@@ -189,7 +193,7 @@ wss.on('connection', (ws) => {
         if (global[vragenGehadKey] <= 8) {
 
 
-            let quizQuestion = generateQuizQuestion(music); 
+            let quizQuestion = generateQuizQuestion(music);
             console.log(global[songsgotKey]);
             if (!global[songsgotKey].includes(quizQuestion.songPath)) {
                 global[songsgotKey].push(quizQuestion.songPath);
@@ -200,8 +204,8 @@ wss.on('connection', (ws) => {
                 });
                 setTimeout(() => {
                     global[vragenGehadKey]++;
-                    stuurvragen(lobbycodevragen); 
-                }, 15000); 
+                    stuurvragen(lobbycodevragen);
+                }, 15000);
             } else {
                 quizQuestion = generateQuizQuestion(music);
                 stuurvragen(lobbycodevragen);
@@ -215,3 +219,13 @@ wss.on('connection', (ws) => {
         }
     }
 });
+
+
+
+function updatepoints(lobbyCode, points, playerid) {
+    wss.clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify({ action: 'updatePointslocal', points: points, playerid: playerid, lobbyCode: lobbyCode }));
+        }
+    });
+}

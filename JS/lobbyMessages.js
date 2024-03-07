@@ -1,4 +1,4 @@
-let socket = new WebSocket('ws://localhost:8080');
+let socket = new WebSocket('ws://10.10.60.50:8080');
 
 let activeLobbies = [];
 
@@ -11,7 +11,7 @@ function checkWebSocketConnection() {
     if (socket.readyState === WebSocket.OPEN) {
         starta();
     } else {
-        socket = new WebSocket('ws://localhost:8080');
+        socket = new WebSocket('ws://10.10.60.50:8080');
         setTimeout(checkWebSocketConnection, 500);
     }
 }
@@ -84,11 +84,19 @@ socket.onmessage = function (event) {
             } else {
                 break;
             }
+        case 'updatePointslocal':
+            if (data.lobbyCode === lobbyCode) {
+                punten[data.playerid] = data.points;
+                console.log(punten);
+                break;
+            } else {
+                break;
+            }
         case 'gameover':
             if (data.lobbycode === lobbyCode) {
-            alert("game over");
-            console.log(data.songsgot);
-            break;
+                alert("game over");
+                console.log(data.songsgot);
+                break;
             } else {
                 break;
             }
@@ -200,6 +208,8 @@ let vragengehad = [];
 
 let antwoord = "";
 
+let timer = 0;
+
 function startquiz(vraag) {
     if (vraagid <= 8) {
         console.log(vraagid);
@@ -212,6 +222,13 @@ function startquiz(vraag) {
         document.getElementById('card-button4').textContent = vraag.options[3];
         let audio = new Audio("MEDIA/MUSIC/" + vraag.songPath);
         audio.play();
+        timer = 15;
+        let interval = setInterval(() => {
+            timer--;
+            if (timer === 0) {
+                clearInterval(interval);
+            }
+        }, 1000);
         setTimeout(() => {
             audio.pause();
             vraagid++;
@@ -229,11 +246,18 @@ let punten = {};
 
 function answer(button) {
     let answer = document.getElementById("card-button" + button).textContent;
-    console.log(button);
     if (answer === antwoord) {
-        punten[playerid] = (punten[playerid] || 0) + 1;
-        console.log(punten);
+        if (vragengehad.includes(vraagid)) {
+            return;
+        } else {
+
+            punten[playerid] = (punten[playerid] || 0) + 1 * timer;
+            socket.send(JSON.stringify({ action: 'updatePoints', points: punten[playerid], playerid: playerid, lobbyCode: lobbyCode }));
+            console.log(punten);
+            vragengehad.push(vraagid);
+        }
     } else {
-        return
+        vragengehad.push(vraagid);
     }
 }
+
