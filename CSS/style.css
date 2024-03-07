@@ -332,6 +332,7 @@ html {
   bottom: 20px;
   right: 20px;
   font-size: 16px;
+  z-index: 1000;
 }
 
 .bottom-links a {
@@ -662,7 +663,7 @@ html {
 .leave-button-container {
     top: 20px;
     left: 20px;
-    z-index: 10;
+    z-index: 120;
 }
 
 .version {

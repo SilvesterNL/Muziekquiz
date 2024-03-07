@@ -150,18 +150,20 @@
 }
 
 
-.ranking-block {
-    display: none; /* Make the ranking block visible */
+
+#ranking-block {
+    display: none;
     position: fixed;
-    top: 40%; /* Adjust as necessary to position it above the leaderboard */
+    top: 13%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #ffffff; /* White background */
-    padding: 15px 30px; /* Adjust padding as necessary */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
-    z-index: 106; /* Ensure it's above the leaderboard */
-    text-align: center; /* Center the text/content */
+    transform: translateX(-50%);
+    background-color: #ffffff;
+    padding: 0px 20px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    z-index: 110;
+    text-align: center;
+    font-size: 1.5em;
 }
 
 
@@ -171,26 +173,13 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 60%;
-    max-width: 700px;
-    background-color: rgba(255, 255, 255, 0.8);
+    width: 70%;
+    max-width: 1000px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 8px rgb(0, 0, 0);
     padding: 20px;
     z-index: 105;
-}
-
-#header {
-    background-color: #6293c8;
-    color: #ffffff;
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 8px 8px 0 0;
-}
-
-#leaderboard {
-    overflow: auto;
-    max-height: 60vh;
+    background-color: transparent;
 }
 
 #leaderboard table {
@@ -198,19 +187,34 @@
     table-layout: fixed;
 }
 
+#leaderboard tr:nth-child(even) {
+    background-color: rgba(53, 24, 184, 0.438);
+}
+
+#leaderboard tr:nth-child(odd) {
+    background-color: rgba(4, 58, 236, 0.562);
+}
+
 #leaderboard th, #leaderboard td {
     text-align: left;
     padding: 15px;
 }
 
-#leaderboard .number, #leaderboard .name {
-   
-    float: left;
+#leaderboard .number {
+    width: 10%;
+    font-size: 2em;
+    text-align: center;
+}
+
+#leaderboard .name {
+    width: 75%;
+    font-size: 1.8em;
 }
 
 #leaderboard .points {
-   
-    float: right;
+    width: 15%;
+    text-align: center;
+    font-size: 1.5em;
 }
 
 #buttons {
@@ -234,12 +238,8 @@
 }
 
 @media (max-width: 768px) {
-    .leaderboard {
-        width: 80%;
-        padding: 15px;
-    }
-
-    .button {
-        padding: 8px 20px;
+    .ranking-block, .leaderboard {
+        width: 90%;
+        top: 20%;
     }
 }
