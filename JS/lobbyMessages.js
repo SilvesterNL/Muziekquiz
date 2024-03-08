@@ -75,7 +75,6 @@ socket.onmessage = function (event) {
             updatereadyplayers(data.playerId);
             break;
         case 'playeractive':
-            console.log("test'");
             break;
         case 'playeridtje':
             if (playerid === 0) {
@@ -87,7 +86,7 @@ socket.onmessage = function (event) {
         case 'updatePointslocal':
             if (data.lobbyCode === lobbyCode && usernames[data.playerId]) {
                 punten[usernames[usernames[data.playerId]]] = data.points;
-                console.log(punten);
+                geantwoord = false;
 
             }
             break;
@@ -105,15 +104,13 @@ socket.onmessage = function (event) {
         case 'puntenupdate':
             if (data.lobbyCode === lobbyCode) {
                 puntensyncro = data.puntensyncro;
-                console.log(data);
-                console.log(data.puntensyncro);
                 showLeaderboard(puntensyncro);
             }
             break;
         case 'nieuwevraag':
             if (data.lobbycodevragen === lobbyCode) {
                 startquiz(data.quizQuestion);
-                console.log(data.quizQuestion);
+                geantwoord = false;
                 break;
             }
     }
@@ -164,7 +161,6 @@ function updatereadyplayers(playerId) {
     const playerDiv = document.querySelector(`[playerid="${playerId}"]`);
     const readyButton = playerDiv.querySelector('.ready-indicator');
     readyButton.style.background = 'green';
-    console.log("player is ready");
     readyplayers++;
     startGame();
 
@@ -193,10 +189,7 @@ function startGame() {
 
                 document.querySelector('.lobby-container').style.display = 'none';
                 document.querySelector('.game').style.display = 'flex';
-                console.log(playerid);
-                console.log(leiderid);
                 if (playerid === leiderid) {
-                    console.log("leider res gestuurd");
                     socket.send(JSON.stringify({ action: 'startGame', lobbyCode }));
                 }
 
@@ -224,8 +217,6 @@ let timer = 0;
 
 function startquiz(vraag) {
     if (vraagid <= 8) {
-        console.log(vraagid);
-        console.log("game booted");
         antwoord = vraag.correctAnswer;
         document.querySelector('.card-title').textContent = vraag.question;
         document.getElementById('card-button1').textContent = vraag.options[0];
@@ -237,7 +228,7 @@ function startquiz(vraag) {
         document.getElementById('card-button3').style.background = "#6293c8";
         document.getElementById('card-button4').style.background = "#6293c8";
 
-        let timer = 15;
+        timer = 15;
         let timerElement = document.querySelector('.go-arrow');
         timerElement.textContent = timer;
 
@@ -252,6 +243,8 @@ function startquiz(vraag) {
                 clearInterval(interval);
                 timerElement.textContent = "⏰";
                 vraagid++;
+                geantwoord = false;
+                (geantwoord);
                 audio.pause();
             }
         }, 1000);
@@ -259,6 +252,8 @@ function startquiz(vraag) {
         setTimeout(() => {
             clearInterval(interval);
             if (vraagid <= 8) {
+                vraagid++;
+                clearInterval(interval);
             }
         }, 15000);
     }
@@ -268,25 +263,47 @@ function startquiz(vraag) {
 
 let punten = {};
 
+let geantwoord = false;
+
+// Aannemende dat `vragengehad`, `vraagid`, `antwoord`, `punten`, `usernames`, `playerid`, `timer`, `socket`, `lobbyCode` zijn gedefinieerd elders in je code.
+
+function resetAntwoordStatus() {
+    geantwoord = false; // Reset de antwoord status zodat de gebruiker weer kan antwoorden
+}
+
 function answer(button) {
     let answerElement = document.getElementById("card-button" + button);
     let answer = answerElement.textContent;
+    // Controleer of de vraag al beantwoord is
     if (vragengehad.includes(vraagid)) {
-        return;
+        ("Vraag al beantwoord.");
+        return; // Vroegtijdig beëindigen als de vraag al beantwoord is
     }
-    let geantwoord = false;
+
     if (answer === antwoord && !geantwoord) {
         answerElement.style.background = "green";
-        punten[usernames[playerid]] = (punten[usernames[playerid]] || 0) + 1 * timer;
+        // Update punten en verstuur via WebSocket
+        let currentPlayerPoints = punten[usernames[playerid]] || 0;
+        punten[usernames[playerid]] = currentPlayerPoints + 1 * timer;
         socket.send(JSON.stringify({ action: 'updatePoints', points: punten[usernames[playerid]], playerid: playerid, lobbyCode: lobbyCode }));
-        console.log(punten);
+
+        (punten);
         geantwoord = true;
+        (geantwoord);
+
     } else if (!geantwoord) {
         answerElement.style.background = "red";
         geantwoord = true;
+        (geantwoord);
     }
+
+    // Voeg huidige vraag toe aan beantwoorde vragen
     vragengehad.push(vraagid);
+
+    // Optioneel: Reset de antwoordstatus na een bepaalde tijd of actie, zodat nieuwe vragen beantwoord kunnen worden
+    setTimeout(resetAntwoordStatus, 1000); // 1000ms = 1 seconde na het beantwoorden van een vraag
 }
+
 
 
 function showLeaderboard(serverPoints) {
