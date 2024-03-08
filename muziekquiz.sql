@@ -89,7 +89,7 @@ INSERT INTO `music` (`id`, `title`, `artist`, `song_path`) VALUES
 (4, 'Careless Whisper', 'George Michael', 'CarelessWhisper.mp3'),
 (5, 'Everybody Wants To Rule The World', 'Tears For Fears', 'EverybodyWantsToRuleTheWorld.mp3'),
 (6, 'Ghostbusters', 'Ray Parker Jr', 'Ghostbusters.mp3'),
-(7, 'Its My Life', 'Bon Jovi', 'ItsMyLife.mp3'),
+(7, 'Its My Life', 'Talk Talk', 'ItsMyLife.mp3'),
 (8, 'Jump', 'Van Halen', 'Jump.mp3'),
 (9, 'Maneater', 'Daryl Hall & John Oates', 'Maneater.mp3'),
 (10, 'Never', 'Heart', 'Never.mp3'),

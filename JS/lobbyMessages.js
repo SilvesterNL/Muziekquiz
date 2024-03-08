@@ -227,26 +227,34 @@ function startquiz(vraag) {
         document.getElementById('card-button2').style.background = "#6293c8";
         document.getElementById('card-button3').style.background = "#6293c8";
         document.getElementById('card-button4').style.background = "#6293c8";
+
+        let timer = 15;
+        let timerElement = document.querySelector('.go-arrow');
+        timerElement.textContent = timer;
+
         let audio = new Audio("MEDIA/MUSIC/" + vraag.songPath);
         audio.play();
-        timer = 15;
+
         let interval = setInterval(() => {
             timer--;
-            if (timer === 0) {
+            if (timer >= 0) {
+                timerElement.textContent = timer.toString();
+            } else {
                 clearInterval(interval);
+                timerElement.textContent = "⏰";
+                vraagid++;
+                audio.pause();
             }
         }, 1000);
+
         setTimeout(() => {
-            audio.pause();
-            vraagid++;
+            clearInterval(interval);
+            if (vraagid <= 8) {
+            }
         }, 15000);
     }
-
-
-
-
-
 }
+
 
 
 let punten = {};
