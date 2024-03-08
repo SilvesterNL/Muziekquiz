@@ -97,7 +97,7 @@ socket.onmessage = function (event) {
                 document.querySelector('.game').style.display = 'none';
                 document.querySelector('.leaderboard').style.display = 'block';
                 document.querySelector('#ranking-block').style.display = 'block';
-
+                showLeaderboard(data.songsgot, punten);
 
                 break;
             } else {
@@ -268,4 +268,11 @@ function answer(button) {
         document.getElementById("card-button" + button).style.background = "red";
     }
 }
+
+function showLeaderboard(players, gescoordepunten) {
+    const leaderboard = document.getElementById('leaderboard');
+    leaderboard.innerHTML = gescoordepunten;
+    console.log(gescoordepunten);
+}
+
 
