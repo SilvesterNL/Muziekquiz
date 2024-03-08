@@ -258,6 +258,10 @@
     #leaderboard th, #leaderboard td {
         padding: 8px;
     }
+
+        video {
+        display: none;
+    }
 }
 
 @media (max-width: 480px) {
@@ -279,5 +283,9 @@
 
     #leaderboard th, #leaderboard td {
         padding: 6px;
+    }
+
+        video {
+        display: none;
     }
 }

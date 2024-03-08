@@ -568,6 +568,7 @@ html {
   color: white;
   border: none;
   padding: 10px 20px;
+  margin-left: 35px;
   border-radius: 5px;
   cursor: crosshair;
   transition: background-color 0.3s;
