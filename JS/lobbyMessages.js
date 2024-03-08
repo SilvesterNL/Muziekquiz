@@ -1,4 +1,4 @@
-let socket = new WebSocket('ws://localhost:8080');
+let socket = new WebSocket('ws://10.10.60.50:8080');
 
 let activeLobbies = [];
 
@@ -11,7 +11,7 @@ function checkWebSocketConnection() {
     if (socket.readyState === WebSocket.OPEN) {
         starta();
     } else {
-        socket = new WebSocket('ws://localhost:8080');
+        socket = new WebSocket('ws://10.10.60.50:8080');
         setTimeout(checkWebSocketConnection, 500);
     }
 }
@@ -85,24 +85,31 @@ socket.onmessage = function (event) {
                 break;
             }
         case 'updatePointslocal':
-            if (data.lobbyCode === lobbyCode) {
-                punten[data.playerid] = data.points;
+            if (data.lobbyCode === lobbyCode && usernames[data.playerId]) {
+                punten[usernames[usernames[data.playerId]]] = data.points;
                 console.log(punten);
-                break;
-            } else {
-                break;
+
             }
+            break;
         case 'gameover':
             if (data.lobbycode === lobbyCode) {
                 document.querySelector('.game').style.display = 'none';
                 document.querySelector('.leaderboard').style.display = 'block';
                 document.querySelector('#ranking-block').style.display = 'block';
                 showLeaderboard(data.songsgot, punten);
-
+                socket.send(JSON.stringify({ action: 'puntensync', punten: punten[usernames[playerid]], lobbyCode: lobbyCode, username: localStorage.getItem('username') }));
                 break;
             } else {
                 break;
             }
+        case 'puntenupdate':
+            if (data.lobbyCode === lobbyCode) {
+                puntensyncro = data.puntensyncro;
+                console.log(data);
+                console.log(data.puntensyncro);
+                showLeaderboard(puntensyncro);
+            }
+            break;
         case 'nieuwevraag':
             if (data.lobbycodevragen === lobbyCode) {
                 startquiz(data.quizQuestion);
@@ -112,11 +119,13 @@ socket.onmessage = function (event) {
     }
 };
 
-
+let usernames = {};
 
 function updateLobbyUsers(users, playerIds) {
     const currentUsername = localStorage.getItem('username');
-
+    users.forEach((username, index) => {
+        usernames[playerIds[index]] = username; // Map player IDs to usernames
+    });
     for (let i = 1; i <= 4; i++) {
         const playerDiv = document.getElementById(`player${i}`);
         const img = playerDiv.querySelector('img');
@@ -252,27 +261,54 @@ function startquiz(vraag) {
 let punten = {};
 
 function answer(button) {
-    let answer = document.getElementById("card-button" + button).textContent;
-    if (answer === antwoord) {
-        if (vragengehad.includes(vraagid)) {
-            return;
-        } else {
-            document.getElementById("card-button" + button).style.background = "green";
-            punten[playerid] = (punten[playerid] || 0) + 1 * timer;
-            socket.send(JSON.stringify({ action: 'updatePoints', points: punten[playerid], playerid: playerid, lobbyCode: lobbyCode }));
-            console.log(punten);
-            vragengehad.push(vraagid);
-        }
-    } else {
-        vragengehad.push(vraagid);
-        document.getElementById("card-button" + button).style.background = "red";
+    let answerElement = document.getElementById("card-button" + button);
+    let answer = answerElement.textContent;
+    if (vragengehad.includes(vraagid)) {
+        return;
     }
+    let geantwoord = false;
+    if (answer === antwoord && !geantwoord) {
+        answerElement.style.background = "green";
+        punten[usernames[playerid]] = (punten[usernames[playerid]] || 0) + 1 * timer;
+        socket.send(JSON.stringify({ action: 'updatePoints', points: punten[usernames[playerid]], playerid: playerid, lobbyCode: lobbyCode }));
+        console.log(punten);
+        geantwoord = true;
+    } else if (!geantwoord) {
+        answerElement.style.background = "red";
+        geantwoord = true;
+    }
+    vragengehad.push(vraagid);
 }
 
-function showLeaderboard(players, gescoordepunten) {
+
+function showLeaderboard(serverPoints) {
     const leaderboard = document.getElementById('leaderboard');
-    leaderboard.innerHTML = gescoordepunten;
-    console.log(gescoordepunten);
+    const table = leaderboard.querySelector('table');
+    const entries = Object.entries(serverPoints).sort((a, b) => b[1] - a[1]).slice(0, 4);
+
+    // Clear existing rows except the header
+    const rows = table.querySelectorAll('tr');
+    for (let i = rows.length - 1; i > 0; i--) {
+        rows[i].remove();
+    }
+
+    // Create and append new rows
+    entries.forEach((entry, index) => {
+        const [name, points] = entry;
+        const row = table.insertRow();
+        const cell1 = row.insertCell(0);
+        const cell2 = row.insertCell(1);
+        const cell3 = row.insertCell(2);
+
+        cell1.className = 'number';
+        cell2.className = 'name';
+        cell3.className = 'points';
+
+        cell1.innerHTML = index === 0 ? '&#129351;' : index === 1 ? '&#129352;' : index === 2 ? '&#129353;' : '&#10005;';
+        cell2.textContent = name;
+        cell3.textContent = points;
+    });
+
+    // Remove the first row after adding new rows
+    table.deleteRow(0);
 }
-
-

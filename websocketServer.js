@@ -15,7 +15,7 @@ const music = [
     { id: 4, title: 'Careless Whisper', artist: 'George Michael', song_path: 'CarelessWhisper.mp3' },
     { id: 5, title: 'Everybody Wants To Rule The World', artist: 'Tears For Fears', song_path: 'EverybodyWantsToRuleTheWorld.mp3' },
     { id: 6, title: 'Ghostbusters', artist: 'Ray Parker Jr', song_path: 'Ghostbusters.mp3' },
-    { id: 7, title: 'Its My Life', artist: 'Bon Jovi', song_path: 'ItsMyLife.mp3' },
+    { id: 7, title: 'Its My Life', artist: 'Talk Talk', song_path: 'ItsMyLife.mp3' },
     { id: 8, title: 'Jump', artist: 'Van Halen', song_path: 'Jump.mp3' },
     { id: 9, title: 'Maneater', artist: 'Daryl Hall & John Oates', song_path: 'Maneater.mp3' },
     { id: 10, title: 'Never', artist: 'Heart', song_path: 'Never.mp3' },
@@ -101,7 +101,7 @@ function broadcastActiveLobbies() {
 }
 
 
-
+let puntensync = [];
 
 
 
@@ -139,6 +139,21 @@ wss.on('connection', (ws) => {
         if (action === 'updatePlayerCount') {
             updateplayercount(lobbyCode);
         }
+        if (action === 'puntensync') {
+            const { punten, lobbyCode, username } = JSON.parse(message);
+            // Ensure puntensync is defined as an object outside this scope
+            if (!puntensync[lobbyCode]) puntensync[lobbyCode] = {}; // Initialize lobbyCode object if not exists
+            puntensync[lobbyCode][username] = punten; // Assign punten correctly
+            console.log(puntensync);
+
+            wss.clients.forEach(client => {
+                if (client.readyState === WebSocket.OPEN) {
+                    // Ensure to send the specific lobby's puntensync object
+                    client.send(JSON.stringify({ action: 'puntenupdate', puntensyncro: puntensync[lobbyCode], lobbyCode: lobbyCode }));
+                }
+            });
+        }
+
         if (action === 'startGame') {
             stuurvragen(lobbyCode);
         }
