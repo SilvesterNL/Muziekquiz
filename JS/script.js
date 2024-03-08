@@ -107,7 +107,7 @@ function openLobbySelector() {
   let selector = document.querySelector(".lobbyselector");
   selector.classList.remove("hide");
   selector.style.animation = "zoominup 0.5s forwards";
-  isSelectorClosed = false; // Update de vlag
+  isSelectorClosed = false;
   document.querySelector('.close-button').addEventListener('click', function () {
     closeLobbySelector();
   });
@@ -139,7 +139,7 @@ function closeLobbySelector() {
 
     setTimeout(() => {
       selector.classList.add("hide");
-      isSelectorClosed = true; // Update de vlag
+      isSelectorClosed = true;
       window.removeEventListener('click', outsideClickListener);
     }, 150);
   }
@@ -199,7 +199,14 @@ function updateLobbyUsers(users) {
             p.textContent = '?';
         }
     }
+    
 }
+
+// Control the volume of the music
+document.getElementById('volumeControl').addEventListener('input', function() {
+    audio.volume = this.value;
+});
+
 
 document.addEventListener("DOMContentLoaded", function () {
   // Geluid toevoegen aan de 'Nieuwe Lobby' knop
