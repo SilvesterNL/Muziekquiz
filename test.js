@@ -1,4 +1,4 @@
-let socket = new WebSocket('ws://10.10.60.50:8080');
+let socket = new WebSocket('ws://websocket.silvesterhensen.dev');
 
 let activeLobbies = [];
 
@@ -7,7 +7,7 @@ function checkWebSocketConnection() {
     if (socket.readyState === WebSocket.OPEN) {
         return
     } else {
-        socket = new WebSocket('ws://10.10.60.50:8080');
+        socket = new WebSocket('ws://websocket.silvesterhensen.dev');
         setTimeout(checkWebSocketConnection, 500);
     }
 }
