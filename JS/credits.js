@@ -8,7 +8,7 @@ function playSoundAndNavigate(url) {
 
 document.getElementById('backButton').addEventListener('click', function(event) {
   event.preventDefault();
-  playSoundAndNavigate('../index.php');
+  playSoundAndNavigate('../index.html');
 });
 
 document.querySelectorAll('.bottom-links a').forEach(function(link) {

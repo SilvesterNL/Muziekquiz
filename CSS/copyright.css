@@ -115,6 +115,13 @@ a {
         text-align: center;
     }
 
+    .credits {
+      display: none;
+    }
+
+    .music-requests {
+      display: none;
+    }
 }
 
 @media (max-width: 480px) {
@@ -144,4 +151,53 @@ a {
     .bottom-links a, .bottom-links span {
         font-size: 14px;
     }
+
+    .credits {
+        display: none;
+    }
+
+    .music-requests {
+        display: none;
+    }
+}
+
+.credits {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  color: white;
+  z-index: 100; 
+}
+
+.credits a {
+  color: #ffc107; 
+  text-decoration: none; 
+  opacity: 80%;
+  transition: all 0.2s ease-in;
+  scale: 1;
+}
+
+.credits a:hover {
+  text-decoration: underline;
+  opacity: 100%;
+}
+
+.music-requests {
+  position: absolute;
+  bottom: 35px; 
+  left: 45px;
+  color: white;
+  z-index: 100;
+}
+
+.music-requests a {
+  color: #ffc107; 
+  text-decoration: none; 
+  opacity: 80%;
+  transition: all 0.2s ease-in;
+  scale: 1;
+}
+
+.music-requests a:hover {
+  opacity: 100%;
 }

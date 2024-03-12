@@ -7,9 +7,9 @@
 
     
     $db_hosti = "localhost";
-    $db_useri = "root";
-    $db_passi = "";
-    $db_datai = "muziekquiz";
+    $db_useri = "silvester_muziekquiz";
+    $db_passi = "tAh4MjAyFCwe8a2xCkGw";
+    $db_datai = "silvester_muziekquiz";
 
     $con = new mysqli($db_hosti,$db_useri,$db_passi,$db_datai);
 ?>

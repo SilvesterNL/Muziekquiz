@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./CSS/style.css">
+    <link rel="stylesheet" href="./CSS/lobby.css">
+    <link rel="shortcut icon" href="./MEDIA/FAVICONS/favicon.png" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="./MEDIA/FAVICONS/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./MEDIA/FAVICONS/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./MEDIA/FAVICONS/favicon-16x16.png">
+    <link rel="manifest" href="./MEDIA/FAVICONS/site.webmanifest">
+    <link rel="mask-icon" href="./MEDIA/FAVICONS/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#603cba">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <title>Lobby - MuziekQuiz</title>
+</head>
+
+<body onload="starta()">
+    <div class="container">
+        <div class="version">Versie 0.1</div>
+        <div class="background"></div>
+        <div class="lobby-container">
+            <div class="leave-button-container">
+                <button onclick="window.location.href='index.html'" class="button-39">Verlaat</button>
+            </div>
+            <div class="lobby-info-container animate__animated animate__fadeIn animate__slower">
+                <div id="lobbyInfo">ABC123</div>
+            </div>
+
+
+            <div id="players">
+                <div class="player animate__animated animate__fadeInLeft" id="player1">
+                    <span class="ready-indicator"></span>
+                    <p class="player-name">?</p>
+                    <img class="player-img" src="../MEDIA/AVATARS/default.webp" alt="Avatar 1">
+                    <button class="player-button">Klaar</button>
+                </div>
+                <div class="player animate__animated animate__fadeInLeft" id="player2">
+                    <span class="ready-indicator"></span>
+                    <p class="player-name">?</p>
+                    <img class="player-img" src="../MEDIA/AVATARS/default.webp" alt="Avatar 2">
+                    <button class="player-button">Klaar</button>
+                </div>
+                <div class="player animate__animated animate__fadeInRight" id="player3">
+                    <span class="ready-indicator"></span>
+                    <p class="player-name">?</p>
+                    <img class="player-img" src="../MEDIA/AVATARS/default.webp" alt="Avatar 3">
+                    <button class="player-button">Klaar</button>
+
+                </div>
+                <div class="player animate__animated animate__fadeInRight" id="player4">
+                    <span class="ready-indicator"></span>
+                    <p class="player-name">?</p>
+                    <img class="player-img" src="../MEDIA/AVATARS/default.webp" alt="Avatar 4">
+                    <button class="player-button">Klaar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="game">
+            <div class="resize">
+                <video class="logoResize" autoplay loop muted>
+                    <source src="MEDIA/HOME/logo.webm" type="video/webm">
+                    <source src="MEDIA/HOME/logo.mov" type="video/mov">
+                </video>
+            </div>
+            <div class="card">
+                <p class="card-title">Welk nummer is dit?></p>
+                <div class="button-container">
+                    <button onclick="answer(1)" class="card-button" id="card-button1">Optie 1</button>
+                    <button onclick="answer(2)" class="card-button" id="card-button2">Optie 2</button>
+                    <button onclick="answer(3)" class="card-button" id="card-button3">Optie 3</button>
+                    <button onclick="answer(4)" class="card-button" id="card-button4">Optie 4</button>
+                </div>
+                <div class="go-corner">
+                    <div class="go-arrow">15</div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="ranking-block">
+            <h1>Leaderboard</h1>
+        </div>
+        <div class="leave-button-container">
+            <button onclick="window.location.href='index.html'" class="button-39">Verlaat</button>
+        </div>
+        <div class="leaderboard">
+
+            <div id="leaderboard">
+                <div class="ribbon"></div>
+                <table>
+
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script defer src="./JS/lobbyMessages.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+</body>
+
+</html>

@@ -64,11 +64,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 // Muziek afspelen
+let audio = new Audio("MEDIA/HOME/homescreen.mp3");
+
 function playmusic() {
-  let audio = new Audio("MEDIA/HOME/homescreen.mp3");
   audio.loop = true;
   audio.volume = 0.02;
   audio.play();
+}
+
+function toggleMusic() {
+  if (audio.paused) {
+    audio.play();
+    document.getElementById('musicToggle').textContent = 'Pauzeer Muziek';
+  } else {
+    audio.pause();
+    document.getElementById('musicToggle').textContent = 'Speel Muziek';
+  }
 }
 
 // Animatie voor 'Arrow'
@@ -81,6 +92,14 @@ document.addEventListener("DOMContentLoaded", function () {
       arrow.classList.add("custom-heartbeat");
     }
   }, 2350);
+  document.getElementById('musicToggle').addEventListener('click', toggleMusic);
+  const musicButton = document.getElementById('musicToggle');
+  setInterval(() => {
+    musicButton.classList.add('animate__animated', 'animate__pulse');
+    musicButton.addEventListener('animationend', () => {
+      musicButton.classList.remove('animate__animated', 'animate__pulse');
+    }, { once: true }); 
+  }, 2325);
 });
 
 //  Voor lobby selector
@@ -88,7 +107,7 @@ function openLobbySelector() {
   let selector = document.querySelector(".lobbyselector");
   selector.classList.remove("hide");
   selector.style.animation = "zoominup 0.5s forwards";
-  isSelectorClosed = false; // Update de vlag
+  isSelectorClosed = false;
   document.querySelector('.close-button').addEventListener('click', function () {
     closeLobbySelector();
   });
@@ -98,10 +117,16 @@ function openLobbySelector() {
 // functie voor sluiten menu door buiten de div te klikken
 function outsideClickListener(event) {
   let selector = document.querySelector(".lobbyselector");
-  if (!selector.contains(event.target) && !isSelectorClosed) {
+  let lobbyMessages = document.getElementById("lobbyMessages");
+  let swalPopup = document.querySelector(".swal2-popup");
+
+  // Controleer of de klik buiten de selector, niet binnen de lobbyMessages en niet binnen een SweetAlert popup plaatsvond
+  if (!selector.contains(event.target) && !lobbyMessages.contains(event.target) && !(swalPopup && swalPopup.contains(event.target)) && !isSelectorClosed) {
     closeLobbySelector();
   }
 }
+
+
 
 // funcite voor sluiten menu
 function closeLobbySelector() {
@@ -114,7 +139,7 @@ function closeLobbySelector() {
 
     setTimeout(() => {
       selector.classList.add("hide");
-      isSelectorClosed = true; // Update de vlag
+      isSelectorClosed = true;
       window.removeEventListener('click', outsideClickListener);
     }, 150);
   }
@@ -133,11 +158,7 @@ document.querySelectorAll('.bottom-links a').forEach(link => {
   });
 })
 
-$(document).ready(function () {
-  setInterval(function () {
-    $(".content").load(window.location.href + " .content");
-  }, 2500);
-});
+
 
 document.addEventListener('click', function (event) {
   if (event.target.matches('.close-button')) {
@@ -163,3 +184,46 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+function updateLobbyUsers(users) {
+    // Update elke speler div met de gebruikersgegevens of met standaardwaarden
+    for (let i = 1; i <= 4; i++) {
+        const playerDiv = document.getElementById(`player${i}`);
+        const img = playerDiv.querySelector('img');
+        const p = playerDiv.querySelector('.player-name');
+
+        if (users[i - 1]) {
+            img.src = './MEDIA/AVATARS/avatar1.png'; // Zet dit naar de daadwerkelijke avatar van de gebruiker
+            p.textContent = users[i - 1];
+        } else {
+            img.src = './MEDIA/AVATARS/default.png'; // Terug naar de standaard avatar als er geen gebruiker is
+            p.textContent = '?';
+        }
+    }
+    
+}
+
+// Control the volume of the music
+document.getElementById('volumeControl').addEventListener('input', function() {
+    audio.volume = this.value;
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Geluid toevoegen aan de 'Nieuwe Lobby' knop
+  const newLobbyButton = document.getElementById('newLobbyButton'); // Veronderstelt dat je knop een id heeft van 'newLobbyButton'
+  if (newLobbyButton) {
+      newLobbyButton.addEventListener('click', function() {
+          const clickSound = new Audio("MEDIA/SOUNDS/onclick.wav");
+          clickSound.play();
+      });
+  }
+
+  // Geluid toevoegen aan de 'Join Lobby' knop
+  const joinLobbyButton = document.getElementById('joinLobbyButton'); // Je hebt al een element met dit ID
+  if (joinLobbyButton) {
+      joinLobbyButton.addEventListener('click', function() {
+          const clickSound = new Audio("MEDIA/SOUNDS/onclick.wav");
+          clickSound.play();
+      });
+  }
+});
